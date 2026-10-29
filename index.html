@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>咫尺乾坤 · 苏州园林志</title>
+<meta name="description" content="苏州古典园林 · 江南烟雨里的造园智慧">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+/* ============ 基础重置 ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Noto Serif SC','STSong','SimSun',serif;
+  background:#f1e7cf;
+  color:#1f1a14;
+  overflow-x:hidden;
+  position:relative;
+  min-height:100vh;
+  line-height:1.7;
+  font-weight:400;
+}
+
+/* ============ 设计令牌 ============ */
+:root{
+  --c-paper:#f3ead7;
+  --c-paper-2:#e8dec3;
+  --c-paper-3:#ddd0ad;
+  --c-ink:#1a1410;
+  --c-ink-soft:#3d3329;
+  --c-vermilion:#b13a2f;
+  --c-vermilion-deep:#872821;
+  --c-daiqing:#2f5a6e;
+  --c-daiqing-deep:#143442;
+  --c-mossy:#5a6b3a;
+  --c-copper:#a66a3d;
+  --c-sandalwood:#8b5a3c;
+  --c-rust:#8a3a2e;
+  --c-gold:#b58d4e;
+
+  --f-li:'Ma Shan Zheng','STXingkai','KaiTi',serif;
+  --f-kai:'Noto Serif SC','STKaiti','KaiTi',serif;
+  --f-xw:'ZCOOL XiaoWei','STKaiti',serif;
+  --f-ljmc:'Liu Jian Mao Cao','STXingkai',serif;
+  --f-qkhy:'ZCOOL QingKe HuangYou','STKaiti',serif;
+  --f-latin:'Cormorant Garamond','Times New Roman',serif;
+}
+
+/* ============ 宣纸纹理 ============ */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(139,90,60,0.06) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 80%, rgba(47,90,110,0.05) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(31,26,20,0.04) 0%, transparent 60%);
+  pointer-events:none;
+  z-index:1;
+}
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(139,90,60,0.04) 0%, transparent 8%),
+    radial-gradient(circle at 80% 70%, rgba(31,26,20,0.03) 0%, transparent 6%),
+    radial-gradient(circle at 50% 40%, rgba(177,58,47,0.02) 0%, transparent 10%),
+    radial-gradient(circle at 30% 80%, rgba(47,90,110,0.04) 0%, transparent 8%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 4px, rgba(139,90,60,0.012) 4px, rgba(139,90,60,0.012) 5px),
+    repeating-linear-gradient(-45deg, transparent 0, transparent 6px, rgba(31,26,20,0.01) 6px, rgba(31,26,20,0.01) 7px);
+  pointer-events:none;
+  z-index:1;
+  mix-blend-mode:multiply;
+}
+
+/* ============ 通用排版 ============ */
+.wrap{position:relative;z-index:3;max-width:1320px;margin:0 auto;padding:0 32px}
+.brush-line{
+  display:block;
+  width:120px;height:18px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 18'><path d='M2 9 Q30 2 60 8 T118 7' stroke='%231a1410' stroke-width='2.2' fill='none' stroke-linecap='round' opacity='0.85'/><path d='M4 12 Q40 14 80 11 T116 12' stroke='%231a1410' stroke-width='1.2' fill='none' stroke-linecap='round' opacity='0.6'/></svg>") no-repeat center/contain;
+  margin:18px auto 24px;
+}
+.seal{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:74px;height:74px;
+  background:var(--c-vermilion);
+  color:#f3ead7;
+  font-family:var(--f-li);
+  font-size:26px;
+  line-height:1.05;
+  letter-spacing:0;
+  border:3px solid var(--c-vermilion-deep);
+  border-radius:6px;
+  padding:6px;
+  text-align:center;
+  box-shadow:0 0 0 1px var(--c-vermilion-deep), inset 0 0 0 1px rgba(243,234,215,0.18);
+  position:relative;
+  transform:rotate(-3deg);
+}
+.seal::before{
+  content:'';position:absolute;inset:6px;
+  border:1px solid rgba(243,234,215,0.45);
+  border-radius:3px;
+}
+.seal span{display:block;line-height:1.1}
+
+/* ============ 顶部装饰带 ============ */
+.ribbon{
+  position:relative;z-index:4;
+  background:linear-gradient(180deg,#1a1410,#2a2118);
+  color:var(--c-paper);
+  padding:14px 0;
+  border-bottom:3px double var(--c-paper);
+  font-family:var(--f-kai);
+  font-size:14px;
+  letter-spacing:0.3em;
+  text-align:center;
+}
+.ribbon .vline{
+  display:inline-block;
+  width:1px;height:14px;
+  background:var(--c-paper);
+  margin:0 18px;
+  vertical-align:middle;
+  opacity:0.5;
+}
+
+/* ============ HERO 头 ============ */
+.hero{
+  position:relative;z-index:3;
+  padding:80px 0 100px;
+  overflow:hidden;
+  border-bottom:2px solid rgba(31,26,20,0.3);
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+.hero-left{position:relative}
+.hero-eyebrow{
+  font-family:var(--f-kai);
+  font-size:15px;
+  letter-spacing:0.4em;
+  color:var(--c-vermilion-deep);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:14px;
+}
+.hero-eyebrow::before{
+  content:'';display:inline-block;
+  width:48px;height:1px;
+  background:var(--c-vermilion-deep);
+}
+.hero-title{
+  font-family:var(--f-li);
+  font-size:148px;
+  line-height:0.9;
+  color:var(--c-ink);
+  font-weight:400;
+  letter-spacing:0.06em;
+  margin-bottom:8px;
+  position:relative;
+}
+.hero-title .char{
+  display:inline-block;
+  position:relative;
+  animation:charIn 1.2s cubic-bezier(0.2,0.7,0.2,1) backwards;
+}
+.hero-title .char:nth-child(1){animation-delay:.1s}
+.hero-title .char:nth-child(2){animation-delay:.25s}
+.hero-title .char:nth-child(3){animation-delay:.4s}
+.hero-title .char:nth-child(4){animation-delay:.55s}
+@keyframes charIn{
+  from{opacity:0;transform:translateY(40px) rotate(-2deg);filter:blur(6px)}
+  to{opacity:1;transform:translateY(0) rotate(0);filter:blur(0)}
+}
+.hero-sub-cn{
+  font-family:var(--f-kai);
+  font-size:32px;
+  color:var(--c-ink-soft);
+  font-weight:300;
+  letter-spacing:0.4em;
+  margin-bottom:30px;
+  padding-left:6px;
+}
+.hero-sub-en{
+  font-family:var(--f-kai);
+  font-size:19px;
+  color:var(--c-daiqing-deep);
+  letter-spacing:0.18em;
+  margin-bottom:40px;
+  max-width:480px;
+  line-height:2.1;
+}
+.hero-meta{
+  display:flex;gap:36px;
+  margin-top:36px;
+  padding-top:24px;
+  border-top:1px dashed rgba(31,26,20,0.4);
+}
+.hero-meta .meta-item .num{
+  font-family:var(--f-latin);
+  font-size:46px;
+  font-weight:400;
+  color:var(--c-vermilion);
+  line-height:1;
+  display:block;
+}
+.hero-meta .meta-item .lbl{
+  font-family:var(--f-kai);
+  font-size:13px;
+  letter-spacing:0.3em;
+  color:var(--c-ink-soft);
+  margin-top:6px;
+  display:block;
+}
+
+/* 右侧视觉：墨晕 + 卷轴 */
+.hero-right{
+  position:relative;
+  height:560px;
+}
+.scroll-frame{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(47,90,110,0.18) 0%, rgba(47,90,110,0.06) 40%, transparent 70%),
+    linear-gradient(135deg, #e8dec3, #f3ead7 40%, #ddd0ad);
+  border-radius:8px;
+  border:1px solid rgba(31,26,20,0.25);
+  box-shadow:
+    0 30px 60px -20px rgba(31,26,20,0.3),
+    inset 0 0 0 1px rgba(243,234,215,0.4),
+    inset 0 0 80px rgba(47,90,110,0.08);
+  overflow:hidden;
+}
+.scroll-frame::before,.scroll-frame::after{
+  content:'';position:absolute;
+  width:40px;height:100%;
+  top:0;
+  background:linear-gradient(180deg,#1a1410 0%,#2a2118 50%,#1a1410 100%);
+  border:1px solid #0d0a07;
+  box-shadow:0 0 0 1px #4a3f29;
+}
+.scroll-frame::before{left:0;border-radius:8px 0 0 8px}
+.scroll-frame::after{right:0;border-radius:0 8px 8px 0}
+
+.scroll-art{
+  position:absolute;
+  left:48px;right:48px;top:0;bottom:0;
+  display:flex;align-items:center;justify-content:center;
+  padding:30px;
+  overflow:hidden;
+}
+/* 实景照片铺满画心（z2），题字与印章压印其上（z4 / z5） */
+.scroll-photo{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 42%;
+  z-index:2;opacity:0;
+  transition:opacity .9s ease;
+  pointer-events:none;
+}
+
+.ink-mountain{
+  position:absolute;
+  width:100%;height:100%;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 30% 70%, rgba(31,26,20,0.6) 0%, rgba(31,26,20,0.3) 30%, transparent 60%),
+    radial-gradient(ellipse 40% 25% at 70% 75%, rgba(31,26,20,0.5) 0%, rgba(31,26,20,0.2) 35%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 50% 85%, rgba(31,26,20,0.4) 0%, transparent 50%);
+}
+.ink-mountain::before{
+  content:'';position:absolute;
+  left:15%;bottom:15%;
+  width:30%;height:50%;
+  background:
+    linear-gradient(180deg, rgba(31,26,20,0) 0%, rgba(31,26,20,0.45) 70%, rgba(31,26,20,0.7) 100%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  filter:blur(0.4px);
+}
+.ink-mountain::after{
+  content:'';position:absolute;
+  right:18%;bottom:12%;
+  width:24%;height:60%;
+  background:
+    linear-gradient(180deg, rgba(31,26,20,0) 0%, rgba(31,26,20,0.4) 60%, rgba(31,26,20,0.6) 100%);
+  clip-path: polygon(40% 0%, 100% 100%, 0% 100%);
+  filter:blur(0.4px);
+}
+
+.pavilion{
+  position:absolute;
+  left:50%;bottom:18%;
+  transform:translateX(-50%);
+  width:46%;height:42%;
+}
+.pavilion svg{width:100%;height:100%}
+
+.calligraphy{
+  position:absolute;
+  right:14%;top:14%;
+  z-index:4;
+  font-family:var(--f-ljmc);
+  font-size:54px;
+  color:var(--c-vermilion-deep);
+  writing-mode:vertical-rl;
+  letter-spacing:0.12em;
+  line-height:1.1;
+  opacity:0.88;
+  text-shadow:1px 1px 0 rgba(243,234,215,0.4);
+}
+/* 卷轴内换成实景照片时，隐去 SVG 装饰，题字改为压印白 */
+.scroll-art.has-photo .ink-mountain,
+.scroll-art.has-photo .pavilion{display:none}
+.scroll-art.has-photo .calligraphy{
+  color:rgba(243,234,215,0.94);
+  text-shadow:0 2px 16px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.55);
+}
+/* 钤印：题字下方一点朱红 */
+.scroll-seal{
+  position:absolute;
+  z-index:5;
+  right:15.5%;top:40%;
+  width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-li);
+  font-size:15px;line-height:1.05;
+  color:#f7efe0;
+  background:var(--c-vermilion);
+  border-radius:3px;
+  writing-mode:vertical-rl;
+  letter-spacing:0.02em;
+  opacity:0;
+  transform:scale(.9);
+  transition:opacity .6s ease .45s, transform .6s ease .45s;
+  box-shadow:0 3px 10px rgba(0,0,0,0.4);
+}
+.scroll-art.has-photo .scroll-seal{opacity:.94;transform:scale(1)}
+.scroll-art.has-photo::after{
+  content:'';position:absolute;inset:0;
+  z-index:3;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 45%, rgba(31,26,20,0) 0%, rgba(31,26,20,0.18) 100%),
+    linear-gradient(180deg, rgba(31,26,20,0.22) 0%, rgba(31,26,20,0.05) 34%, rgba(31,26,20,0.3) 100%);
+  pointer-events:none;
+}
+
+.goose{
+  position:absolute;
+  z-index:3;
+  font-family:var(--f-li);
+  font-size:20px;
+  color:var(--c-ink-soft);
+  padding:6px 12px;
+  background:rgba(243,234,215,0.7);
+  border:1px solid rgba(31,26,20,0.3);
+  letter-spacing:0.4em;
+}
+.goose.tl{top:24px;left:24px}
+.goose.tr{top:24px;right:24px;writing-mode:vertical-rl;line-height:1.4;font-size:18px}
+.goose.bl{bottom:24px;left:24px;writing-mode:vertical-rl;line-height:1.4;font-size:18px}
+.goose.br{bottom:24px;right:24px}
+
+/* ============ 序章 ============ */
+.intro{
+  position:relative;z-index:3;
+  padding:120px 0 80px;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(231,221,196,0.5) 50%, transparent 100%);
+}
+.intro-grid{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:60px;
+  align-items:center;
+}
+.intro-seal{writing-mode:vertical-rl;letter-spacing:0.3em;font-family:var(--f-li);font-size:22px;color:var(--c-paper-3);background:var(--c-vermilion);padding:18px 14px;border:3px solid var(--c-vermilion-deep);box-shadow:0 0 0 1px var(--c-vermilion-deep), 4px 4px 0 rgba(31,26,20,0.2)}
+.intro-seal span{display:block}
+.intro-text{
+  font-family:var(--f-kai);
+  font-size:20px;
+  line-height:2.2;
+  color:var(--c-ink-soft);
+  font-weight:400;
+}
+.intro-text .lead{
+  font-family:var(--f-li);
+  font-size:34px;
+  color:var(--c-ink);
+  display:block;
+  margin-bottom:14px;
+  letter-spacing:0.1em;
+}
+.intro-text .pull{
+  font-family:var(--f-ljmc);
+  font-size:54px;
+  color:var(--c-vermilion);
+  line-height:1;
+  float:left;
+  margin:8px 18px -8px 0;
+  padding:6px 8px;
+}
+.intro-aside{
+  writing-mode:vertical-rl;
+  font-family:var(--f-kai);
+  font-size:16px;
+  letter-spacing:0.3em;
+  line-height:2;
+  color:var(--c-daiqing-deep);
+  border-left:1px solid rgba(31,26,20,0.25);
+  padding-left:24px;
+  text-align:left;
+  height:340px;
+}
+
+/* ============ 分隔章 ============ */
+.divider{
+  position:relative;z-index:3;
+  padding:40px 0;
+  text-align:center;
+}
+.divider .ornament{
+  display:flex;align-items:center;justify-content:center;gap:24px;
+  font-family:var(--f-kai);
+  letter-spacing:0.5em;
+  color:var(--c-ink-soft);
+  font-size:13px;
+}
+.divider .ornament .bar{
+  display:inline-block;
+  width:120px;height:1px;
+  background:linear-gradient(90deg, transparent, var(--c-ink-soft), transparent);
+}
+.divider .ornament .diamond{
+  width:8px;height:8px;
+  background:var(--c-vermilion);
+  transform:rotate(45deg);
+}
+.divider h2{
+  font-family:var(--f-li);
+  font-size:78px;
+  color:var(--c-ink);
+  margin:14px 0 6px;
+  letter-spacing:0.12em;
+}
+.divider h2 .en{
+  display:block;
+  font-family:var(--f-kai);
+  font-size:17px;
+  letter-spacing:0.32em;
+  color:var(--c-vermilion-deep);
+  font-weight:400;
+  margin-bottom:14px;
+}
+
+/* ============ 园林卡片 ============ */
+.gardens{
+  position:relative;z-index:3;
+  padding:60px 0 80px;
+}
+.garden-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:36px;
+}
+/* 七园时，末张居中，避免孤卡片偏左 */
+@media (min-width:1025px){
+  .garden-grid > .card:last-child:nth-child(3n+1){grid-column:2}
+}
+@media (min-width:641px) and (max-width:1024px){
+  .garden-grid > .card:last-child:nth-child(2n+1){grid-column:1 / -1;max-width:calc(50% - 18px);justify-self:center}
+}
+.card{
+  position:relative;
+  background:
+    linear-gradient(180deg, #f5ecd6 0%, #ebe0c4 100%);
+  border:1px solid rgba(31,26,20,0.35);
+  padding:24px 24px 26px;
+  cursor:pointer;
+  text-decoration:none;
+  color:inherit;
+  transition:transform .5s cubic-bezier(0.2,0.7,0.2,1), box-shadow .5s;
+  overflow:hidden;
+  isolation:isolate;
+}
+.card::before{
+  content:'';position:absolute;inset:6px;
+  border:1px solid rgba(31,26,20,0.2);
+  pointer-events:none;
+  z-index:2;
+}
+.card::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(177,58,47,0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(47,90,110,0.04) 0%, transparent 40%);
+  pointer-events:none;
+  z-index:1;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 24px 50px -16px rgba(31,26,20,0.35),
+    0 0 0 1px rgba(31,26,20,0.4);
+}
+
+/* 卡片角落装饰 */
+.card-corner{
+  position:absolute;
+  width:24px;height:24px;
+  border:2px solid var(--c-vermilion-deep);
+  z-index:3;
+}
+.card-corner.tl{top:14px;left:14px;border-right:none;border-bottom:none}
+.card-corner.tr{top:14px;right:14px;border-left:none;border-bottom:none}
+.card-corner.bl{bottom:14px;left:14px;border-right:none;border-top:none}
+.card-corner.br{bottom:14px;right:14px;border-left:none;border-top:none}
+
+.card-img{
+  position:relative;
+  width:100%;aspect-ratio:4/3;
+  overflow:hidden;
+  margin-bottom:18px;
+  border:1px solid rgba(31,26,20,0.3);
+  background:#3a2f24;
+}
+.illu{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  display:block;
+  overflow:hidden;
+}
+.illu svg{width:100%;height:100%;display:block;position:relative;z-index:1}
+.illu > img{position:absolute!important;inset:0;width:100%!important;height:100%!important;object-fit:cover;z-index:2;transition:transform 1.2s ease, filter .8s}
+.card-img .illu svg{transition:transform 1.2s ease, filter .8s}
+.card-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:saturate(0.85) contrast(1.05) sepia(0.08);
+  transition:transform 1.2s ease, filter .8s;
+}
+.card:hover .card-img img{
+  transform:scale(1.06);
+  filter:saturate(1) contrast(1.08) sepia(0);
+}
+.card-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 50%, rgba(31,26,20,0.35) 100%);
+  pointer-events:none;
+}
+.card-img .stamp{
+  position:absolute;bottom:10px;right:10px;
+  width:46px;height:46px;
+  background:var(--c-vermilion);
+  color:#f3ead7;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-li);
+  font-size:14px;
+  text-align:center;
+  line-height:1.05;
+  border:2px solid var(--c-vermilion-deep);
+  z-index:2;
+  transform:rotate(-2deg);
+}
+
+.card-no{
+  position:absolute;
+  top:36px;left:36px;
+  font-family:var(--f-kai);
+  font-size:15px;
+  letter-spacing:0.28em;
+  color:var(--c-vermilion-deep);
+  background:rgba(243,234,215,0.92);
+  padding:4px 12px;
+  border:1px solid rgba(31,26,20,0.3);
+  z-index:2;
+}
+
+.card-body{padding:0 4px;position:relative;z-index:2}
+.card-name-cn{
+  font-family:var(--f-li);
+  font-size:38px;
+  color:var(--c-ink);
+  line-height:1.1;
+  letter-spacing:0.08em;
+  margin-bottom:4px;
+}
+.card-name-py{
+  font-family:var(--f-kai);
+  font-size:15px;
+  color:var(--c-daiqing-deep);
+  letter-spacing:0.18em;
+  margin-bottom:14px;
+}
+.card-tag{
+  display:inline-block;
+  font-family:var(--f-kai);
+  font-size:12px;
+  letter-spacing:0.25em;
+  color:var(--c-vermilion-deep);
+  border:1px solid var(--c-vermilion-deep);
+  padding:3px 10px;
+  margin-right:6px;
+  margin-bottom:8px;
+}
+.card-desc{
+  font-family:var(--f-kai);
+  font-size:14px;
+  line-height:1.85;
+  color:var(--c-ink-soft);
+  margin:14px 0 18px;
+  min-height:80px;
+}
+.card-cta{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:14px;
+  border-top:1px dashed rgba(31,26,20,0.4);
+  font-family:var(--f-kai);
+  font-size:13px;
+  letter-spacing:0.3em;
+  color:var(--c-ink-soft);
+}
+.card-cta .arrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--c-vermilion-deep);
+  transition:gap .3s;
+}
+.card:hover .card-cta .arrow{gap:14px}
+
+/* ============ 园林哲学 ============ */
+.philosophy{
+  position:relative;z-index:3;
+  padding:80px 0;
+  background:
+    radial-gradient(ellipse at center, rgba(20,52,66,0.95) 0%, rgba(20,52,66,0.98) 100%),
+    linear-gradient(135deg, var(--c-daiqing-deep), #0a1e26);
+  color:var(--c-paper);
+  border-top:3px double var(--c-paper-3);
+  border-bottom:3px double var(--c-paper-3);
+  overflow:hidden;
+}
+.philosophy::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(177,58,47,0.18) 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(181,141,78,0.15) 0%, transparent 30%);
+  pointer-events:none;
+}
+.philosophy-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:0;
+  position:relative;
+  z-index:2;
+}
+.phi-item{
+  padding:32px 28px;
+  border-right:1px solid rgba(243,234,215,0.18);
+  position:relative;
+}
+.phi-item:last-child{border-right:none}
+.phi-item .num{
+  font-family:var(--f-ljmc);
+  font-size:46px;
+  font-weight:400;
+  color:var(--c-gold);
+  line-height:1;
+  display:block;
+  letter-spacing:0.1em;
+  margin-bottom:14px;
+}
+.phi-item .cn{
+  font-family:var(--f-li);
+  font-size:30px;
+  color:var(--c-paper);
+  letter-spacing:0.12em;
+  margin-bottom:6px;
+}
+.phi-item .en{
+  font-family:var(--f-kai);
+  font-size:14px;
+  letter-spacing:0.22em;
+  color:var(--c-gold);
+  margin-bottom:16px;
+  display:block;
+}
+.phi-item .desc{
+  font-family:var(--f-kai);
+  font-size:14px;
+  line-height:1.85;
+  color:rgba(243,234,215,0.78);
+}
+
+/* ============ 园林四季 ============ */
+.seasons{
+  position:relative;z-index:3;
+  padding:80px 0;
+}
+.season-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:0;
+}
+.season-card{
+  position:relative;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  border-right:1px solid rgba(31,26,20,0.2);
+  cursor:pointer;
+  isolation:isolate;
+}
+.season-card:last-child{border-right:none}
+.season-card img,.season-card .illu{
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:saturate(0.92) contrast(1.04);
+  transition:transform 1.4s, filter 1s;
+}
+.season-card:hover img,.season-card:hover .illu{transform:scale(1.08);filter:saturate(1) contrast(1.05)}
+.season-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(31,26,20,0) 0%,
+    rgba(31,26,20,0) 58%,
+    rgba(31,26,20,0.42) 76%,
+    rgba(31,26,20,0.86) 100%);
+  z-index:1;
+}
+.season-card .season-label{
+  position:absolute;
+  left:24px;right:24px;bottom:24px;
+  z-index:2;
+  color:var(--c-paper);
+}
+.season-card .season-cn{
+  font-family:var(--f-li);
+  font-size:46px;
+  letter-spacing:0.12em;
+  line-height:1;
+  display:block;
+}
+.season-card .season-en{
+  font-family:var(--f-kai);
+  font-size:15px;
+  letter-spacing:0.35em;
+  color:var(--c-gold);
+  margin-top:8px;
+  display:block;
+}
+.season-card .season-verse{
+  font-family:var(--f-kai);
+  font-size:13px;
+  margin-top:10px;
+  opacity:0.85;
+  border-top:1px solid rgba(243,234,215,0.4);
+  padding-top:8px;
+}
+
+/* ============ 底部题词 ============ */
+.epilogue{
+  position:relative;z-index:3;
+  padding:120px 0 80px;
+  text-align:center;
+}
+.ep-graph{
+  font-family:var(--f-ljmc);
+  font-size:120px;
+  color:var(--c-ink);
+  line-height:1.05;
+  letter-spacing:0.08em;
+  margin-bottom:30px;
+  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+}
+.ep-graph span{
+  display:inline-block;
+  padding:0 6px;
+  position:relative;
+}
+.ep-graph span::after{
+  content:'';position:absolute;
+  left:8%;right:8%;bottom:-6px;height:2px;
+  background:var(--c-vermilion);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .8s .3s;
+}
+.epilogue.in-view .ep-graph span::after{transform:scaleX(1)}
+
+.ep-poem{
+  font-family:var(--f-kai);
+  font-size:22px;
+  letter-spacing:0.3em;
+  color:var(--c-ink-soft);
+  line-height:2;
+  margin-bottom:40px;
+}
+.ep-poem .accent{color:var(--c-vermilion-deep);font-family:var(--f-li);font-size:28px}
+
+.ep-by{
+  font-family:var(--f-kai);
+  font-size:16px;
+  letter-spacing:0.36em;
+  color:var(--c-daiqing-deep);
+  margin-bottom:60px;
+}
+
+/* ============ 页脚 ============ */
+.foot{
+  position:relative;z-index:3;
+  background:linear-gradient(180deg,#1a1410 0%, #0a0805 100%);
+  color:var(--c-paper-2);
+  padding:60px 0 40px;
+  border-top:4px double var(--c-paper-3);
+}
+.foot-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:50px;
+  margin-bottom:40px;
+}
+.foot-brand .brand-cn{
+  font-family:var(--f-li);
+  font-size:42px;
+  letter-spacing:0.1em;
+  margin-bottom:14px;
+  color:var(--c-paper);
+}
+.foot-brand .brand-en{
+  font-family:var(--f-kai);
+  font-size:14px;
+  letter-spacing:0.3em;
+  color:var(--c-gold);
+  margin-bottom:24px;
+}
+.foot-brand p{
+  font-family:var(--f-kai);
+  font-size:13px;
+  line-height:1.9;
+  color:rgba(243,234,215,0.65);
+  max-width:380px;
+}
+.foot h4{
+  font-family:var(--f-li);
+  font-size:18px;
+  color:var(--c-paper);
+  letter-spacing:0.2em;
+  margin-bottom:16px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(243,234,215,0.3);
+}
+.foot ul{list-style:none}
+.foot li{
+  font-family:var(--f-kai);
+  font-size:13px;
+  color:rgba(243,234,215,0.7);
+  padding:5px 0;
+  letter-spacing:0.1em;
+}
+.foot li::before{content:'◇ ';color:var(--c-gold);margin-right:6px}
+.foot-bar{
+  border-top:1px solid rgba(243,234,215,0.2);
+  padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--f-kai);
+  font-size:14px;
+  letter-spacing:0.24em;
+  color:rgba(243,234,215,0.5);
+}
+
+/* ============ 鼠标水墨涟漪 ============ */
+#ripple-canvas{
+  position:fixed;inset:0;
+  width:100%;height:100%;
+  z-index:2;
+  pointer-events:none;
+  mix-blend-mode:multiply;
+}
+
+/* ============ 模态 ============ */
+.modal{
+  position:fixed;inset:0;
+  z-index:1000;
+  display:none;
+  align-items:center;justify-content:center;
+  padding:40px;
+  background:rgba(20,16,12,0.7);
+  backdrop-filter:blur(6px);
+}
+.modal.open{display:flex;animation:fadeIn .5s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-frame{
+  width:min(1100px, 96vw);
+  max-height:92vh;
+  background:
+    linear-gradient(180deg, #f3ead7 0%, #ebe0c4 100%);
+  position:relative;
+  display:flex;
+  overflow:hidden;
+  border:1px solid rgba(31,26,20,0.4);
+  box-shadow:
+    0 60px 100px -20px rgba(0,0,0,0.6),
+    inset 0 0 0 6px rgba(243,234,215,1),
+    inset 0 0 0 7px rgba(31,26,20,0.3);
+  transform:scale(0.92);
+  opacity:0;
+  transition:transform .6s cubic-bezier(0.2,0.7,0.2,1), opacity .5s;
+}
+.modal.open .modal-frame{transform:scale(1);opacity:1}
+
+.modal-frame::before,.modal-frame::after{
+  content:'';position:absolute;
+  width:24px;height:100%;top:0;
+  background:linear-gradient(180deg,#1a1410 0%,#2a2118 50%,#1a1410 100%);
+  z-index:3;
+}
+.modal-frame::before{left:0;border-right:2px solid #4a3f29}
+.modal-frame::after{right:0;border-left:2px solid #4a3f29}
+
+.modal-img{
+  width:55%;
+  background:#3a2f24;
+  position:relative;
+  overflow:hidden;
+}
+.modal-img img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(0.95)}
+.modal-img::before{
+  content:'';position:absolute;inset:8px;
+  border:1px solid rgba(243,234,215,0.4);
+  z-index:2;
+  pointer-events:none;
+}
+.modal-img .img-seal{
+  position:absolute;top:24px;left:24px;
+  z-index:2;
+  background:var(--c-vermilion);
+  color:#f3ead7;
+  padding:8px 14px;
+  font-family:var(--f-li);
+  font-size:16px;
+  letter-spacing:0.2em;
+  border:2px solid var(--c-vermilion-deep);
+}
+.modal-img .img-no{
+  position:absolute;bottom:24px;right:24px;
+  z-index:2;
+  font-family:var(--f-latin);
+  font-size:64px;
+  font-weight:300;
+  color:var(--c-paper);
+  opacity:0.5;
+  line-height:1;
+}
+
+.modal-body{
+  width:45%;
+  padding:50px 44px;
+  overflow-y:auto;
+  position:relative;
+}
+.modal-body::-webkit-scrollbar{width:6px}
+.modal-body::-webkit-scrollbar-thumb{background:var(--c-vermilion-deep);border-radius:3px}
+
+.modal-close{
+  position:absolute;top:24px;right:24px;
+  width:48px;height:48px;
+  background:var(--c-vermilion);
+  color:var(--c-paper);
+  border:2px solid var(--c-vermilion-deep);
+  font-family:var(--f-li);
+  font-size:24px;
+  cursor:pointer;
+  z-index:5;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .3s;
+}
+.modal-close:hover{transform:rotate(90deg)}
+
+.modal-eyebrow{
+  font-family:var(--f-latin);
+  font-size:12px;
+  letter-spacing:0.4em;
+  color:var(--c-vermilion-deep);
+  text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;
+}
+.modal-eyebrow::after{
+  content:'';flex:1;height:1px;background:var(--c-vermilion-deep);
+  opacity:0.5;
+}
+.modal-title{
+  font-family:var(--f-li);
+  font-size:64px;
+  color:var(--c-ink);
+  line-height:1.05;
+  margin-bottom:8px;
+  letter-spacing:0.1em;
+}
+.modal-py{
+  font-family:var(--f-latin);
+  font-size:18px;
+  font-style:italic;
+  color:var(--c-daiqing-deep);
+  letter-spacing:0.1em;
+  margin-bottom:24px;
+}
+.modal-meta{
+  display:flex;gap:24px;
+  padding:14px 0;
+  border-top:1px solid rgba(31,26,20,0.2);
+  border-bottom:1px solid rgba(31,26,20,0.2);
+  margin-bottom:24px;
+}
+.modal-meta .item .k{
+  font-family:var(--f-kai);
+  font-size:11px;
+  letter-spacing:0.3em;
+  color:var(--c-ink-soft);
+  display:block;
+  margin-bottom:4px;
+}
+.modal-meta .item .v{
+  font-family:var(--f-li);
+  font-size:18px;
+  color:var(--c-vermilion-deep);
+  letter-spacing:0.1em;
+}
+.modal-section h5{
+  font-family:var(--f-li);
+  font-size:18px;
+  color:var(--c-ink);
+  letter-spacing:0.2em;
+  margin-bottom:10px;
+  padding-left:14px;
+  border-left:3px solid var(--c-vermilion);
+}
+.modal-section p{
+  font-family:var(--f-kai);
+  font-size:14.5px;
+  line-height:2;
+  color:var(--c-ink-soft);
+  margin-bottom:20px;
+  text-indent:2em;
+}
+.modal-section .poem{
+  font-family:var(--f-ljmc);
+  font-size:22px;
+  color:var(--c-vermilion-deep);
+  text-align:center;
+  letter-spacing:0.3em;
+  padding:24px 0;
+  margin:20px 0;
+  border-top:1px dashed rgba(31,26,20,0.4);
+  border-bottom:1px dashed rgba(31,26,20,0.4);
+  line-height:2;
+}
+.modal-features{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  margin:20px 0;
+}
+.modal-feature{
+  background:rgba(243,234,215,0.6);
+  border:1px solid rgba(31,26,20,0.2);
+  padding:10px 14px;
+  font-family:var(--f-kai);
+  font-size:13px;
+  letter-spacing:0.15em;
+  color:var(--c-ink);
+}
+.modal-feature::before{
+  content:'◆';color:var(--c-vermilion);margin-right:8px;
+}
+
+/* ============ 响应式 ============ */
+@media (max-width:1024px){
+  .hero{grid-template-columns:1fr;padding:60px 0 80px}
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-title{font-size:96px}
+  .hero-right{height:420px}
+  .hero-lantern.l{left:-12px}
+  .hero-lantern.r{right:-12px}
+  .garden-grid{grid-template-columns:repeat(2,1fr)}
+  .philosophy-grid{grid-template-columns:repeat(2,1fr)}
+  .phi-item:nth-child(2n){border-right:none}
+  .phi-item{border-bottom:1px solid rgba(243,234,215,0.18)}
+  .season-grid{grid-template-columns:repeat(2,1fr)}
+  .season-card{border-right:1px solid rgba(31,26,20,0.2);border-bottom:1px solid rgba(31,26,20,0.2)}
+  .modal-frame{flex-direction:column;max-height:96vh;overflow-y:auto}
+  .modal-img{width:100%;height:280px}
+  .modal-body{width:100%;padding:36px 28px}
+  .foot-grid{grid-template-columns:1fr;gap:36px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  .hero-title{font-size:64px}
+  .hero-sub-cn{font-size:22px}
+  .divider h2{font-size:54px}
+  .garden-grid{grid-template-columns:1fr}
+  .philosophy-grid{grid-template-columns:1fr}
+  .phi-item{border-right:none;border-bottom:1px solid rgba(243,234,215,0.18)}
+  .season-grid{grid-template-columns:1fr}
+  .season-card{border-right:none;border-bottom:1px solid rgba(31,26,20,0.2)}
+  .intro-grid{grid-template-columns:1fr}
+  .intro-aside{display:none}
+  .ep-graph{font-size:64px}
+  .modal-title{font-size:42px}
+  .modal-features{grid-template-columns:1fr}
+}
+
+/* ============ 入场 ============ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s, transform .9s}
+.reveal.in-view{opacity:1;transform:translateY(0)}
+
+/* ============ 页面级装饰：回纹角隅 / 灯笼 / 团扇 / 回纹分隔 ============ */
+.page-ornaments{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.corner{position:fixed;width:140px;height:140px;pointer-events:none;opacity:.42;transition:opacity .6s}
+.corner.tl{top:42px;left:14px}
+.corner.tr{top:42px;right:14px;transform:scaleX(-1)}
+.corner.bl{bottom:42px;left:14px;transform:scaleY(-1)}
+.corner.br{bottom:42px;right:14px;transform:scale(-1,-1)}
+.corner:hover{opacity:.6}
+@media (max-width:900px){.corner{width:96px;height:96px;opacity:.32}}
+@media (max-width:640px){.corner{width:64px;height:64px;opacity:.22}}
+
+/* 灯笼 —— 悬于卷轴两侧，不压标题 */
+.hero-lantern{position:absolute;pointer-events:none;width:58px;height:auto;opacity:.84;
+  z-index:3;
+  filter:drop-shadow(0 4px 12px rgba(177,58,47,.18));
+  animation:lanternSway 5.5s ease-in-out infinite alternate}
+.hero-lantern.l{left:-34px;top:-4px}
+.hero-lantern.r{right:-34px;top:-32px;animation-delay:-2.6s;width:50px;opacity:.72}
+@keyframes lanternSway{
+  0%   {transform:rotate(-2.5deg) translateY(0)}
+  100% {transform:rotate(2.5deg)  translateY(6px)}
+}
+
+/* 团扇 —— 尾声区 */
+.fan-deco{position:absolute;pointer-events:none;width:180px;opacity:.55;
+  transform:rotate(-14deg);right:-22px;top:24px}
+@media (max-width:900px){.fan-deco{width:120px;right:10px}}
+
+/* 印章 —— 装饰性，距卡片图 */
+.stamp-deco{position:absolute;pointer-events:none;width:78px;opacity:.78;
+  right:20px;top:18px}
+
+/* 回纹分隔条（手工 SVG） */
+.meander-rule{display:flex;align-items:center;justify-content:center;gap:18px;
+  max-width:680px;margin:0 auto;color:var(--c-vermilion)}
+.meander-rule .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--c-vermilion) 30%,var(--c-vermilion) 70%,transparent);opacity:.6}
+.meander-rule svg{width:auto;height:18px;flex-shrink:0}
+
+/* 装饰行：含印章 + 短诗 */
+.poetic-banner{margin-top:36px;display:flex;align-items:center;justify-content:center;gap:18px}
+.poetic-banner .seal{width:62px;height:62px;background:var(--c-vermilion);color:var(--c-paper);
+  display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng','ZCOOL XiaoWei',serif;
+  font-size:22px;letter-spacing:2px;transform:rotate(-3deg);box-shadow:0 4px 18px rgba(177,58,47,.32)}
+.poetic-banner .seal.two{background:transparent;border:2px solid var(--c-vermilion);color:var(--c-vermilion);
+  transform:rotate(2deg);font-family:'Noto Serif SC',serif;font-weight:700}
+.poetic-banner p{margin:0;font-family:'Ma Shan Zheng','Noto Serif SC',serif;color:var(--c-ink);font-size:22px;letter-spacing:8px}
+
+/* 冰裂纹背景叠层（页面最底） */
+.ice-bg{position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.055;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'><g fill='none' stroke='%231a1410' stroke-width='0.6'><path d='M40,80 L120,160 L80,220 L160,300 M120,160 L200,100 M160,300 L260,250 L340,320 M340,320 L420,260 L500,340 M500,340 L560,400'/><path d='M80,420 L160,360 L220,440 L320,400 M220,440 L300,520 M320,400 L420,460 L500,420'/><path d='M380,40 L460,120 L400,180 L500,240 M180,540 L260,500 L340,580 M440,540 L520,500'/></g></svg>");
+  background-size:600px 600px}
+
+/* reduced-motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<!-- 顶部装饰带 -->
+<div class="ribbon">
+  苏州古典园林 <span class="vline"></span> 世界文化遗产 <span class="vline"></span> 一九九七年列入 <span class="vline"></span> 江南烟雨 六朝风雅
+</div>
+
+<!-- 鼠标水墨涟漪画布 -->
+<canvas id="ripple-canvas" aria-hidden="true"></canvas>
+
+<!-- 冰裂纹底层纹理 -->
+<div class="ice-bg" aria-hidden="true"></div>
+
+<!-- 页面级装饰：四隅回纹 -->
+<div class="page-ornaments" aria-hidden="true">
+
+  <!-- TL 角隅 回纹 -->
+  <svg class="corner tl" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <!-- 回纹 -->
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <!-- 印章小方 -->
+    <rect x="22" y="100" width="22" height="22" fill="#b13a2f"/>
+    <text x="33" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">苏</text>
+    <!-- 飘叶点缀 -->
+    <path d="M78,86 q-6,-4 -10,-2 q-2,8 6,12 q8,-4 4,-10 z" fill="#b13a2f" opacity=".45"/>
+    <path d="M104,110 q-4,-3 -8,-1 q-1,6 5,9 q5,-3 3,-8 z" fill="#b58d4e" opacity=".55"/>
+  </svg>
+
+  <svg class="corner tr" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <rect x="96" y="100" width="22" height="22" fill="#1a1410"/>
+    <text x="107" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">園</text>
+    <path d="M30,86 q6,-4 10,-2 q2,8 -6,12 q-8,-4 -4,-10 z" fill="#b58d4e" opacity=".55"/>
+    <path d="M14,108 q4,-3 8,-1 q1,6 -5,9 q-5,-3 -3,-8 z" fill="#b13a2f" opacity=".45"/>
+  </svg>
+
+  <svg class="corner bl" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <rect x="22" y="100" width="22" height="22" fill="#b58d4e"/>
+    <text x="33" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">林</text>
+    <path d="M78,86 q-6,-4 -10,-2 q-2,8 6,12 q8,-4 4,-10 z" fill="#b58d4e" opacity=".55"/>
+    <path d="M104,110 q-4,-3 -8,-1 q-1,6 5,9 q5,-3 3,-8 z" fill="#b13a2f" opacity=".45"/>
+  </svg>
+
+  <svg class="corner br" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <rect x="96" y="100" width="22" height="22" fill="#b13a2f"/>
+    <text x="107" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">志</text>
+    <path d="M30,86 q6,-4 10,-2 q2,8 -6,12 q-8,-4 -4,-10 z" fill="#b13a2f" opacity=".45"/>
+    <path d="M14,108 q4,-3 8,-1 q1,6 -5,9 q-5,-3 -3,-8 z" fill="#b58d4e" opacity=".55"/>
+  </svg>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow">中 国 古 典 园 林 志 · 丙 午 年</div>
+      <h1 class="hero-title">
+        <span class="char">苏</span><span class="char">州</span><span class="char">园</span><span class="char">林</span>
+      </h1>
+      <div class="hero-sub-cn">江 · 南 · 烟 · 雨</div>
+      <div class="hero-sub-en">一 步 一 景，咫 尺 乾 坤。<br>叠 石 引 水，曲 径 通 幽；<br>粉 墙 为 绢，竹 影 成 墨。</div>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="num">09</span>
+          <span class="lbl">古典名园</span>
+        </div>
+        <div class="meta-item">
+          <span class="num">500<sup style="font-size:24px">+</sup></span>
+          <span class="lbl">年营造史</span>
+        </div>
+        <div class="meta-item">
+          <span class="num">1997</span>
+          <span class="lbl">列入世遗</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <!-- 灯笼悬挂（古风） -->
+      <svg class="hero-lantern l" viewBox="0 0 60 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="30" y1="0" x2="30" y2="32" stroke="#1a1410" stroke-width=".6" opacity=".7"/>
+        <rect x="20" y="30" width="20" height="6" fill="#5a3a26"/>
+        <ellipse cx="30" cy="64" rx="22" ry="30" fill="#b13a2f" stroke="#1a1410" stroke-width=".8"/>
+        <line x1="30" y1="34" x2="30" y2="94" stroke="#f3ead7" stroke-width=".5" opacity=".55"/>
+        <ellipse cx="30" cy="46" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".5"/>
+        <ellipse cx="30" cy="64" rx="22" ry="6" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".5"/>
+        <ellipse cx="30" cy="82" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".5"/>
+        <rect x="20" y="92" width="20" height="5" fill="#5a3a26"/>
+        <line x1="30" y1="97" x2="30" y2="105" stroke="#b58d4e" stroke-width="1"/>
+        <path d="M27,105 q3,8 6,0 M28,107 l1,16 M30,107 v18 M32,107 l-1,16" fill="none" stroke="#b58d4e" stroke-width=".6"/>
+        <text x="30" y="70" text-anchor="middle" font-family="serif" font-size="22" fill="#f3ead7" font-weight="700" opacity=".9">福</text>
+      </svg>
+
+      <svg class="hero-lantern r" viewBox="0 0 60 130" xmlns="http://www.w3.org/2000/svg">
+        <line x1="30" y1="0" x2="30" y2="32" stroke="#1a1410" stroke-width=".6" opacity=".7"/>
+        <rect x="20" y="30" width="20" height="6" fill="#5a3a26"/>
+        <ellipse cx="30" cy="64" rx="22" ry="30" fill="#b13a2f" stroke="#1a1410" stroke-width=".8"/>
+        <line x1="30" y1="34" x2="30" y2="94" stroke="#f3ead7" stroke-width=".5" opacity=".5"/>
+        <ellipse cx="30" cy="46" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".45"/>
+        <ellipse cx="30" cy="64" rx="22" ry="6" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".45"/>
+        <ellipse cx="30" cy="82" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".45"/>
+        <rect x="20" y="92" width="20" height="5" fill="#5a3a26"/>
+        <line x1="30" y1="97" x2="30" y2="105" stroke="#b58d4e" stroke-width="1"/>
+        <path d="M27,105 q3,8 6,0 M28,107 l1,16 M30,107 v18 M32,107 l-1,16" fill="none" stroke="#b58d4e" stroke-width=".6"/>
+        <text x="30" y="70" text-anchor="middle" font-family="serif" font-size="20" fill="#f3ead7" font-weight="700" opacity=".9">春</text>
+      </svg>
+
+      <div class="scroll-frame">
+        <div class="scroll-art" id="scroll-art">
+          <div class="ink-mountain"></div>
+          <div class="calligraphy">咫尺<br>乾坤</div>
+          <div class="scroll-seal">园林</div>
+          <div class="pavilion" id="hero-scroll-svg"></div>
+        </div>
+        <div class="goose tl">江南<br>第一<br>风雅</div>
+        <div class="goose bl">诗画<br>同源</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 序章 -->
+<section class="intro reveal">
+  <div class="wrap intro-grid">
+    <div class="intro-seal"><span>造</span><span>化</span><span>自</span><span>然</span></div>
+    <div class="intro-text">
+      <span class="lead">江南园林，咫尺乾坤。</span>
+      <span class="pull">园</span>林者，以小见大，纳须弥于芥子；师法自然，融诗画于丘壑。粉墙为绢，竹影成墨，流水作笔；一石一木，皆含古意；半窗半阁，俱见匠心。自春秋苑囿、魏晋山水、至宋元写意、明清鼎盛，五千载营造智慧凝为九座名园，本篇择其七座逐一走访；至今游者入园，仍可与古人对坐，听松风、观鱼跃、读残碑、品茗香。
+    </div>
+    <div class="intro-aside">造园之妙，在于借景；虽由人作，宛自天开。<br>— 明 · 计成《园冶》</div>
+  </div>
+</section>
+
+<!-- 分隔 -->
+<div class="divider">
+  <div class="ornament">
+    <span class="bar"></span>
+    <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+    </svg>
+    <span>七 · 名 · 园</span>
+    <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+    </svg>
+    <span class="diamond"></span>
+    <span class="bar"></span>
+  </div>
+  <h2>园 林 七 览<span class="en">七 座 名 园 · 各 有 千 秋</span></h2>
+</div>
+
+<!-- 园林卡片 -->
+<section class="gardens">
+  <div class="wrap">
+    <div class="garden-grid">
+
+      <a class="card" href="garden.html?id=zhuozheng">
+        <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+        <div class="card-no">第 一 园</div>
+        <div class="card-img">
+          <div class="illu" data-illu="cardPavilionWater" data-photo-key="card-zhuozheng"></div>
+          <div class="stamp">拙<br>政</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name-cn">拙 政 园</h3>
+          <div class="card-name-py">江 南 园 林 之 冠 · 明 代 文 人 写 意 山 水 园</div>
+          <div>
+            <span class="card-tag">明 · 文徵明</span>
+            <span class="card-tag">江南第一</span>
+          </div>
+          <p class="card-desc">苏州面积最大、名气最盛的古典园林，文人写意山水园的典范。以水为骨，亭台楼阁皆因水成景。</p>
+          <div class="card-cta">
+            <span>入园漫步</span>
+            <span class="arrow">入 园 →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="garden.html?id=liu">
+        <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+        <div class="card-no">第 二 园</div>
+        <div class="card-img">
+          <div class="illu" data-illu="cardRockery" data-photo-key="card-liu"></div>
+          <div class="stamp">留<br>园</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name-cn">留 园</h3>
+          <div class="card-name-py">建 筑 布 局 之 巅 · 冠 云 峰 与 楠 木 厅</div>
+          <div>
+            <span class="card-tag">清 · 刘恕</span>
+            <span class="card-tag">冠云峰</span>
+          </div>
+          <p class="card-desc">以建筑布局见长，厅堂宏丽、庭院幽深。著名的"留园三绝"——冠云峰、鱼化石、楠木厅。</p>
+          <div class="card-cta">
+            <span>入园漫步</span>
+            <span class="arrow">入 园 →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="garden.html?id=wangshi">
+        <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+        <div class="card-no">第 三 园</div>
+        <div class="card-img">
+          <div class="illu" data-illu="cardCorridorWater" data-photo-key="card-wangshi"></div>
+          <div class="stamp">网<br>师</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name-cn">网 师 园</h3>
+          <div class="card-name-py">小 而 精 深 · 夜 游 网 师 最 是 静 谧</div>
+          <div>
+            <span class="card-tag">南宋 · 史正志</span>
+            <span class="card-tag">夜游独绝</span>
+          </div>
+          <p class="card-desc">小巧精深，"园以水胜，室以文传"。夜游网师，秉烛而行，别有一番静谧之趣。</p>
+          <div class="card-cta">
+            <span>入园漫步</span>
+            <span class="arrow">入 园 →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="garden.html?id=shizi">
+        <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+        <div class="card-no">第 四 园</div>
+        <div class="card-img">
+          <div class="illu" data-illu="cardRockery" data-photo-key="card-shizi"></div>
+          <div class="stamp">狮<br>林</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name-cn">狮 子 林</h3>
+          <div class="card-name-py">假 山 王 国 · 元 代 禅 意 石 园</div>
+          <div>
+            <span class="card-tag">元 · 天如禅师</span>
+            <span class="card-tag">假山王国</span>
+          </div>
+          <p class="card-desc">元代禅意园林的代表，以湖石假山著称，"狮子峰"形似狮舞。乾隆六下江南必游之地。</p>
+          <div class="card-cta">
+            <span>入园漫步</span>
+            <span class="arrow">入 园 →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="garden.html?id=canglang">
+        <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+        <div class="card-no">第 五 园</div>
+        <div class="card-img">
+          <div class="illu" data-illu="cardPavilionWater" data-photo-key="card-canglang"></div>
+          <div class="stamp">沧<br>浪</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name-cn">沧 浪 亭</h3>
+          <div class="card-name-py">苏 州 最 古 · 借 水 成 景 · 未 入 园 先 见 水</div>
+          <div>
+            <span class="card-tag">北宋 · 苏舜钦</span>
+            <span class="card-tag">苏州最古</span>
+          </div>
+          <p class="card-desc">苏州现存最古老的园林，依水而建，"沧浪之水清兮，可以濯吾缨"。未入园已见水景。</p>
+          <div class="card-cta">
+            <span>入园漫步</span>
+            <span class="arrow">入 园 →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="garden.html?id=yi">
+        <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+        <div class="card-no">第 六 园</div>
+        <div class="card-img">
+          <div class="illu" data-illu="cardBamboo" data-photo-key="card-yi"></div>
+          <div class="stamp">怡<br>园</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name-cn">怡 园</h3>
+          <div class="card-name-py">晚 清 集 锦 · 冶 诸 园 之 长 于 一 炉</div>
+          <div>
+            <span class="card-tag">清 · 顾文彬</span>
+            <span class="card-tag">晚清集锦</span>
+          </div>
+          <p class="card-desc">晚清集锦式园林，取拙政、留园、网师、狮子林诸园之长，冶于一炉，格调清雅。</p>
+          <div class="card-cta">
+            <span>入园漫步</span>
+            <span class="arrow">入 园 →</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="garden.html?id=yipu">
+        <span class="card-corner tl"></span><span class="card-corner tr"></span><span class="card-corner bl"></span><span class="card-corner br"></span>
+        <div class="card-no">第 七 园</div>
+        <div class="card-img">
+          <div class="illu" data-illu="cardMoonGate" data-photo-key="card-yipu"></div>
+          <div class="stamp">艺<br>圃</div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name-cn">艺 圃</h3>
+          <div class="card-name-py">别 有 洞 天 · 五 亩 藏 世 遗</div>
+          <div>
+            <span class="card-tag">明 · 袁氏</span>
+            <span class="card-tag">砖雕第一</span>
+          </div>
+          <p class="card-desc">明末清初的宅园，园仅五亩而疏朗雅致。砖雕门楼"别有洞天"冠绝江南，二〇〇〇年列入《世界文化遗产名录》。</p>
+          <div class="card-cta">
+            <span>入园漫步</span>
+            <span class="arrow">入 园 →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- 园林哲学 -->
+<section class="philosophy">
+  <div class="wrap">
+    <div class="divider" style="padding:0 0 50px">
+      <div class="ornament" style="color:rgba(243,234,215,0.7)">
+        <span class="bar" style="background:linear-gradient(90deg,transparent,var(--c-gold),transparent)"></span>
+        <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="var(--c-gold)" stroke-width="1.1"/>
+        </svg>
+        <span>造 · 园 · 四 · 法</span>
+        <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="var(--c-gold)" stroke-width="1.1"/>
+        </svg>
+        <span class="diamond" style="background:var(--c-gold)"></span>
+        <span class="bar" style="background:linear-gradient(90deg,transparent,var(--c-gold),transparent)"></span>
+      </div>
+      <h2 style="color:var(--c-paper);font-size:64px"><span class="en" style="color:var(--c-gold)">中 国 造 园 之 四 法</span>借 景 框 景 对 景 漏 景</h2>
+    </div>
+    <div class="philosophy-grid">
+      <div class="phi-item">
+        <span class="num">一</span>
+        <h3 class="cn">借 景</h3>
+        <span class="en">取 园 外 之 景 为 我 所 用</span>
+        <p class="desc">园外之景为我所用，远山古塔皆入画图。颐和园借西山，拙政园借北寺塔——造园之最高境界。</p>
+      </div>
+      <div class="phi-item">
+        <span class="num">二</span>
+        <h3 class="cn">框 景</h3>
+        <span class="en">以 门 窗 为 框 景 成 画</span>
+        <p class="desc">以门窗为画框，框出一幅天然图画。一扇花窗、半掩月门，皆是凝固的诗行。移步换景，步步入画。</p>
+      </div>
+      <div class="phi-item">
+        <span class="num">三</span>
+        <h3 class="cn">对 景</h3>
+        <span class="en">两 景 相 望 互 为 呼 应</span>
+        <p class="desc">两景相望，互为对景。人在此景，望彼景成画；人在彼处，望此景亦成章。</p>
+      </div>
+      <div class="phi-item">
+        <span class="num">四</span>
+        <h3 class="cn">漏 景</h3>
+        <span class="en">隔 而 不 断 含 蓄 朦 胧</span>
+        <p class="desc">漏墙花窗，似隔还通。竹影扶疏、枝条掩映，景从墙隙渗出，含蓄朦胧，引发无限遐思。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 四季 -->
+<section class="seasons">
+  <div class="wrap">
+    <div class="divider" style="padding:0 0 50px">
+      <div class="ornament">
+        <span class="bar"></span>
+        <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+        </svg>
+        <span>四 · 时 · 之 · 美</span>
+        <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+        </svg>
+        <span class="diamond"></span>
+        <span class="bar"></span>
+      </div>
+      <h2>园 · 林 · 四 · 季<span class="en">四 时 之 景 各 有 韵 致</span></h2>
+    </div>
+    <div class="season-grid">
+      <div class="season-card">
+        <div class="illu" data-illu="seasonSpring" data-photo-key="season-spring"></div>
+        <div class="season-label">
+          <span class="season-cn">春</span>
+          <span class="season-en">桃 李 芳 菲</span>
+          <p class="season-verse">海棠未雨，梨花先雪</p>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="illu" data-illu="seasonSummer" data-photo-key="season-summer"></div>
+        <div class="season-label">
+          <span class="season-cn">夏</span>
+          <span class="season-en">荷 香 满 池</span>
+          <p class="season-verse">接天莲叶无穷碧</p>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="illu" data-illu="seasonAutumn" data-photo-key="season-autumn"></div>
+        <div class="season-label">
+          <span class="season-cn">秋</span>
+          <span class="season-en">丹 桂 飘 香</span>
+          <p class="season-verse">桂子飘香，月圆人好</p>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="illu" data-illu="seasonWinter" data-photo-key="season-winter"></div>
+        <div class="season-label">
+          <span class="season-cn">冬</span>
+          <span class="season-en">踏 雪 寻 梅</span>
+          <p class="season-verse">暗香浮动，月黄昏</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 尾声 -->
+<section class="epilogue">
+
+  <!-- 团扇装饰 -->
+  <svg class="fan-deco" viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg">
+    <!-- 扇面 -->
+    <path d="M14,114 A 96,96 0 0 1 200,114 L 14,114 Z" fill="#f3ead7" stroke="#1a1410" stroke-width="1"/>
+    <path d="M14,114 A 96,96 0 0 1 200,114" fill="none" stroke="#b13a2f" stroke-width="0.6"/>
+    <!-- 扇骨 -->
+    <path d="M14,114 L 14,18 M14,114 L 38,18 M14,114 L 62,20 M14,114 L 86,26 M14,114 L 110,40 M14,114 L 134,58 M14,114 L 158,80 M14,114 L 182,102" stroke="#8a4a32" stroke-width="0.8" fill="none" opacity=".85"/>
+    <!-- 墨韵书画 -->
+    <path d="M70,98 q12,-30 28,-22 q8,4 6,16 q-2,8 -14,4 q-8,-2 -10,8" fill="none" stroke="#1a1410" stroke-width="1.2"/>
+    <circle cx="118" cy="68" r="4" fill="#b13a2f" opacity=".7"/>
+    <path d="M48,86 q-10,8 -20,4 M168,90 q-12,4 -22,0" fill="none" stroke="#b58d4e" stroke-width=".7"/>
+    <text x="74" y="74" font-family="serif" font-size="20" fill="#1a1410" font-style="italic" opacity=".85">烟</text>
+    <text x="100" y="86" font-family="serif" font-size="20" fill="#1a1410" font-style="italic" opacity=".85">雨</text>
+    <!-- 扇坠流苏 -->
+    <line x1="14" y1="114" x2="10" y2="128" stroke="#b58d4e" stroke-width="1"/>
+    <circle cx="10" cy="130" r="2" fill="#b58d4e"/>
+    <path d="M6,130 q-2,4 0,6 M10,130 v8 M14,130 q2,4 0,6" stroke="#b58d4e" stroke-width=".5" fill="none"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="ep-graph"><span>不</span><span>负</span><span>园</span><span>林</span><span>不</span><span>负</span><span>卿</span></div>
+
+    <!-- 回纹分隔条 -->
+    <div class="meander-rule" aria-hidden="true">
+      <span class="line"></span>
+      <svg viewBox="0 0 96 18" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,16 H6 V8 H14 V14 H22 V8 H30 V14 H38 V8 H46 V14 H54 V8 H62 V14 H70 V8 H78 V14 H86 V8 H94 V14 H96 V16" fill="none" stroke="#b13a2f" stroke-width="1.2"/>
+      </svg>
+      <span class="line"></span>
+    </div>
+
+    <p class="ep-poem">
+      偶<span class="accent">·</span>入<span class="accent">·</span>人<span class="accent">·</span>间<span class="accent">·</span>惊 鸿 客，<br>
+      又<span class="accent">·</span>回<span class="accent">·</span>园<span class="accent">·</span>里<span class="accent">·</span>作 山 民。
+    </p>
+
+    <div class="poetic-banner" aria-hidden="true">
+      <span class="seal">造<br>化</span>
+      <p>愿 与 君 同 游</p>
+      <span class="seal two">烟<br>雨</span>
+    </div>
+
+    <span class="seal"><span>园<br>志</span></span>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand-cn">咫 尺 乾 坤</div>
+        <div class="brand-en">苏 州 古 典 园 林 通 考</div>
+        <p>苏州古典园林始于春秋、盛于明清，是中国造园艺术的巅峰之作。一九九七年，拙政园、留园、网师园、环秀山庄同列世界文化遗产；二零零零年，沧浪亭、狮子林、艺圃、耦园亦入其列。</p>
+      </div>
+      <div>
+        <h4>园 · 之 · 志</h4>
+        <ul>
+          <li>拙政园 · 明</li>
+          <li>留园 · 清</li>
+          <li>网师园 · 南宋</li>
+          <li>狮子林 · 元</li>
+          <li>沧浪亭 · 北宋</li>
+          <li>怡园 · 清末</li>
+          <li>艺圃 · 明</li>
+        </ul>
+      </div>
+      <div>
+        <h4>造 · 园 · 法</h4>
+        <ul>
+          <li>借 景</li>
+          <li>框 景</li>
+          <li>对 景</li>
+          <li>漏 景</li>
+          <li>抑 景</li>
+          <li>添 景</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <svg width="48" height="14" viewBox="0 0 48 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:.6">
+        <path d="M0,12 H4 V6 H8 V10 H12 V6 H16 V10 H20 V6 H24 V10 H28 V6 H32 V10 H36 V6 H40 V10 H44 V6 H48" fill="none" stroke="rgba(243,234,215,0.5)" stroke-width="1"/>
+      </svg>
+      <span>© 江南烟雨 · 公元二零二六年</span>
+      <svg width="48" height="14" viewBox="0 0 48 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:.6">
+        <path d="M0,12 H4 V6 H8 V10 H12 V6 H16 V10 H20 V6 H24 V10 H28 V6 H32 V10 H36 V6 H40 V10 H44 V6 H48" fill="none" stroke="rgba(243,234,215,0.5)" stroke-width="1"/>
+      </svg>
+      <span>唸 · 园 · 林 · 一 · 卷 · 书</span>
+    </div>
+  </div>
+</footer>
+
+<!-- 模态已移除 - 详情见独立页面 garden.html -->
+
+<script src="illustrations.js"></script>
+<script>
+/* ============ 数据 ============ */
+/* 卡片为静态链接，内容见 garden.html；此处不再重复维护园子数据 */
+
+/* ============ 卡片已是链接，无需 JS ============ */
+
+/* ============ 入场观察 ============ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in-view');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ============ 水墨涟漪 ============ */
+const canvas = document.getElementById('ripple-canvas');
+const ctx = canvas.getContext('2d');
+let ripples = [];
+let mouseX = -1000, mouseY = -1000;
+let lastDrop = 0;
+
+function resize(){
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);  // 用 setTransform，避免 resize 时缩放累积
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Ripple {
+  constructor(x, y, power = 1){
+    this.x = x;
+    this.y = y;
+    this.radius = 3;
+    this.maxRadius = (150 + Math.random() * 110) * power;
+    this.speed = (0.46 + Math.random() * 0.3) * (0.9 + power * 0.18);
+    this.life = 1;
+    this.decay = (0.0038 + Math.random() * 0.0016) / power;
+    this.wobble = Math.random() * Math.PI * 2;
+    this.spin = 0.004 + Math.random() * 0.007;
+    this.ink = 0.72 + Math.random() * 0.28;
+  }
+  update(){
+    this.radius += this.speed;
+    this.wobble += this.spin;
+    this.life -= this.decay;
+    if (this.radius > this.maxRadius) this.life = 0;
+  }
+  draw(){
+    if (this.life <= 0) return;
+    const { x, y, radius, life, wobble } = this;
+    // 二次衰减：墨痕收尾更柔
+    const fade = life * life * this.ink;
+    if (fade <= 0.003) return;
+    const R = Math.max(0.5, radius + Math.sin(wobble) * 2.2);
+    const k = 0.93 + Math.sin(wobble * 0.63) * 0.06;  // 略扁，像手绘水波
+    const ry = R * k;
+
+    // 外层水墨晕：边缘完全化开
+    const halo = ctx.createRadialGradient(x, y, R * 0.5, x, y, R * 1.05);
+    halo.addColorStop(0, 'rgba(31,26,20,0)');
+    halo.addColorStop(0.70, `rgba(31,26,20,${0.045 * fade})`);
+    halo.addColorStop(0.93, `rgba(31,26,20,${0.12 * fade})`);
+    halo.addColorStop(1, 'rgba(31,26,20,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.ellipse(x, y, R * 1.05, ry * 1.05, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 三道由浓到淡的水波线，扩散越远越细
+    const rings = [[1, 0.19, 1.1], [0.78, 0.125, 0.9], [0.54, 0.065, 0.7]];
+    for (const r of rings){
+      const rr = Math.max(0.4, R * r[0]);
+      ctx.strokeStyle = `rgba(31,26,20,${r[1] * fade})`;
+      ctx.lineWidth = r[2];
+      ctx.beginPath();
+      ctx.ellipse(x, y, rr, rr * k, wobble * 0.06, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // 落笔处的淡墨点，随扩散很快化开
+    const dot = Math.max(0, 1 - radius / 44);
+    if (dot > 0.02){
+      const dr = Math.max(0.4, radius * 0.85 + 2);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, dr);
+      g.addColorStop(0, `rgba(31,26,20,${0.26 * fade * dot})`);
+      g.addColorStop(1, 'rgba(31,26,20,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, dr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
+// 落墨：慢、疏、克制
+function dropInk(x, y, power){
+  ripples.push(new Ripple(x, y, power));
+  while (ripples.length > 8) ripples.shift();
+}
+
+window.addEventListener('mousemove', e => {
+  const moved = Math.hypot(e.clientX - mouseX, e.clientY - mouseY);
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  const now = performance.now();
+  // 至少移动 26px 且间隔 240ms 才落一滴：比原来慢得多、稀得多
+  if (moved > 26 && now - lastDrop > 240){
+    lastDrop = now;
+    dropInk(mouseX, mouseY, 1);
+  }
+});
+
+window.addEventListener('touchmove', e => {
+  if (!e.touches[0]) return;
+  const t = e.touches[0];
+  const moved = Math.hypot(t.clientX - mouseX, t.clientY - mouseY);
+  mouseX = t.clientX;
+  mouseY = t.clientY;
+  const now = performance.now();
+  if (moved > 26 && now - lastDrop > 240){
+    lastDrop = now;
+    dropInk(mouseX, mouseY, 1);
+  }
+}, { passive:true });
+
+// 点击 = 滴墨入纸：晕得更慢、更浓
+window.addEventListener('mousedown', e => { dropInk(e.clientX, e.clientY, 1.9); });
+
+function animate(){
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ripples.forEach(r => { r.update(); r.draw(); });
+  ripples = ripples.filter(r => r.life > 0);
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ============ Hero字符入场 ============ */
+document.querySelectorAll('.char').forEach((el, i) => {
+  el.style.animationDelay = (i * 0.18) + 's';
+});
+
+/* ============ 插画渲染（实景照片 + SVG 兜底） ============ */
+(function(){
+  if (!window.GP) return;
+
+  function renderPhotoWithSvg(el, photoUrl, svgFn){
+    // 实景照片为主，失败则显示 SVG 兜底
+    el.innerHTML = '';
+    // 先放 SVG（绝对定位底层）
+    const svgWrap = document.createElement('div');
+    svgWrap.className = 'svg-fallback';
+    svgWrap.style.cssText = 'position:absolute;inset:0;z-index:1';
+    if (svgFn) svgWrap.innerHTML = svgFn();
+    el.appendChild(svgWrap);
+    // 再放 img（覆盖上层）；本地照片就位后淡入，未就位则移除，露出 SVG
+    const img = new Image();
+    img.alt = el.dataset.alt || '';
+    img.loading = 'lazy';
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity .8s ease';
+    img.onload = function(){
+      const self = this;
+      self.style.opacity = '1';
+      // 兜底层同步淡出，避免两层叠加时 SVG 压在照片之上
+      svgWrap.style.transition = 'opacity .8s ease';
+      svgWrap.style.opacity = '0';
+      setTimeout(function(){ if (svgWrap.parentNode) svgWrap.remove(); }, 1000);
+    };
+    img.onerror = function(){ this.remove(); }; // 失败则移除，让 SVG 显示
+    img.src = photoUrl;
+    el.appendChild(img);
+  }
+
+  // 替换 [data-illu] 占位符
+  document.querySelectorAll('[data-illu]').forEach(el => {
+    const name = el.dataset.illu;
+    // 插画函数缺失时退回通用插画，避免出现空白框
+    const fn = GP[name] || GP.cardPavilionWater || GP.heroZhuozheng;
+    const photoKey = el.dataset.photoKey || name;
+    const photo = GP.photoFor(photoKey);
+    renderPhotoWithSvg(el, photo, fn);
+  });
+
+  // Hero 卷轴：实景照片铺满画心，SVG 作兜底
+  const heroScrollEl = document.getElementById('hero-scroll-svg');
+  if (heroScrollEl && GP.heroScrollArt) heroScrollEl.innerHTML = GP.heroScrollArt();
+  const scrollArt = document.getElementById('scroll-art');
+  if (scrollArt){
+    const scrollImg = new Image();
+    scrollImg.className = 'scroll-photo';
+    scrollImg.alt = '狮子林假山洞天，石桥跨水';
+    scrollImg.onload = function(){
+      this.style.opacity = '1';
+      scrollArt.classList.add('has-photo');
+    };
+    scrollImg.onerror = function(){ this.remove(); }; // 照片缺失则保留 SVG 兜底
+    scrollImg.src = GP.photoFor('hero-scroll-art');
+    scrollArt.insertBefore(scrollImg, scrollArt.firstChild);
+  }
+})();
+</script>
+</body>
+</html>

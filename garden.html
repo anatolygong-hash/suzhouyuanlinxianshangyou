@@ -1,0 +1,2790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>移步换景 · 苏州园林志</title>
+<meta name="description" content="苏州古典园林 · 漫步移步换景之间">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:'Noto Serif SC','STSong','SimSun',serif;
+  background:#f1e7cf;
+  color:#1f1a14;
+  overflow-x:hidden;
+  position:relative;
+  min-height:100vh;
+  line-height:1.7;
+}
+:root{
+  --c-paper:#f3ead7;
+  --c-paper-2:#e8dec3;
+  --c-ink:#1a1410;
+  --c-ink-soft:#3d3329;
+  --c-vermilion:#b13a2f;
+  --c-vermilion-deep:#872821;
+  --c-daiqing:#2f5a6e;
+  --c-daiqing-deep:#143442;
+  --c-gold:#b58d4e;
+  --c-copper:#a66a3d;
+  --f-li:'Ma Shan Zheng','STXingkai',serif;
+  --f-kai:'Noto Serif SC','STKaiti',serif;
+  --f-xw:'ZCOOL XiaoWei',serif;
+  --f-ljmc:'Liu Jian Mao Cao',serif;
+  --f-latin:'Cormorant Garamond',serif;
+}
+
+/* ==== 背景纹理 ==== */
+body::before{
+  content:'';position:fixed;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(139,90,60,0.06) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 80%, rgba(47,90,110,0.05) 0%, transparent 40%);
+  pointer-events:none;
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:1;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(139,90,60,0.04) 0%, transparent 8%),
+    radial-gradient(circle at 80% 70%, rgba(31,26,20,0.03) 0%, transparent 6%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 4px, rgba(139,90,60,0.012) 4px, rgba(139,90,60,0.012) 5px);
+  pointer-events:none;mix-blend-mode:multiply;
+}
+#ripple-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;mix-blend-mode:multiply}
+
+/* ==== 顶部导航 ==== */
+.top-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(241,231,207,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(31,26,20,0.25);
+  padding:14px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--f-kai);
+}
+.top-nav a.back{
+  display:inline-flex;align-items:center;gap:10px;
+  color:var(--c-ink);text-decoration:none;
+  font-size:14px;letter-spacing:0.2em;
+  padding:6px 14px;
+  border:1px solid rgba(31,26,20,0.3);
+  background:var(--c-paper);
+  transition:background .3s, color .3s;
+}
+.top-nav a.back:hover{background:var(--c-vermilion);color:var(--c-paper);border-color:var(--c-vermilion-deep)}
+.top-nav a.back::before{content:'←';font-size:18px}
+.top-nav .crumbs{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--f-kai);
+  font-size:15px;letter-spacing:0.24em;
+  color:var(--c-ink-soft);
+}
+.top-nav .crumbs .sep{opacity:0.4}
+.top-nav .crumbs .cur{color:var(--c-vermilion-deep);font-family:var(--f-li);font-size:18px;letter-spacing:0.2em}
+.top-nav .quick-nav{
+  display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;
+}
+.top-nav .quick-nav a{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:36px;padding:0 11px;
+  font-family:var(--f-li);font-size:14px;line-height:1;
+  white-space:nowrap;letter-spacing:0.05em;
+  color:var(--c-ink);text-decoration:none;
+  border:1px solid rgba(31,26,20,0.3);
+  background:var(--c-paper);
+  transition:all .3s;
+}
+.top-nav .quick-nav a:hover{background:var(--c-vermilion);color:var(--c-paper);transform:translateY(-2px);border-color:var(--c-vermilion-deep)}
+.top-nav .quick-nav a.active{
+  background:var(--c-vermilion);color:var(--c-paper);border-color:var(--c-vermilion-deep);
+  box-shadow:0 2px 8px rgba(177,58,47,0.3);
+}
+
+/* ==== HERO ==== */
+.hero{
+  position:relative;height:100vh;min-height:640px;
+  overflow:hidden;
+  display:flex;align-items:flex-end;
+  z-index:3;
+}
+.hero-img{
+  position:absolute;inset:0;z-index:0;
+  overflow:hidden;
+  filter:saturate(0.85) contrast(1.08) sepia(0.12) brightness(0.85);
+  transform:scale(1.05);
+  animation:slowZoom 18s ease-in-out infinite alternate;
+}
+.hero-img svg{display:block;width:100%;height:100%;position:relative;z-index:1}
+.hero-img img{position:absolute!important;inset:0;width:100%!important;height:100%!important;object-fit:cover;z-index:2}
+.hero-img .svg-fallback{position:absolute;inset:0;z-index:1}
+@keyframes slowZoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+.hero::after{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(180deg, rgba(31,26,20,0.4) 0%, rgba(31,26,20,0.15) 40%, rgba(31,26,20,0.85) 100%),
+    linear-gradient(90deg, rgba(31,26,20,0.5) 0%, transparent 50%);
+}
+.hero-frame{
+  position:absolute;inset:18px;z-index:3;
+  border:1px solid rgba(243,234,215,0.3);
+  pointer-events:none;
+}
+.hero-frame::before,.hero-frame::after{
+  content:'';position:absolute;width:30px;height:30px;border:2px solid var(--c-gold);
+}
+.hero-frame::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
+.hero-frame::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
+
+.hero-content{
+  position:relative;z-index:4;
+  width:100%;
+  padding:0 60px 100px;
+  color:var(--c-paper);
+}
+.hero-eyebrow{
+  font-family:var(--f-kai);
+  font-size:16px;letter-spacing:0.4em;
+  color:var(--c-gold);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:14px;
+  animation:fadeUp 1s .2s backwards ease-out;
+}
+.hero-eyebrow::before{
+  content:'';display:inline-block;width:48px;height:1px;background:var(--c-gold);
+}
+.hero-title{
+  font-family:var(--f-li);
+  font-size:200px;
+  line-height:0.9;
+  letter-spacing:0.08em;
+  font-weight:400;
+  margin-bottom:14px;
+  animation:fadeUp 1.2s .4s backwards ease-out;
+}
+.hero-py{
+  font-family:var(--f-kai);
+  font-size:20px;
+  color:rgba(243,234,181,0.85);
+  letter-spacing:0.22em;
+  margin-bottom:30px;
+  animation:fadeUp 1.2s .6s backwards ease-out;
+}
+.hero-verse{
+  font-family:var(--f-kai);
+  font-size:26px;
+  letter-spacing:0.4em;
+  line-height:1.8;
+  color:var(--c-paper);
+  padding-left:18px;
+  border-left:3px solid var(--c-vermilion);
+  max-width:700px;
+  animation:fadeUp 1.2s .8s backwards ease-out;
+}
+.hero-verse .accent{font-family:var(--f-li);font-size:32px;color:var(--c-gold)}
+.hero-tags{
+  margin-top:30px;
+  display:flex;gap:10px;flex-wrap:wrap;
+  animation:fadeUp 1.2s 1s backwards ease-out;
+}
+.hero-tags span{
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.3em;
+  padding:6px 16px;
+  background:rgba(243,234,181,0.15);
+  border:1px solid var(--c-gold);
+  color:var(--c-gold);
+  backdrop-filter:blur(4px);
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.scroll-hint{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  z-index:5;color:var(--c-paper);
+  text-align:center;
+  font-family:var(--f-kai);
+  font-size:13px;letter-spacing:0.4em;
+  animation:fadeUp 1.5s 1.5s backwards ease-out, bob 2s 2s infinite ease-in-out;
+}
+.scroll-hint .arrow{
+  margin-top:6px;
+  width:1px;height:30px;
+  background:linear-gradient(180deg,transparent,var(--c-paper));
+  margin-left:auto;margin-right:auto;
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ==== 速览信息条 ==== */
+.quick-info{
+  position:relative;z-index:4;
+  background:linear-gradient(180deg, var(--c-paper) 0%, var(--c-paper-2) 100%);
+  border-bottom:1px solid rgba(31,26,20,0.3);
+  padding:32px 0;
+}
+.quick-grid{
+  display:grid;grid-template-columns:repeat(4, 1fr);
+  text-align:center;
+  position:relative;
+}
+.quick-grid::before,.quick-grid::after{
+  content:'';position:absolute;top:0;bottom:0;width:1px;background:rgba(31,26,20,0.3);
+}
+.quick-grid::before{left:25%}
+.quick-grid::after{right:25%}
+.quick-item{padding:0 24px}
+.quick-item .k{
+  font-family:var(--f-kai);font-size:12px;letter-spacing:0.4em;
+  color:var(--c-ink-soft);margin-bottom:8px;display:block;
+}
+.quick-item .v{
+  font-family:var(--f-li);font-size:24px;letter-spacing:0.1em;
+  color:var(--c-vermilion-deep);
+}
+.quick-item .en{
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.28em;
+  color:var(--c-ink-soft);
+  display:block;margin-top:4px;
+}
+
+/* ==== 通用分隔 ==== */
+.section-divider{
+  position:relative;z-index:3;
+  padding:60px 0 30px;
+  text-align:center;
+}
+.section-divider .ornament{
+  display:flex;align-items:center;justify-content:center;gap:24px;
+  font-family:var(--f-kai);letter-spacing:0.5em;
+  color:var(--c-ink-soft);font-size:13px;
+  margin-bottom:14px;
+}
+.section-divider .ornament .bar{display:inline-block;width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--c-ink-soft),transparent)}
+.section-divider .ornament .diamond{width:8px;height:8px;background:var(--c-vermilion);transform:rotate(45deg)}
+.section-divider h2{
+  font-family:var(--f-li);font-size:74px;
+  color:var(--c-ink);margin:0;letter-spacing:0.12em;
+}
+.section-divider h2 .en{
+  display:block;
+  font-family:var(--f-kai);font-size:16px;letter-spacing:0.3em;
+  color:var(--c-vermilion-deep);font-weight:400;
+  margin-bottom:14px;
+}
+.section-divider p{max-width:640px;margin:18px auto 0;font-family:var(--f-kai);font-size:15px;color:var(--c-ink-soft);line-height:2;letter-spacing:0.05em}
+
+/* ==== 移步换景 主体 ==== */
+.walker-section{
+  position:relative;z-index:3;
+  padding:30px 0 100px;
+}
+.walker{
+  max-width:1400px;margin:0 auto;
+  padding:0 32px;
+}
+
+/* 顶部游戏条 */
+.game-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
+  padding:18px 24px;
+  background:var(--c-paper);
+  border:1px solid rgba(31,26,20,0.3);
+  position:relative;
+}
+.game-bar::before{
+  content:'';position:absolute;inset:5px;
+  border:1px solid rgba(31,26,20,0.15);
+  pointer-events:none;
+}
+.game-bar .title{
+  font-family:var(--f-li);font-size:24px;color:var(--c-ink);letter-spacing:0.2em;
+}
+.game-bar .progress{
+  font-family:var(--f-kai);font-size:15px;letter-spacing:0.26em;
+  color:var(--c-ink-soft);
+}
+.game-bar .progress .num{
+  font-size:24px;color:var(--c-vermilion-deep);font-weight:500;margin:0 4px;
+}
+.game-bar .actions{
+  display:flex;gap:10px;
+}
+.game-bar .actions button{
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.2em;
+  padding:8px 18px;
+  background:var(--c-paper-2);
+  border:1px solid rgba(31,26,20,0.3);
+  color:var(--c-ink);
+  cursor:pointer;
+  transition:all .3s;
+}
+.game-bar .actions button:hover{background:var(--c-vermilion);color:var(--c-paper);border-color:var(--c-vermilion-deep)}
+.game-bar .actions button.active{background:var(--c-vermilion);color:var(--c-paper);border-color:var(--c-vermilion-deep)}
+
+/* 进度条 */
+.progress-bar{
+  height:4px;
+  background:rgba(31,26,20,0.15);
+  margin-bottom:24px;
+  position:relative;
+  overflow:hidden;
+}
+.progress-bar::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:var(--progress, 0%);
+  background:linear-gradient(90deg, var(--c-vermilion), var(--c-gold));
+  transition:width .6s cubic-bezier(0.2,0.7,0.2,1);
+}
+
+/* 舞台 */
+.stage{
+  position:relative;
+  height:64vh;
+  min-height:480px;
+  max-height:720px;
+  background:#1a1410;
+  overflow:hidden;
+  border:1px solid rgba(31,26,20,0.4);
+  box-shadow:
+    0 30px 60px -20px rgba(31,26,20,0.5),
+    inset 0 0 0 6px rgba(243,234,215,0.04);
+}
+.stage-frame{
+  position:absolute;inset:18px;
+  border:1px solid rgba(243,234,215,0.25);
+  pointer-events:none;
+  z-index:5;
+}
+/* 底部压暗：白字落在亮照片上也读得清（在信息层之下、照片之上） */
+.stage::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:68%;
+  background:linear-gradient(180deg,
+    rgba(20,16,12,0) 0%,
+    rgba(20,16,12,0.24) 40%,
+    rgba(20,16,12,0.58) 74%,
+    rgba(20,16,12,0.76) 100%);
+  z-index:4;pointer-events:none;
+}
+.stage-frame::before,.stage-frame::after{
+  content:'';position:absolute;width:20px;height:20px;border:2px solid var(--c-gold);
+}
+.stage-frame::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
+.stage-frame::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
+
+/* 落章：盖在画面上，照片全程留在屏上，章自行落定并淡出 */
+.stamp-flash{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-15deg);
+  width:120px;height:120px;
+  background:#b13a2f;color:#f3ead7;
+  font-family:var(--f-li);font-size:32px;
+  display:flex;align-items:center;justify-content:center;
+  border:3px solid #872821;
+  box-shadow:0 0 0 6px rgba(177,58,47,.3);
+  z-index:20;pointer-events:none;
+  animation:stampPress 1.3s cubic-bezier(.2,1.4,.4,1) forwards;
+}
+@keyframes stampPress{
+  0%{transform:translate(-50%,-50%) rotate(-15deg) scale(2);opacity:0}
+  12%{transform:translate(-50%,-50%) rotate(-15deg) scale(.92);opacity:1}
+  22%{transform:translate(-50%,-50%) rotate(-15deg) scale(1.04);opacity:1}
+  30%{transform:translate(-50%,-50%) rotate(-15deg) scale(1);opacity:1}
+  70%{transform:translate(-50%,-50%) rotate(-15deg) scale(1);opacity:1}
+  100%{transform:translate(-50%,-50%) rotate(-15deg) scale(1);opacity:0}
+}
+
+.stage-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transition:opacity .45s ease;
+}
+.stage-bg svg{display:block;width:100%;height:100%}
+.stage-bg.cur{
+  opacity:1;
+  filter:saturate(0.9) contrast(1.08) sepia(0.1);
+}
+.stage-bg.next{
+  opacity:0;
+}
+.stage-bg.transitioning-out{animation:slideOut 1s forwards}
+.stage-bg.transitioning-in{animation:slideIn 1s forwards}
+@keyframes slideOut{
+  from{transform:translateX(0);opacity:1}
+  to{transform:translateX(-4%);opacity:0}
+}
+@keyframes slideIn{
+  from{transform:translateX(4%);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+
+/* 角落印章 / 标题 */
+.stage-overlay-tl{
+  position:absolute;top:30px;left:30px;z-index:6;
+  font-family:var(--f-li);font-size:30px;
+  color:var(--c-paper);letter-spacing:0.2em;
+  padding:8px 16px;
+  background:rgba(177,58,47,0.85);
+  border:2px solid var(--c-vermilion-deep);
+  backdrop-filter:blur(2px);
+}
+.stage-overlay-tr{
+  position:absolute;top:30px;right:30px;z-index:6;
+  display:flex;flex-direction:column;gap:8px;align-items:flex-end;
+}
+/* 亮照片上也要看得清：右上角加一层压暗衬底 */
+.stage-overlay-tr::before{
+  content:'';position:absolute;
+  left:-28px;right:-28px;top:-30px;bottom:-20px;
+  background:linear-gradient(180deg,rgba(20,16,12,0.72) 0%,rgba(20,16,12,0.34) 70%,rgba(20,16,12,0) 100%);
+  z-index:-1;pointer-events:none;
+}
+.stage-overlay-tr .scene-num{
+  font-family:var(--f-latin);font-size:13px;letter-spacing:0.4em;
+  color:var(--c-gold);text-transform:uppercase;
+}
+.stage-overlay-tr .scene-en{
+  font-family:var(--f-kai);font-size:15px;
+  color:rgba(247,240,222,0.95);letter-spacing:0.24em;
+  text-shadow:0 2px 12px rgba(0,0,0,0.9),0 0 4px rgba(0,0,0,0.8),0 0 14px rgba(0,0,0,0.6);
+}
+
+/* 底部场景信息（右侧留出「园林平面图」按钮的位置） */
+.stage-info{
+  position:absolute;left:86px;right:210px;bottom:30px;z-index:6;
+  color:var(--c-paper);
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:30px;
+}
+.stage-info .text{flex:1;max-width:60%}
+.stage-info .name{
+  font-family:var(--f-li);font-size:54px;letter-spacing:0.12em;line-height:1;
+  margin-bottom:10px;
+}
+.stage-info .verse{
+  font-family:var(--f-kai);font-size:15px;letter-spacing:0.2em;line-height:1.7;
+  color:rgba(243,234,181,0.9);
+  border-left:2px solid var(--c-vermilion);padding-left:12px;
+}
+.stage-info .desc{
+  flex:1;
+  font-family:var(--f-kai);font-size:14px;line-height:1.95;
+  color:rgba(243,234,181,0.85);
+  background:rgba(20,16,12,0.5);
+  padding:14px 18px;
+  border-left:2px solid var(--c-gold);
+  backdrop-filter:blur(4px);
+  max-width:380px;
+}
+
+/* 步骤按钮 */
+.step-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:56px;height:56px;
+  background:rgba(243,234,181,0.9);
+  color:var(--c-ink);
+  border:2px solid var(--c-vermilion-deep);
+  font-family:var(--f-latin);font-size:24px;
+  cursor:pointer;z-index:7;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;
+}
+.step-btn:hover{background:var(--c-vermilion);color:var(--c-paper)}
+.step-btn.prev{left:20px}
+.step-btn.next{right:20px}
+
+/* 景中之物：原热点圆点与照片对不上，改为右下方文字条 */
+.stage-info .spots{
+  margin-top:12px;padding-top:10px;
+  border-top:1px dashed rgba(243,234,181,0.28);
+}
+.stage-info .spots:empty{display:none}
+.stage-info .spot-item{
+  display:flex;gap:10px;align-items:baseline;
+  margin-top:6px;
+  font-family:var(--f-kai);font-size:13px;line-height:1.75;
+}
+.stage-info .spot-name{
+  font-family:var(--f-li);font-size:14px;
+  color:var(--c-gold);letter-spacing:0.12em;white-space:nowrap;
+}
+.stage-info .spot-detail{color:rgba(243,234,181,0.82)}
+
+/* 场景走廊 */
+.scene-strip{
+  margin-top:30px;
+  background:var(--c-paper);
+  border:1px solid rgba(31,26,20,0.3);
+  padding:20px;
+  position:relative;
+}
+.scene-strip::before{
+  content:'';position:absolute;inset:5px;
+  border:1px solid rgba(31,26,20,0.15);
+  pointer-events:none;
+}
+.strip-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:18px;
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.3em;
+  color:var(--c-ink-soft);
+}
+.strip-header .strip-title{color:var(--c-ink);font-family:var(--f-li);font-size:20px;letter-spacing:0.2em}
+.strip-header .strip-hint{font-family:var(--f-kai);font-size:13px;letter-spacing:0.26em;color:var(--c-ink-soft)}
+
+.scene-list{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  gap:14px;
+}
+.scene-thumb{
+  position:relative;
+  aspect-ratio:4/3;
+  background:#3a2f24;
+  border:1px solid rgba(31,26,20,0.3);
+  cursor:pointer;
+  overflow:hidden;
+  transition:all .4s;
+}
+.scene-thumb img{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(0.85) contrast(1.05) sepia(0.12);
+  opacity:0;
+  transition:transform .8s, filter .4s, opacity .7s ease;
+}
+.scene-thumb img.loaded{opacity:1}
+.scene-thumb:hover img{transform:scale(1.08);filter:saturate(0.95) contrast(1.05)}
+.scene-thumb .thumb-name{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:8px 10px;
+  background:linear-gradient(180deg,transparent,rgba(20,16,12,0.85));
+  color:var(--c-paper);
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.15em;
+}
+.scene-thumb .thumb-no{
+  position:absolute;top:6px;left:6px;
+  background:var(--c-paper);color:var(--c-ink);
+  font-family:var(--f-latin);font-size:11px;letter-spacing:0.2em;
+  padding:2px 6px;border:1px solid rgba(31,26,20,0.4);
+}
+.scene-thumb .visited-mark{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-6deg);
+  width:54px;height:54px;
+  background:var(--c-vermilion);
+  color:var(--c-paper);
+  font-family:var(--f-li);font-size:14px;letter-spacing:0.1em;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  border:2px solid var(--c-vermilion-deep);
+  opacity:0;transition:opacity .5s, transform .5s;
+  pointer-events:none;
+  z-index:2;
+}
+.scene-thumb.visited .visited-mark{
+  opacity:0.92;transform:translate(-50%,-50%) rotate(-12deg);
+}
+.scene-thumb.visited img{filter:saturate(0.4) contrast(1) sepia(0.2)}
+.scene-thumb.visited img.loaded{opacity:.65}
+.scene-thumb.visited:hover img{filter:saturate(0.55) contrast(1.02) sepia(0.18)}
+.scene-thumb.current{
+  border-color:var(--c-vermilion);
+  box-shadow:0 0 0 2px var(--c-vermilion), 0 8px 20px -6px rgba(177,58,47,0.5);
+}
+
+/* 园林平面图 */
+.map-toggle{
+  position:absolute;bottom:90px;right:30px;z-index:7;
+  font-family:var(--f-kai);font-size:12px;letter-spacing:0.3em;
+  padding:10px 16px;
+  background:rgba(243,234,181,0.95);
+  border:1px solid var(--c-ink);
+  color:var(--c-ink);
+  cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+}
+.map-toggle:hover{background:var(--c-vermilion);color:var(--c-paper);border-color:var(--c-vermilion-deep)}
+.map-toggle::before{content:'◇'}
+
+.map-modal{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(20,16,12,0.85);
+  display:none;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);
+}
+.map-modal.open{display:flex;animation:fadeIn .4s}
+.map-modal .map-frame{
+  position:relative;
+  width:min(900px, 92vw);
+  max-height:90vh;
+  background:var(--c-paper);
+  border:1px solid var(--c-ink);
+  padding:40px;
+  overflow:auto;
+}
+.map-modal .map-frame::before{
+  content:'';position:absolute;inset:8px;
+  border:1px solid rgba(31,26,20,0.2);
+  pointer-events:none;
+}
+.map-modal h3{
+  font-family:var(--f-li);font-size:32px;color:var(--c-ink);
+  letter-spacing:0.2em;text-align:center;margin-bottom:6px;
+}
+.map-modal .map-py{
+  font-family:var(--f-kai);font-size:15px;color:var(--c-daiqing-deep);
+  letter-spacing:0.22em;text-align:center;margin-bottom:24px;
+}
+.map-modal .map-svg{width:100%;height:auto;display:block}
+.map-modal .map-legend{
+  margin-top:20px;
+  display:flex;justify-content:center;gap:30px;
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.2em;
+  color:var(--c-ink-soft);
+}
+.map-modal .map-legend span{display:inline-flex;align-items:center;gap:8px}
+.map-modal .map-legend .dot{display:inline-block;width:12px;height:12px;border-radius:50%}
+.map-modal .map-close{
+  position:absolute;top:16px;right:16px;
+  width:40px;height:40px;
+  background:var(--c-vermilion);color:var(--c-paper);
+  border:2px solid var(--c-vermilion-deep);
+  font-family:var(--f-li);font-size:20px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  z-index:5;
+}
+
+/* 完成弹窗 */
+.complete-overlay{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(20,16,12,0.7);
+  display:none;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+}
+.complete-overlay.open{display:flex;animation:fadeIn .5s}
+.complete-seal{
+  width:300px;height:300px;
+  background:var(--c-vermilion);
+  color:var(--c-paper);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:var(--f-li);
+  border:6px solid var(--c-vermilion-deep);
+  box-shadow:0 0 0 6px rgba(177,58,47,0.3), 0 30px 60px rgba(0,0,0,0.5);
+  transform:rotate(-3deg) scale(0);
+  animation:stampIn 0.8s 0.2s cubic-bezier(0.2,1.4,0.4,1) forwards;
+  position:relative;
+}
+.complete-seal::before{
+  content:'';position:absolute;inset:8px;
+  border:1px solid rgba(243,234,181,0.4);
+}
+.complete-seal .big{
+  font-size:54px;letter-spacing:0.15em;line-height:1.1;text-align:center;
+  margin-bottom:14px;
+}
+.complete-seal .small{
+  font-size:20px;letter-spacing:0.4em;
+  color:var(--c-gold);
+}
+@keyframes stampIn{
+  0%{transform:rotate(-3deg) scale(2);opacity:0}
+  50%{transform:rotate(-3deg) scale(0.9);opacity:1}
+  75%{transform:rotate(-3deg) scale(1.05);opacity:1}
+  100%{transform:rotate(-3deg) scale(1);opacity:1}
+}
+.complete-msg{
+  position:absolute;
+  bottom:80px;left:50%;transform:translateX(-50%);
+  color:var(--c-paper);text-align:center;
+  font-family:var(--f-kai);font-size:20px;letter-spacing:0.3em;
+}
+.complete-msg small{display:block;margin-top:8px;font-family:var(--f-kai);font-size:15px;color:var(--c-gold);letter-spacing:0.3em}
+.complete-close{
+  position:absolute;top:40px;right:40px;
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.3em;
+  color:var(--c-paper);
+  background:transparent;
+  border:1px solid var(--c-paper);
+  padding:10px 20px;cursor:pointer;
+}
+
+/* ==== 历史沿革 ==== */
+.history{
+  position:relative;z-index:3;
+  padding:60px 0 80px;
+  background:linear-gradient(180deg, transparent, rgba(232,222,195,0.5));
+}
+.history-grid{
+  display:grid;grid-template-columns:1fr 1.2fr;gap:60px;
+  max-width:1200px;margin:0 auto;padding:0 32px;
+}
+.history-text h3{
+  font-family:var(--f-li);font-size:46px;color:var(--c-ink);
+  letter-spacing:0.15em;line-height:1.1;margin-bottom:18px;
+}
+.history-text .lead{
+  font-family:var(--f-kai);font-size:17px;
+  color:var(--c-vermilion-deep);letter-spacing:0.3em;margin-bottom:24px;
+}
+.history-text p{
+  font-family:var(--f-kai);font-size:15.5px;line-height:2.05;
+  color:var(--c-ink-soft);
+  text-indent:2em;
+  margin-bottom:18px;
+}
+
+.timeline{
+  position:relative;padding-left:36px;
+}
+.timeline::before{
+  content:'';position:absolute;left:8px;top:0;bottom:0;
+  width:2px;
+  background:linear-gradient(180deg, var(--c-vermilion), var(--c-gold), var(--c-vermilion));
+}
+.timeline-item{
+  position:relative;padding:14px 0 28px;
+  cursor:default;
+}
+.timeline-item::before{
+  content:'';position:absolute;left:-32px;top:18px;
+  width:14px;height:14px;
+  background:var(--c-vermilion);
+  border:3px solid var(--c-paper);
+  border-radius:50%;
+  box-shadow:0 0 0 2px var(--c-vermilion);
+}
+.timeline-item .era{
+  font-family:var(--f-li);font-size:22px;color:var(--c-vermilion-deep);
+  letter-spacing:0.2em;display:block;margin-bottom:6px;
+}
+.timeline-item .event{
+  font-family:var(--f-kai);font-size:14px;line-height:1.85;
+  color:var(--c-ink-soft);
+}
+
+/* ==== 建筑之美 ==== */
+.architecture{
+  position:relative;z-index:3;
+  padding:80px 0;
+}
+.arch-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  max-width:1300px;margin:0 auto;padding:0 32px;
+}
+.arch-card{
+  position:relative;
+  background:var(--c-paper);
+  border:1px solid rgba(31,26,20,0.3);
+  padding:30px 28px;
+  overflow:hidden;
+  isolation:isolate;
+  transition:transform .4s, box-shadow .4s;
+}
+.arch-card::before{
+  content:'';position:absolute;inset:6px;
+  border:1px solid rgba(31,26,20,0.18);
+  pointer-events:none;
+}
+.arch-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px -10px rgba(31,26,20,0.25);
+}
+.arch-card .no{
+  font-family:var(--f-ljmc);font-size:40px;font-weight:400;
+  color:var(--c-vermilion);
+  line-height:1;display:block;
+  margin-bottom:14px;
+}
+/* 名景卡片配图：实景照片优先，SVG 水墨兜底 */
+.arch-illu{
+  position:relative;
+  width:100%;height:132px;
+  margin:0 0 18px;
+  overflow:hidden;
+  background:var(--c-paper2);
+  border:1px solid rgba(31,26,20,0.18);
+}
+.arch-illu svg{display:block;width:100%;height:100%}
+.arch-illu img{
+  position:absolute!important;inset:0;width:100%!important;height:100%!important;
+  object-fit:cover;z-index:2;
+}
+.arch-card h4{
+  font-family:var(--f-li);font-size:28px;color:var(--c-ink);
+  letter-spacing:0.1em;margin-bottom:4px;
+}
+.arch-card .tag{
+  font-family:var(--f-kai);font-size:12px;letter-spacing:0.3em;
+  color:var(--c-vermilion-deep);
+  display:inline-block;margin-bottom:14px;
+  border-bottom:1px solid var(--c-vermilion-deep);padding-bottom:4px;
+}
+.arch-card p{
+  font-family:var(--f-kai);font-size:14px;line-height:1.95;
+  color:var(--c-ink-soft);
+}
+.arch-card .seal-corner{
+  position:absolute;top:14px;right:14px;
+  width:30px;height:30px;
+  background:var(--c-vermilion);
+  color:var(--c-paper);
+  font-family:var(--f-li);font-size:11px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--c-vermilion-deep);
+  transform:rotate(-5deg);
+  opacity:0.85;
+}
+
+/* ==== 名诗佳联 ==== */
+.poetry{
+  position:relative;z-index:3;
+  padding:80px 0;
+  background:
+    radial-gradient(ellipse at center, rgba(20,52,66,0.96) 0%, rgba(10,30,38,1) 100%);
+  color:var(--c-paper);
+}
+.poetry::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(177,58,47,0.15) 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(181,141,78,0.12) 0%, transparent 30%);
+  pointer-events:none;
+}
+.poem-list{
+  max-width:1000px;margin:0 auto;padding:0 32px;
+  display:flex;flex-direction:column;gap:60px;
+}
+.poem-item{
+  text-align:center;position:relative;
+}
+.poem-item .quote-mark{
+  font-family:var(--f-latin);font-size:120px;font-style:italic;
+  color:var(--c-gold);opacity:0.4;
+  line-height:1;display:block;
+  margin-bottom:-30px;
+}
+.poem-item .poem-text{
+  font-family:var(--f-ljmc);font-size:36px;
+  letter-spacing:0.3em;line-height:2;
+  color:var(--c-paper);
+  margin-bottom:18px;
+  text-shadow:0 2px 0 rgba(0,0,0,0.3);
+}
+.poem-item .poem-author{
+  font-family:var(--f-kai);font-size:15px;
+  color:var(--c-gold);letter-spacing:0.24em;
+}
+.poem-item .poem-author::before{content:'— ';opacity:0.5}
+.poem-divider{
+  display:flex;align-items:center;justify-content:center;gap:20px;
+  color:var(--c-gold);opacity:0.5;
+}
+.poem-divider .bar{width:80px;height:1px;background:var(--c-gold)}
+.poem-divider .diamond{width:6px;height:6px;background:var(--c-gold);transform:rotate(45deg)}
+
+/* ==== 游览指南 ==== */
+.visit{
+  position:relative;z-index:3;
+  padding:80px 0;
+}
+.visit-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  max-width:1200px;margin:0 auto;padding:0 32px;
+}
+.visit-card{
+  background:var(--c-paper);
+  border:1px solid rgba(31,26,20,0.3);
+  padding:24px 22px;
+  text-align:center;
+  position:relative;
+}
+.visit-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--c-vermilion);
+}
+.visit-card .icon{
+  font-family:var(--f-li);font-size:36px;color:var(--c-vermilion-deep);
+  margin-bottom:14px;display:block;
+}
+.visit-card .label{
+  font-family:var(--f-kai);font-size:12px;letter-spacing:0.3em;
+  color:var(--c-ink-soft);margin-bottom:8px;
+}
+.visit-card .value{
+  font-family:var(--f-li);font-size:22px;letter-spacing:0.1em;
+  color:var(--c-ink);margin-bottom:6px;
+}
+.visit-card .en{
+  font-family:var(--f-kai);font-size:13px;
+  color:var(--c-daiqing-deep);letter-spacing:0.24em;
+}
+
+/* ==== 其他园林 ==== */
+.other-gardens{
+  position:relative;z-index:3;
+  padding:80px 0 60px;
+  background:linear-gradient(180deg, transparent, rgba(232,222,195,0.4));
+}
+.other-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:18px;
+  max-width:1300px;margin:0 auto;padding:0 32px;
+}
+.other-card{
+  display:block;text-decoration:none;color:var(--c-ink);
+  background:var(--c-paper);
+  border:1px solid rgba(31,26,20,0.3);
+  overflow:hidden;
+  transition:transform .4s, box-shadow .4s;
+}
+.other-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 30px -8px rgba(31,26,20,0.3);
+}
+.other-card .img{
+  aspect-ratio:4/3;overflow:hidden;position:relative;
+}
+.other-card .img img{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(0.75) contrast(1.08) sepia(0.1);
+  transition:transform 1s, filter .6s;
+}
+.other-card:hover .img img{transform:scale(1.06);filter:saturate(1) contrast(1.05)}
+.other-card .img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(20,16,12,0.5));
+}
+.other-card .body{
+  padding:18px 18px 20px;
+  text-align:center;
+}
+.other-card .name{
+  font-family:var(--f-li);font-size:22px;letter-spacing:0.15em;
+  margin-bottom:4px;
+}
+.other-card .py{
+  font-family:var(--f-kai);font-size:13px;
+  color:var(--c-daiqing-deep);letter-spacing:0.22em;
+  margin-bottom:10px;
+}
+.other-card .go{
+  font-family:var(--f-kai);font-size:12px;letter-spacing:0.3em;
+  color:var(--c-vermilion-deep);
+}
+.other-card:hover .go{color:var(--c-vermilion)}
+
+/* ==== 页脚 ==== */
+.foot{
+  position:relative;z-index:3;
+  background:#1a1410;color:var(--c-paper-2);
+  padding:50px 0 30px;border-top:3px double var(--c-paper-3);
+}
+.foot-inner{
+  max-width:1200px;margin:0 auto;padding:0 32px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.foot-brand{
+  font-family:var(--f-li);font-size:24px;letter-spacing:0.15em;
+  color:var(--c-paper);
+}
+.foot-brand small{
+  display:block;font-family:var(--f-kai);font-size:13px;
+  letter-spacing:0.28em;color:var(--c-gold);
+  margin-top:4px;
+}
+.foot-links{
+  display:flex;gap:24px;
+}
+.foot-links a{
+  font-family:var(--f-kai);font-size:13px;letter-spacing:0.2em;
+  color:var(--c-paper-2);text-decoration:none;
+  padding:6px 0;border-bottom:1px solid transparent;
+}
+.foot-links a:hover{color:var(--c-gold);border-color:var(--c-gold)}
+.foot-credit{
+  font-family:var(--f-kai);font-size:13px;
+  letter-spacing:0.26em;color:rgba(243,234,181,0.5);
+}
+
+/* ==== 响应式 ==== */
+@media (max-width:1100px){
+  .hero-title{font-size:140px}
+  .section-divider h2{font-size:54px}
+  .top-nav .quick-nav a{font-size:12px;padding:0 8px;height:32px;letter-spacing:0}
+  .arch-grid{grid-template-columns:repeat(2,1fr)}
+  .other-grid{grid-template-columns:repeat(3,1fr)}
+  .visit-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:768px){
+  .top-nav{padding:12px 16px;flex-wrap:wrap;gap:10px}
+  .top-nav .crumbs{display:none}
+  .hero-title{font-size:88px}
+  .hero-content{padding:0 30px 80px}
+  .hero-verse{font-size:18px}
+  .quick-grid{grid-template-columns:repeat(2,1fr);gap:24px 0}
+  .quick-grid::before,.quick-grid::after{display:none}
+  .section-divider h2{font-size:42px}
+  .history-grid{grid-template-columns:1fr;gap:30px}
+  .arch-grid{grid-template-columns:1fr}
+  .other-grid{grid-template-columns:repeat(2,1fr)}
+  .visit-grid{grid-template-columns:1fr}
+  .stage{height:50vh;min-height:380px}
+  .scene-list{grid-template-columns:repeat(3,1fr)}
+  .scene-list .scene-thumb:nth-child(n+4){display:none}
+  .stage-info{flex-direction:column;align-items:flex-start;gap:14px}
+  .stage-info .text{max-width:100%}
+  .stage-info .desc{max-width:100%}
+  .stage-info .name{font-size:36px}
+  /* 窄屏：信息区收紧，避免场景标题被左上印章压住 */
+  .stage-info{left:74px;right:74px;gap:10px;bottom:22px}
+  .stage-info .text{max-width:100%;background:rgba(20,16,12,0.62);padding:10px 14px;backdrop-filter:blur(4px);border-left:2px solid var(--c-gold)}
+  .stage-info .name{font-size:30px;margin-bottom:6px}
+  .stage-info .verse{font-size:12px;line-height:1.6;padding-left:9px}
+  .stage-info .desc{font-size:12px;line-height:1.7;padding:10px 13px}
+  .stage-info .spots{margin-top:8px;padding-top:7px}
+  .stage-info .spot-item{font-size:11.5px;line-height:1.55;margin-top:4px;gap:8px}
+  .stage-info .spot-name{font-size:12px}
+  .stage-overlay-tl{top:16px;left:16px;font-size:22px;padding:5px 11px}
+  .stage-overlay-tr{top:16px;right:16px}
+  /* 窄屏：平面图按钮移到印章下方，避免压住说明框 */
+  .map-toggle{top:62px;left:16px;right:auto;bottom:auto;padding:7px 12px;font-size:11px;letter-spacing:.2em}
+  .step-btn{width:42px;height:42px;font-size:18px}
+  .poem-item .poem-text{font-size:22px}
+  .foot-inner{flex-direction:column;gap:20px;text-align:center}
+}
+@media (max-width:480px){
+  .hero-title{font-size:60px}
+  .other-grid{grid-template-columns:1fr}
+  .scene-list{grid-template-columns:repeat(2,1fr)}
+}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .9s, transform .9s}
+.fade-in.in-view{opacity:1;transform:translateY(0)}
+
+/* ==== SVG 插画容器 ==== */
+.illu{position:relative;width:100%;height:100%;overflow:hidden}
+.illu svg{display:block;width:100%;height:100%}
+.other-card .img .illu{position:absolute;inset:0}
+.other-card .img img{position:relative;z-index:-1}
+.other-card .illu::after{
+  content:'';position:absolute;inset:0;z-index:3;
+  background:linear-gradient(180deg,transparent 50%,rgba(20,16,12,0.5));
+}
+.other-card .illu img{
+  position:absolute!important;inset:0;width:100%!important;height:100%!important;
+  object-fit:cover;z-index:2;
+}
+.illu > img{position:absolute!important;inset:0;width:100%!important;height:100%!important;object-fit:cover;z-index:2}
+.svg-fallback{position:absolute;inset:0;z-index:1}
+
+/* ============ 页面级装饰：回纹角隅 / 灯笼 / 团扇 / 印章 ============ */
+.page-ornaments{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.corner{position:fixed;width:140px;height:140px;pointer-events:none;opacity:.42;transition:opacity .6s}
+.corner.tl{top:42px;left:14px}
+.corner.tr{top:42px;right:14px;transform:scaleX(-1)}
+.corner.bl{bottom:42px;left:14px;transform:scaleY(-1)}
+.corner.br{bottom:42px;right:14px;transform:scale(-1,-1)}
+.corner:hover{opacity:.6}
+@media (max-width:900px){.corner{width:96px;height:96px;opacity:.32}}
+@media (max-width:640px){.corner{width:64px;height:64px;opacity:.22}}
+
+.hero-lantern{position:fixed;pointer-events:none;width:64px;height:auto;opacity:.82;z-index:45;
+  filter:drop-shadow(0 4px 12px rgba(177,58,47,.18));
+  animation:lanternSway 5.5s ease-in-out infinite alternate}
+.hero-lantern.l{left:6%;top:18vh}
+.hero-lantern.r{right:8%;top:8vh;animation-delay:-2.6s;width:54px;opacity:.7}
+@keyframes lanternSway{
+  0%   {transform:rotate(-2.5deg) translateY(0)}
+  100% {transform:rotate(2.5deg)  translateY(6px)}
+}
+
+.fan-deco{position:absolute;pointer-events:none;width:180px;opacity:.55;
+  transform:rotate(-14deg);right:-22px;top:24px}
+@media (max-width:900px){.fan-deco{width:120px;right:10px}}
+
+.stamp-deco{position:absolute;pointer-events:none;width:78px;opacity:.78;
+  right:20px;top:18px}
+
+.meander-rule{display:flex;align-items:center;justify-content:center;gap:18px;
+  max-width:680px;margin:24px auto;color:var(--c-vermilion)}
+.meander-rule .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--c-vermilion) 30%,var(--c-vermilion) 70%,transparent);opacity:.6}
+.meander-rule svg{width:auto;height:18px;flex-shrink:0}
+
+.poetic-banner{margin-top:36px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+.poetic-banner .seal{width:62px;height:62px;background:var(--c-vermilion);color:var(--c-paper);
+  display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng','ZCOOL XiaoWei',serif;
+  font-size:22px;letter-spacing:2px;transform:rotate(-3deg);box-shadow:0 4px 18px rgba(177,58,47,.32)}
+.poetic-banner .seal.two{background:transparent;border:2px solid var(--c-vermilion);color:var(--c-vermilion);
+  transform:rotate(2deg);font-family:'Noto Serif SC',serif;font-weight:700}
+.poetic-banner p{margin:0;font-family:'Ma Shan Zheng','Noto Serif SC',serif;color:var(--c-ink);font-size:22px;letter-spacing:8px}
+
+/* 步行中飘落的叶 / 花瓣 */
+.walk-petal{position:fixed;pointer-events:none;z-index:46;opacity:.7;font-family:'serif';
+  font-size:14px;color:var(--c-vermilion);animation:petalFall 9s linear infinite}
+@keyframes petalFall{
+  0%{transform:translateY(-20px) rotate(0);opacity:0}
+  10%{opacity:.7}
+  100%{transform:translateY(110vh) rotate(360deg);opacity:0}
+}
+
+/* 冰裂纹底层 */
+.ice-bg{position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.055;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'><g fill='none' stroke='%231a1410' stroke-width='0.6'><path d='M40,80 L120,160 L80,220 L160,300 M120,160 L200,100 M160,300 L260,250 L340,320 M340,320 L420,260 L500,340 M500,340 L560,400'/><path d='M80,420 L160,360 L220,440 L320,400 M220,440 L300,520 M320,400 L420,460 L500,420'/><path d='M380,40 L460,120 L400,180 L500,240 M180,540 L260,500 L340,580 M440,540 L520,500'/></g></svg>");
+  background-size:600px 600px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<canvas id="ripple-canvas" aria-hidden="true"></canvas>
+
+<!-- 冰裂纹底层纹理 -->
+<div class="ice-bg" aria-hidden="true"></div>
+
+<!-- 页面级装饰：四隅回纹 -->
+<div class="page-ornaments" aria-hidden="true">
+
+  <svg class="corner tl" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <rect x="22" y="100" width="22" height="22" fill="#b13a2f"/>
+    <text x="33" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">苏</text>
+    <path d="M78,86 q-6,-4 -10,-2 q-2,8 6,12 q8,-4 4,-10 z" fill="#b13a2f" opacity=".45"/>
+    <path d="M104,110 q-4,-3 -8,-1 q-1,6 5,9 q5,-3 3,-8 z" fill="#b58d4e" opacity=".55"/>
+  </svg>
+
+  <svg class="corner tr" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <rect x="96" y="100" width="22" height="22" fill="#1a1410"/>
+    <text x="107" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">園</text>
+    <path d="M30,86 q6,-4 10,-2 q2,8 -6,12 q-8,-4 -4,-10 z" fill="#b58d4e" opacity=".55"/>
+    <path d="M14,108 q4,-3 8,-1 q1,6 -5,9 q-5,-3 -3,-8 z" fill="#b13a2f" opacity=".45"/>
+  </svg>
+
+  <svg class="corner bl" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <rect x="22" y="100" width="22" height="22" fill="#b58d4e"/>
+    <text x="33" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">林</text>
+    <path d="M78,86 q-6,-4 -10,-2 q-2,8 6,12 q8,-4 4,-10 z" fill="#b58d4e" opacity=".55"/>
+    <path d="M104,110 q-4,-3 -8,-1 q-1,6 5,9 q5,-3 3,-8 z" fill="#b13a2f" opacity=".45"/>
+  </svg>
+
+  <svg class="corner br" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 L136,4 L136,12 L12,12 L12,136 L4,136 Z" fill="none" stroke="#b13a2f" stroke-width="1.4"/>
+    <path d="M16,16 L130,16 L130,22 L22,22 L22,130 L16,130" fill="none" stroke="#b58d4e" stroke-width="0.7" opacity=".75"/>
+    <path d="M30,30 H50 V46 H38 V54 H50 V70 H30 V58 H42 V50 H30 V38 Z M58,30 H78 V46 H66 V54 H78 V70 H58 V58 H70 V50 H58 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <path d="M86,30 H106 V46 H94 V54 H106 V70 H86 V58 H98 V50 H86 V38 Z" fill="none" stroke="#1a1410" stroke-width="0.9" opacity=".7"/>
+    <rect x="96" y="100" width="22" height="22" fill="#b13a2f"/>
+    <text x="107" y="116" text-anchor="middle" font-family="serif" font-size="14" fill="#f3ead7" font-weight="700">志</text>
+    <path d="M30,86 q6,-4 10,-2 q2,8 -6,12 q-8,-4 -4,-10 z" fill="#b13a2f" opacity=".45"/>
+    <path d="M14,108 q4,-3 8,-1 q1,6 -5,9 q-5,-3 -3,-8 z" fill="#b58d4e" opacity=".55"/>
+  </svg>
+
+  <!-- 灯笼将经 JS 注入至 .hero -->
+</div>
+
+<!-- 顶部导航 -->
+<nav class="top-nav">
+  <a class="back" href="index.html">返回姑苏园志</a>
+  <div class="crumbs">
+    <span>姑苏园志</span>
+    <span class="sep">·</span>
+    <span class="cur" id="nav-cur">拙政园</span>
+  </div>
+  <div class="quick-nav" id="quick-nav"></div>
+</nav>
+
+<!-- 内容容器 -->
+<div id="app"></div>
+
+<script src="illustrations.js"></script>
+<script>
+/* ============ 数据 ============ */
+const IMG = [
+  '1545569310-32c5bba7c0a3',
+  '1518998053901-5348d3961a04',
+  '1528115473883-4fa1c33c0105',
+  '1565967511849-76a60a516170',
+  '1582719471384-894fbb16e074',
+  '1605429523419-d828acb941d8',
+  '1583289139708-22fadd3d2a8f',
+  '1542640244-7a672b1ca9b9',
+  '1531259683007-016a943cdcdf',
+  '1535139262971-5186b4810b3f',
+  '1554253262-e3fb33b6ad73',
+  '1568725259027-d99cc6a35b8a',
+];
+const url = (id, w=1600) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=85`;
+
+// 每座园林对应的 Hero SVG 函数
+const HERO_FN = {
+  zhuozheng:'heroZhuozheng',
+  liu:'heroLiu',
+  wangshi:'heroWangshi',
+  shizi:'heroShizi',
+  canglang:'heroCanglang',
+  yi:'heroYi',
+  yipu:'heroYipu'
+};
+
+// 场景名 → 插画函数映射（键必须与 GARDENS[x].scenes[].name 完全一致）
+const SCENE_ILLU = {
+  '远香堂':'sceneYuanXiangTang','小 飞 虹':'sceneXiaoFeiHong',
+  '香 洲':'sceneXiangZhou','梧 竹 幽 居':'sceneWuZhu',
+  '荷风四面亭':'sceneHeFengTing','小 沧 浪':'sceneXiaoCanglang',
+  '涵碧山房':'sceneHanBiShanFang','冠 云 峰':'sceneGuanYunFeng',
+  '楠 木 厅':'sceneNanMuTing','五峰仙馆':'sceneNanMuTing',
+  '林泉耆硕之馆':'sceneHanBiShanFang','佳晴喜雨快雪之亭':'sceneCangLangTing',
+  '殿 春 簃':'sceneDianChunYi','月到风来亭':'sceneYueDaoFengLai',
+  '濯 缨 水 阁':'sceneXiaoCanglang','看松读画轩':'sceneKanShanLou',
+  '引 静 桥':'sceneXiaoFeiHong','竹外一枝轩':'sceneWuZhu',
+  '狮 子 峰':'sceneShiZiFeng','真 趣 亭':'sceneZhenQuTing',
+  '燕 誉 堂':'sceneYanYuTang','指 柏 轩':'sceneWuZhu',
+  '问 梅 阁':'sceneWenMeiGe','飞 瀑 亭':'sceneFeiPuTing',
+  '沧 浪 亭':'sceneCangLangTing','五百名贤祠':'sceneDianChunYi',
+  '看 山 楼':'sceneKanShanLou','面 水 轩':'sceneMianShuiXuan',
+  '清 香 馆':'sceneDianChunYi','翠 玲 珑':'sceneWuZhu',
+  '坡仙琴馆':'scenePoXian','拜 石 轩':'sceneBaiShiXuan',
+  '锁 绿 轩':'sceneWuZhu','南 雪 亭':'sceneCangLangTing',
+  '藕 香 榭':'sceneHeFengTing','碧梧栖凤':'sceneWuTongFeng',
+  '别有洞天':'sceneYipuMoonGate','世 纶 堂':'sceneShiLunTang',
+  '乳 鱼 亭':'sceneRuYuTing','思 嗜 轩':'sceneSiShiXuan',
+  '延 光 阁':'sceneKanShanLou','芹 庐':'sceneBaiShiXuan',
+  // 「六大名景」卡片用（features 的名称与 scenes 略有出入，单独补）
+  '鱼 化 石':'sceneYuHuaShi','彩 霞 池':'sceneCaiXiaChi'
+};
+
+// 去掉空格后的宽松索引：名景名与场景名的空格排布不一致时也能命中
+const SCENE_ILLU_N = {};
+Object.keys(SCENE_ILLU).forEach(k => { SCENE_ILLU_N[k.replace(/\s/g,'')] = SCENE_ILLU[k]; });
+const illuForName = (name) => SCENE_ILLU[name] || SCENE_ILLU_N[(name||'').replace(/\s/g,'')] || '';
+
+const GARDENS = {
+  zhuozheng: {
+    name:'拙 政 园', alias:'江 南 园 林 之 冠 · 明 代 文 人 写 意 山 水 园',
+    eyebrow:'第 一 园 · 明 代 · 一 五 一 三 年',
+    heroImg:url(IMG[0], 1920),
+    heroFocus:'center 52%',
+    era:'明正德', founder:'王献臣', area:'约 78 亩', unesco:'1997',
+    location:'苏州市姑苏区东北街178号',
+    tags:['江南第一','文人写意','以水为骨'],
+    introVerse:'绝怜人境无车马<br>信有山林在市城',
+    introAuthor:'文徵明',
+    scenes:[
+      { name:'远香堂', alias:'荷 风 四 面 · 香 自 远 来', img:url(IMG[0]),
+        verse:'堂前荷叶无穷碧，香远益清四望中',
+        desc:'拙政园中部主厅，取周敦颐《爱莲说》"香远益清"之意。堂北临荷池，夏日荷花盛开，清香远溢，故名。四面轩敞，回廊四合，是园中最宏敞的厅堂。',
+        mapX:50,mapY:55,
+        hotspots:[
+          {x:30,y:45,name:'荷 花 池',detail:'池广数亩，夏日"接天莲叶无穷碧，映日荷花别样红"。每至六月，游人如织。'},
+          {x:72,y:60,name:'雪香云蔚亭',detail:'位于池东北山巅，亭名取自李白"雪香飞绿上"句，与远香堂遥相呼应。'}
+        ]
+      },
+      { name:'小 飞 虹', alias:'廊 桥 分 水 · 一 虹 贯 隔', img:url(IMG[1]),
+        verse:'廊 桥 卧 波 映 倒 影 · 恰 似 长 虹 饮 涧 来',
+        desc:'拙政园唯一的廊桥，桥廊覆顶，桥下倒影如彩虹卧波，故名。"飞虹"喻其轻盈飘逸之意，是中部水景的视觉中心。',
+        mapX:48,mapY:42,
+        hotspots:[
+          {x:50,y:50,name:'廊 桥 中 心',detail:'桥身三跨，木构覆顶，桥栏朱红，是拙政园最具标志性的建筑之一。'}
+        ]
+      },
+      { name:'香 洲', alias:'舟 舫 临 水 · 观 鱼 听 雨', img:url(IMG[2]),
+        verse:'画 舫 临 水 观 鱼 跃 · 静 听 雨 点 打 芭 蕉',
+        desc:'拙政园中部画舫，仿舟形建筑，前舱、中舱、后舱三部分。登之如乘舟入画，是园中观景佳处。',
+        mapX:38,mapY:50,
+        hotspots:[
+          {x:25,y:40,name:'观 荷 角',detail:'面荷池而设，夏日凭栏观荷，最得清凉之趣。'},
+          {x:75,y:65,name:'后 舱 书 斋',detail:'旧时为园主读书处，窗外一株古梅，凌寒独开。'}
+        ]
+      },
+      { name:'梧 竹 幽 居', alias:'梧 竹 成 阴 · 曲 廊 幽 僻', img:url(IMG[3]),
+        verse:'面 皆 梧 竹 故 名 幽 居 · 小 轩 背 倚 曲 廊 宜 静',
+        desc:'小轩四面皆梧竹，故名"梧竹幽居"。小轩面对山石，背倚曲廊，是中部庭院幽静所在。',
+        mapX:62,mapY:48,
+        hotspots:[
+          {x:40,y:50,name:'梧 桐 树',detail:'庭中梧桐数株，夏日浓荫匝地，凤尾森森。'},
+          {x:70,y:55,name:'修 竹 丛',detail:'翠竹成行，风过处沙沙作响，与梧桐相映成趣。'}
+        ]
+      },
+      { name:'荷风四面亭', alias:'四 面 荷 风 · 亭 中 宜 夏', img:url(IMG[4]),
+        verse:'四 面 荷 风 三 面 柳 · 半 潭 秋 水 一 亭 凉',
+        desc:'池中六角亭，四面环水，夏日荷风扑面。亭有楹联"四壁荷花三面柳，半潭秋水一亭凉"，是观荷佳处。',
+        mapX:55,mapY:60,
+        hotspots:[
+          {x:50,y:50,name:'亭 心',detail:'亭内悬匾"荷风四面"，柱联"四壁荷花三面柳，半潭秋水一亭凉"。'}
+        ]
+      },
+      { name:'小 沧 浪', alias:'园 中 一 角 水 · 尺 幅 有 江 湖', img:url(IMG[5]),
+        verse:'沧浪之水清兮，可以濯吾缨',
+        desc:'拙政园东北部水院，取《楚辞》"沧浪"之意。一泓清水，四周轩窗环绕，是园中最幽静处。',
+        mapX:70,mapY:38,
+        hotspots:[
+          {x:30,y:60,name:'小 沧 浪 亭',detail:'水院中央小亭，单檐六角，翼然水上。'},
+          {x:75,y:40,name:'藕 香 榭',detail:'临水敞轩，旧时夏日于此品茗听荷，最得清凉。'}
+        ]
+      }
+    ],
+    history:[
+      {era:'明正德八年',event:'御史王献臣辞官归田，于大弘寺旧址营建园林，聘文徵明参与设计。取潘岳《闲居赋》"拙者之为政"之意，名曰"拙政"。'},
+      {era:'明嘉靖',event:'徐时泰得之东部，辟为"东园"，又得中部，复"西园"。三园合称"拙政园"。'},
+      {era:'清顺治',event:'园归海宁陈之遴，旋入官署。'},
+      {era:'清康熙',event:'徐乾学购为私园，名"徐园"，建"怀谢堂"纪念谢安。'},
+      {era:'清乾隆',event:'蒋重光再修，吴蔚所得，光禄卿汪颂又得。屡易其主。'},
+      {era:'清咸丰十年',event:'太平军进驻苏州，拙政园为忠王府。'},
+      {era:'1952',event:'中华人民共和国成立后，全面修缮，对公众开放。'},
+      {era:'1997',event:'联合国教科文组织列入《世界文化遗产名录》。'}
+    ],
+    features:[
+      {no:'一',name:'远 香 堂',tag:'中部主厅',desc:'四面轩敞，夏日荷香远溢。堂北平台为赏荷佳处。'},
+      {no:'二',name:'小 飞 虹',tag:'廊桥',desc:'木质廊桥卧波，朱红桥栏，倒影如虹。'},
+      {no:'三',name:'香 洲',tag:'舫',desc:'仿舟形画舫，前舱、中舱、后舱三段式。'},
+      {no:'四',name:'梧竹幽居',tag:'庭院',desc:'四面梧竹环绕，庭院幽深静谧。'},
+      {no:'五',name:'荷风四面亭',tag:'亭',desc:'池中六角亭，四面来风。'},
+      {no:'六',name:'小 沧 浪',tag:'水院',desc:'东部水院，三面轩窗，一泓清水。'}
+    ],
+    poems:[
+      {text:'绝怜人境无车马<br>信有山林在市城',author:'文徵明 · 拙政园三十一咏'},
+      {text:'四壁荷花三面柳<br>半潭秋水一亭凉',author:'清 · 荷风四面亭联'},
+      {text:'虽由人作<br>宛自天开',author:'明 · 计成《园冶》'}
+    ]
+  },
+
+  liu: {
+    name:'留 园', alias:'建 筑 布 局 之 巅 · 清 代 艺 术 集 锦',
+    eyebrow:'第 二 园 · 清 代 · 一 六 二 九 年',
+    heroImg:url(IMG[1], 1920),
+    heroFocus:'center 36%',
+    era:'明嘉靖', founder:'徐时泰', area:'约 35 亩', unesco:'1997',
+    location:'苏州市姑苏区留园路338号',
+    tags:['建筑大家','冠云峰','留园三绝'],
+    introVerse:'吴下名园此第一<br>冠云峰下久盘桓',
+    introAuthor:'陈从周',
+    scenes:[
+      { name:'涵碧山房', alias:'高 轩 临 水 · 碧 波 在 底', img:url(IMG[1]),
+        verse:'山房涵碧水，厅前对奇峰',
+        desc:'留园中部主厅，因前临荷花池，池水涵碧，故名。厅堂宽敞明亮，左右对联，厅后一泓碧池，是园中最宜夏居之所。',
+        mapX:50,mapY:55,
+        hotspots:[
+          {x:40,y:55,name:'荷 花 台',detail:'厅前石台临池，夏日"映日荷花别样红"。'},
+          {x:75,y:45,name:'明 瑟 楼',detail:'取《水经注》"目对鱼鸟，水木明瑟"之意，二层小楼。'}
+        ]
+      },
+      { name:'冠 云 峰', alias:'太 湖 石 孤 峰 · 皱 漏 瘦 透', img:url(IMG[6]),
+        verse:'冠云峰高六丈五，皱漏瘦透甲天下',
+        desc:'留园"三绝"之首，北宋花石纲遗物。高6.5米，集"皱、漏、瘦、透"四美于一身，是江南最大的湖石之一。',
+        mapX:50,mapY:50,
+        hotspots:[
+          {x:50,y:50,name:'峰 顶',detail:'峰顶如云冠，故名"冠云"。四面可观，移步换形。'},
+          {x:30,y:60,name:'冠 云 亭',detail:'亭依峰而立，与峰相映成趣。'},
+          {x:80,y:75,name:'冠 云 台',detail:'台下观峰，如仰视云端，最得峰之神韵。'}
+        ]
+      },
+      { name:'楠 木 厅', alias:'楠 木 为 材 · 兰 馨 满 室', img:url(IMG[7]),
+        verse:'楠木厅中楠木柱，金砖铺地紫檀窗',
+        desc:'留园"三绝"之一，全楠木构架。厅内楠木柱粗壮挺拔，色彩温润，是清代建筑精品。',
+        mapX:62,mapY:45,
+        hotspots:[
+          {x:50,y:50,name:'楠 木 柱',detail:'楠木柱径尺余，通体无漆，木纹天成，气味清香。'}
+        ]
+      },
+      { name:'五峰仙馆', alias:'五 石 罗 列 · 仿 倪 迂 画', img:url(IMG[8]),
+        verse:'馆内五峰列如仙',
+        desc:'留园"楠木厅"北院，馆内置五块湖石，象征"五岳"。取李白"五峰秀色"诗意。',
+        mapX:65,mapY:48,
+        hotspots:[
+          {x:50,y:50,name:'五 峰',detail:'五块湖石列于馆中，姿态各异，仿倪云林山水画意。'}
+        ]
+      },
+      { name:'林泉耆硕之馆', alias:'耆 旧 名 贤 · 悬 匾 纪 事', img:url(IMG[9]),
+        verse:'林泉之趣，耆老所乐',
+        desc:'留园"鸳鸯厅"代表作，南北两厅，一为冬日红木厅，一为夏日楠木厅。一厅两用，匠心独运。',
+        mapX:55,mapY:50,
+        hotspots:[
+          {x:50,y:50,name:'南 厅',detail:'冬日红木厅，陈设古雅，悬有历代名贤画像。'},
+          {x:75,y:45,name:'北 厅',detail:'夏日楠木厅，隔院相望，通风纳凉。'}
+        ]
+      },
+      { name:'佳晴喜雨快雪之亭', alias:'三 时 之 景 · 亭 名 各 适', img:url(IMG[10]),
+        verse:'佳晴喜雨快雪时，皆宜登此亭',
+        desc:'留园西部亭名，取杜甫"久雨忽晴则喜"、"快雪时晴佳"诗意。亭临水池，三面环水。',
+        mapX:35,mapY:62,
+        hotspots:[
+          {x:50,y:50,name:'亭 心',detail:'亭中悬匾，三面环水，晴雨雪各得其景。'}
+        ]
+      }
+    ],
+    history:[
+      {era:'明嘉靖',event:'徐时泰建东园、西园，为留园前身。'},
+      {era:'清嘉庆',event:'吴县东山富商刘恕购得东园部分，得宋代花石纲遗物"冠云峰"，改园名"寒碧庄"。'},
+      {era:'清同治',event:'盛康购得此园，重加修葺，扩建为东西两部，更名"留园"。'},
+      {era:'光绪年间',event:'园中建"林泉耆硕之馆"等建筑，园貌初定。'},
+      {era:'1937',event:'日军占领苏州，留园部分建筑被毁。'},
+      {era:'1953',event:'人民政府拨款全面修复，对公众开放。'},
+      {era:'1997',event:'列入《世界文化遗产名录》。'}
+    ],
+    features:[
+      {no:'一',name:'冠 云 峰',tag:'湖石峰',desc:'北宋花石纲遗物，高6.5米，集皱漏瘦透于一身。'},
+      {no:'二',name:'楠 木 厅',tag:'楠木殿',desc:'全楠木构架，楠木柱通体无漆。'},
+      {no:'三',name:'鱼 化 石',tag:'古化石',desc:'产于云南，置于楠木厅内，纹理清晰如鱼鳞。'},
+      {no:'四',name:'涵碧山房',tag:'中部主厅',desc:'因前临荷花池，池水涵碧，故名。'},
+      {no:'五',name:'林泉耆硕之馆',tag:'鸳鸯厅',desc:'南北两厅，冬夏两用，结构精巧。'},
+      {no:'六',name:'佳晴喜雨快雪之亭',tag:'亭',desc:'亭名古雅，三面环水。'}
+    ],
+    poems:[
+      {text:'吴下名园此第一<br>冠云峰下久盘桓',author:'陈从周 · 评留园'},
+      {text:'片石山房述黄公<br>涵碧山房记刘恕',author:'清 · 留园题咏'}
+    ]
+  },
+
+  wangshi: {
+    name:'网 师 园', alias:'小 而 精 深 · 南 宋 文 人 雅 园',
+    eyebrow:'第 三 园 · 南 宋 · 一 一 七 四 年',
+    heroImg:url(IMG[2], 1920),
+    heroFocus:'center 44%',
+    era:'南宋淳熙', founder:'史正志', area:'约半亩余', unesco:'1997',
+    location:'苏州市姑苏区友谊路15号',
+    tags:['小巧精深','夜游独绝','以水为胜'],
+    introVerse:'渔父濯缨沧浪水<br>网师借得半亩园',
+    introAuthor:'— 网师园主人',
+    scenes:[
+      { name:'殿 春 簃', alias:'小 院 一 隅 · 芍 药 芭 蕉', img:url(IMG[2]),
+        verse:'殿春小院深，芍药满阶开',
+        desc:'网师园最著名的小院，因芍药花晚春盛开而得名"殿春"。是1980年美国大都会博物馆"明轩"的蓝本。',
+        mapX:55,mapY:55,
+        hotspots:[
+          {x:50,y:50,name:'芍 药 台',detail:'院中芍药台，暮春芍药盛开，花瓣层层叠叠，清香四溢。'},
+          {x:25,y:60,name:'芭 蕉',detail:'院中芭蕉一丛，雨打芭蕉声滴沥，最具文人意趣。'}
+        ]
+      },
+      { name:'月到风来亭', alias:'水 中 之 亭 · 月 到 风 来', img:url(IMG[11]),
+        verse:'月到天心，风来水面',
+        desc:'亭名取自邵雍诗"月到天心处，风来水面时"。位于网师园彩霞池西北岸，是观月赏风佳处。',
+        mapX:42,mapY:45,
+        hotspots:[
+          {x:50,y:50,name:'亭 心 望 月',detail:'夜游网师，至此亭最宜赏月，月光水光相映。'}
+        ]
+      },
+      { name:'濯 缨 水 阁', alias:'临 水 而 建 · 濯 缨 沧 浪', img:url(IMG[5]),
+        verse:'沧浪之水清兮，可以濯吾缨',
+        desc:'网师园水阁名，取《孟子》"沧浪之水清兮，可以濯吾缨"之意。临水而筑，下临彩霞池。',
+        mapX:45,mapY:55,
+        hotspots:[
+          {x:50,y:50,name:'水 阁',detail:'三面环水，夏日凭栏，最得清凉。'}
+        ]
+      },
+      { name:'看松读画轩', alias:'观 松 读 画 · 满 轩 清 阴', img:url(IMG[3]),
+        verse:'满 轩 古 松 伴 读 书 · 画 意 悠 然',
+        desc:'轩名取"看松"与"读画"二意。轩前古松苍翠，轩内藏书画，是网师园主人读书处。',
+        mapX:50,mapY:42,
+        hotspots:[
+          {x:30,y:55,name:'古 松',detail:'轩前古松一株，苍劲挺拔，已有百年。'}
+        ]
+      },
+      { name:'引 静 桥', alias:'小 桥 引 静 · 一 径 通 深', img:url(IMG[4]),
+        verse:'小桥取"引人入静"之意。',
+        desc:'网师园最小的石拱桥，桥身三折，玲珑精巧。取"引人入静"之意。',
+        mapX:48,mapY:50,
+        hotspots:[
+          {x:50,y:50,name:'桥 拱',detail:'拱桥倒影成圆，与水中月影相映。'}
+        ]
+      },
+      { name:'竹外一枝轩', alias:'竹 外 一 枝 · 疏 影 横 斜', img:url(IMG[8]),
+        verse:'竹外一枝斜更好',
+        desc:'轩名取宋诗"竹外一枝斜更好"之意。轩前修竹数竿，斜枝探出窗外，取"一枝之趣"。',
+        mapX:58,mapY:52,
+        hotspots:[
+          {x:50,y:55,name:'轩 前 修 竹',detail:'窗外修竹数竿，风过处沙沙作响。'}
+        ]
+      }
+    ],
+    history:[
+      {era:'南宋淳熙元年',event:'史正志万卷堂故址，筑园名"万卷堂"。'},
+      {era:'元',event:'废为寺。'},
+      {era:'清乾隆',event:'宋宗元重建，借"渔父"之意，名"网师"。'},
+      {era:'清嘉庆',event:'西部住宅区落成，与东部宅园相并，园制渐定。'},
+      {era:'1941',event:'何亚农购得，请画家张善孖、张大千兄弟居住。'},
+      {era:'1958',event:'全面整修，对公众开放。'},
+      {era:'1980',event:'以"殿春簃"为蓝本，在美国大都会博物馆建"明轩"，开创中国园林海外移植先河。'}
+    ],
+    features:[
+      {no:'一',name:'殿 春 簃',tag:'小院',desc:'网师园精华，芍药满阶，"明轩"蓝本。'},
+      {no:'二',name:'彩 霞 池',tag:'池',desc:'网师园中心水面，池岸曲折，聚水为胜。'},
+      {no:'三',name:'看松读画轩',tag:'轩',desc:'轩前古松，轩内藏画。'},
+      {no:'四',name:'濯缨水阁',tag:'水阁',desc:'三面环水，取《孟子》意。'},
+      {no:'五',name:'月到风来亭',tag:'亭',desc:'观月赏风佳处。'},
+      {no:'六',name:'引 静 桥',tag:'桥',desc:'网师园最小石拱桥，造型精巧。'}
+    ],
+    poems:[
+      {text:'殿春芍药香<br>小院深幽藏',author:'陈从周 · 评网师园'},
+      {text:'月到天心处<br>风来水面时',author:'宋 · 邵雍《清夜吟》'}
+    ]
+  },
+
+  shizi: {
+    name:'狮 子 林', alias:'假 山 王 国 · 元 代 禅 意 石 园',
+    eyebrow:'第 四 园 · 元 代 · 一 三 四 二 年',
+    heroImg:url(IMG[3], 1920),
+    heroFocus:'center 44%',
+    era:'元至正', founder:'天如禅师', area:'约 15 亩', unesco:'1997',
+    location:'苏州市姑苏区园林路23号',
+    tags:['假山王国','禅意园林','乾隆六游'],
+    introVerse:'人道我居城市里<br>我疑身在万山中',
+    introAuthor:'— 元 · 狮子林',
+    scenes:[
+      { name:'狮 子 峰', alias:'湖 石 迭 峰 · 形 若 狮 舞', img:url(IMG[3]),
+        verse:'狮子峰前万石蹲，禅房深处一灯悬',
+        desc:'狮子林假山主峰，湖石形似狮子起舞，故名。元代禅僧天如禅师取"佛狮子"意命名。',
+        mapX:55,mapY:48,
+        hotspots:[
+          {x:50,y:50,name:'狮 子 峰',detail:'峰高数丈，湖石嶙峋，状若群狮起舞。'},
+          {x:25,y:60,name:'九 狮 台',detail:'台上可观九狮，故名。乾隆曾在此品题。'}
+        ]
+      },
+      { name:'真 趣 亭', alias:'乾 隆 御 笔 · 真 趣 二 字', img:url(IMG[2]),
+        verse:'真趣亭中赏奇峰，乾隆御笔留题',
+        desc:'乾隆六下江南，必游狮子林。御笔题"真趣"二字，匾悬于亭中，至今高悬。',
+        mapX:55,mapY:45,
+        hotspots:[
+          {x:50,y:50,name:'乾 隆 御 笔',detail:'亭匾"真趣"二字为乾隆御笔，至今高悬。'}
+        ]
+      },
+      { name:'燕 誉 堂', alias:'大 厅 待 客 · 燕 誉 犹 存', img:url(IMG[1]),
+        verse:'燕誉嘉宾，堂前紫薇',
+        desc:'狮子林主厅，因堂前紫薇树，又名"紫薇堂"。取《诗经》"式燕且誉"之意。',
+        mapX:40,mapY:42,
+        hotspots:[
+          {x:50,y:50,name:'紫 薇 树',detail:'堂前紫薇一株，花开烂熳，古人称"紫薇花下紫薇郎"。'}
+        ]
+      },
+      { name:'指 柏 轩', alias:'古 柏 列 前 · 游 客 指 之', img:url(IMG[6]),
+        verse:'指柏问禅，万石参悟',
+        desc:'取禅宗"指柏"公案，轩前古柏苍翠。元代以来为禅僧参悟之处。',
+        mapX:48,mapY:55,
+        hotspots:[
+          {x:30,y:50,name:'古 柏',detail:'轩前古柏参天，元代禅僧于此指柏参悟，故名。'}
+        ]
+      },
+      { name:'问 梅 阁', alias:'以 梅 命 阁 · 暗 香 浮 动', img:url(IMG[5]),
+        verse:'问梅消息，倚窗听寒',
+        desc:'取"问梅"意，临窗种梅，阁中赏梅。狮子林"四季景物"代表建筑。',
+        mapX:55,mapY:65,
+        hotspots:[
+          {x:50,y:50,name:'梅 树',detail:'阁前古梅一株，凌寒独放，暗香浮动。'}
+        ]
+      },
+      { name:'飞 瀑 亭', alias:'假 山 叠 瀑 · 飞 流 直 下', img:url(IMG[4]),
+        verse:'飞瀑亭前听泉响',
+        desc:'狮子林西部亭，因亭前假山瀑布得名。瀑从石隙跌落，声如鸣琴。',
+        mapX:35,mapY:65,
+        hotspots:[
+          {x:50,y:50,name:'瀑 布',detail:'飞瀑三叠，声如鸣琴，是园中"听"景佳处。'}
+        ]
+      }
+    ],
+    history:[
+      {era:'元至正二年',event:'僧天如禅师惟则的弟子"买地结屋，以居其师"，因园中湖石多似狮子，且天如禅师得法于天目山狮子岩，故名"狮子林"。'},
+      {era:'明洪武',event:'寺宇倾圮，仅存佛殿。'},
+      {era:'明嘉靖',event:'王心一购得，改名"圣恩寺"，园林部分称"五松园"。'},
+      {era:'清康熙',event:'黄熙之父出资修缮，恢复佛寺，称"画禅寺"。'},
+      {era:'清乾隆六下江南',event:'每次必游狮子林，并题"真趣"匾。命画师绘狮子林图，回京后在承德避暑山庄、圆明园仿建。'},
+      {era:'民国',event:'园中建筑渐有修葺，景致渐复。'},
+      {era:'1952',event:'人民政府接管，全面修缮，对公众开放。'}
+    ],
+    features:[
+      {no:'一',name:'狮 子 峰',tag:'假山主峰',desc:'湖石似狮起舞，是狮子林标志。'},
+      {no:'二',name:'真 趣 亭',tag:'亭',desc:'乾隆御笔"真趣"匾悬于此。'},
+      {no:'三',name:'燕 誉 堂',tag:'主厅',desc:'狮子林主厅，堂前紫薇。'},
+      {no:'四',name:'指 柏 轩',tag:'禅室',desc:'取禅宗"指柏"公案命名。'},
+      {no:'五',name:'问 梅 阁',tag:'赏梅',desc:'临窗种梅，四季皆景。'},
+      {no:'六',name:'飞 瀑 亭',tag:'亭',desc:'亭前瀑布三叠，声如鸣琴。'}
+    ],
+    poems:[
+      {text:'人道我居城市里<br>我疑身在万山中',author:'元 · 天如禅师'},
+      {text:'狮子峰前万石蹲<br>禅房深处一灯悬',author:'清 · 乾隆御题'}
+    ]
+  },
+
+  canglang: {
+    name:'沧 浪 亭', alias:'苏 州 最 古 · 北 宋 借 水 成 景',
+    eyebrow:'第 五 园 · 北 宋 · 一 零 四 四 年',
+    heroImg:url(IMG[4], 1920),
+    heroFocus:'center 34%',
+    era:'北宋庆历', founder:'苏舜钦', area:'约 16 亩', unesco:'2000',
+    location:'苏州市姑苏区三元坊',
+    tags:['苏州最古','未入园先见水','以水取胜'],
+    introVerse:'沧浪之水清兮<br>可以濯吾缨',
+    introAuthor:'— 屈原《渔父》',
+    scenes:[
+      { name:'沧 浪 亭', alias:'方 亭 敞 朗 · 古 朴 不 华', img:url(IMG[4]),
+        verse:'沧浪亭畔水悠悠，五百名贤刻石留',
+        desc:'苏州现存最古老的园林主亭。北宋苏舜钦被劾罢官，以四万钱购得，构亭命名"沧浪"，取《孟子》《楚辞》意。',
+        mapX:50,mapY:42,
+        hotspots:[
+          {x:50,y:50,name:'沧 浪 亭',detail:'亭为四方攒尖顶，石柱十六根，古朴庄严。'},
+          {x:75,y:30,name:'石 碑',detail:'亭内碑刻"沧浪亭"三字，为清代名家俞樾所书。'}
+        ]
+      },
+      { name:'五百名贤祠', alias:'五 百 名 贤 画 像 · 清 刻 千 秋', img:url(IMG[7]),
+        verse:'五百名贤列壁间',
+        desc:'祠内嵌自春秋至清代五百名贤石刻画像，自吴王阖闾、伍员，至清代顾炎武、于成龙等，共594人。',
+        mapX:42,mapY:50,
+        hotspots:[
+          {x:50,y:50,name:'石 刻 画 像',detail:'祠内嵌春秋至清代名贤石刻画像五百九十四幅，跨两千年。'}
+        ]
+      },
+      { name:'看 山 楼', alias:'园 中 最 高 · 远 望 城 廓', img:url(IMG[8]),
+        verse:'看山楼上远山青',
+        desc:'沧浪亭园中最高建筑，登之可远眺西南诸山。取"悠然见南山"意。',
+        mapX:60,mapY:38,
+        hotspots:[
+          {x:50,y:50,name:'楼 顶 远 眺',detail:'登楼远眺，西南灵岩、天平诸山隐约可见。'}
+        ]
+      },
+      { name:'面 水 轩', alias:'三 面 环 水 · 面 水 而 居', img:url(IMG[5]),
+        verse:'面水轩前碧水流',
+        desc:'临水敞轩，三面环水，是沧浪亭"借水"造景的代表作。轩名"面水"，意指正面对水。',
+        mapX:35,mapY:60,
+        hotspots:[
+          {x:50,y:55,name:'轩 前 水 面',detail:'轩前水面开阔，是园外之水借入园内之处。'}
+        ]
+      },
+      { name:'清 香 馆', alias:'前 栽 翠 竹 · 满 院 清 香', img:url(IMG[3]),
+        verse:'满 院 金 桂 秋 香 · 暗 香 浮 动 自 然 清',
+        desc:'馆名"清香"，因馆前多植桂树，秋天金桂飘香，故名"清香"。取"暗香浮动"诗意。',
+        mapX:55,mapY:55,
+        hotspots:[
+          {x:50,y:50,name:'桂 花 树',detail:'馆前金桂数株，秋日花开满枝，香溢十里。'}
+        ]
+      },
+      { name:'翠 玲 珑', alias:'三 株 翠 竹 · 玲 珑 剔 透', img:url(IMG[6]),
+        verse:'翠竹三株，玲珑剔透',
+        desc:'沧浪亭东南翠玲珑，为三面环廊围合小院，种植翠竹，翠影摇曳，最得幽趣。',
+        mapX:48,mapY:55,
+        hotspots:[
+          {x:30,y:50,name:'翠 竹 丛',detail:'廊周翠竹丛生，翠影玲珑。'}
+        ]
+      }
+    ],
+    history:[
+      {era:'北宋庆历四年',event:'苏舜钦被劾罢官，旅居苏州。以四万钱购得"草木郁然，崇阜广水"之池，构亭命名"沧浪"，取《孟子》《楚辞》意。'},
+      {era:'南宋',event:'园林曾为将帅驻兵之地，后渐荒芜。'},
+      {era:'明嘉靖',event:'苏州知府胡缵宗重建，更名"沧浪亭"。'},
+      {era:'清道光',event:'巡抚梁章钜重修，建"五百名贤祠"。'},
+      {era:'清咸丰',event:'太平军入苏，亭毁于战火。'},
+      {era:'清同治',event:'巡抚张树声重修，恢复旧观。'},
+      {era:'1955',event:'全面修缮，对公众开放。'},
+      {era:'2000',event:'列入《世界文化遗产名录》（扩展项目）。'}
+    ],
+    features:[
+      {no:'一',name:'沧 浪 亭',tag:'主亭',desc:'苏州现存最古园林主亭，北宋遗构。'},
+      {no:'二',name:'五百名贤祠',tag:'祠',desc:'594位名贤石刻画像，跨越两千年。'},
+      {no:'三',name:'看 山 楼',tag:'楼',desc:'园中最高建筑，可远眺诸山。'},
+      {no:'四',name:'面 水 轩',tag:'水轩',desc:'三面环水，借水成景。'},
+      {no:'五',name:'清 香 馆',tag:'馆',desc:'馆前种桂，秋日飘香。'},
+      {no:'六',name:'翠 玲 珑',tag:'廊',desc:'廊周种竹，翠影玲珑。'}
+    ],
+    poems:[
+      {text:'沧浪之水清兮<br>可以濯吾缨',author:'先秦 · 屈原《渔父》'},
+      {text:'一径抱幽山<br>居然城市间',author:'宋 · 苏舜钦《沧浪亭》'}
+    ]
+  },
+
+  yi: {
+    name:'怡 园', alias:'晚 清 集 锦 · 格 调 清 雅 怡 情',
+    eyebrow:'第 六 园 · 清 末 · 一 八 七 四 年',
+    heroImg:url(IMG[5], 1920),
+    heroFocus:'center 40%',
+    era:'清同治', founder:'顾文彬', area:'约 9 亩', unesco:'—',
+    location:'苏州市姑苏区人民路',
+    tags:['晚清集锦','坡仙琴馆','格调清雅'],
+    introVerse:'何必丝与竹<br>山水有清音',
+    introAuthor:'— 古琴曲',
+    scenes:[
+      { name:'坡仙琴馆', alias:'藏 苏 轼 古 琴 · 玉 涧 流 泉', img:url(IMG[5]),
+        verse:'坡仙琴馆藏玉涧，流泉一曲思东坡',
+        desc:'怡园精华，馆内藏苏东坡"玉涧流泉"古琴。"坡仙"指苏东坡，"琴馆"为古琴陈列处。',
+        mapX:50,mapY:45,
+        hotspots:[
+          {x:50,y:50,name:'玉涧流泉琴',detail:'苏东坡"玉涧流泉"古琴，怡园至宝。'},
+          {x:30,y:60,name:'坡 仙 画 像',detail:'馆内东坡画像一轴，意境高古。'}
+        ]
+      },
+      { name:'拜 石 轩', alias:'拜 石 成 癖 · 爱 石 之 癖', img:url(IMG[6]),
+        verse:'拜石如拜友',
+        desc:'取米芾"拜石"典故，米芾见奇石拜之，呼为"石兄"。轩前置奇石数块，可供赏拜。',
+        mapX:45,mapY:55,
+        hotspots:[
+          {x:50,y:50,name:'奇 石',detail:'轩前奇石数株，形态各异，最宜静观。'}
+        ]
+      },
+      { name:'锁 绿 轩', alias:'绿 树 成 墙 · 锁 住 一 院', img:url(IMG[3]),
+        verse:'锁绿轩前绿满窗',
+        desc:'轩名"锁绿"，意指窗外绿意被锁入室内。轩周种竹，翠影锁窗。',
+        mapX:55,mapY:48,
+        hotspots:[
+          {x:50,y:55,name:'修 竹 窗',detail:'窗外修竹数竿，翠影入窗，如绿锁窗棂。'}
+        ]
+      },
+      { name:'南 雪 亭', alias:'取 南 朝 雪 意 · 亭 小 境 清', img:url(IMG[10]),
+        verse:'南雪亭前赏残雪',
+        desc:'亭名取"南雪"意。冬日亭前残雪未消，是怡园冬景代表。',
+        mapX:45,mapY:60,
+        hotspots:[
+          {x:50,y:50,name:'亭 心 望 雪',detail:'冬日登此亭，最宜赏雪。'}
+        ]
+      },
+      { name:'藕 香 榭', alias:'临 水 荷 榭 · 藕 花 幽 香', img:url(IMG[2]),
+        verse:'藕香榭里赏荷风',
+        desc:'临水敞轩，夏日荷花盛开，藕香满榭，故名。是怡园夏日赏荷佳处。',
+        mapX:38,mapY:62,
+        hotspots:[
+          {x:50,y:55,name:'荷 池',detail:'榭前荷池，夏日"接天莲叶无穷碧"。'}
+        ]
+      },
+      { name:'碧梧栖凤', alias:'梧 叶 碧 影 · 梧 栖 凤 来', img:url(IMG[8]),
+        verse:'碧梧栖凤待谁来',
+        desc:'取"凤栖梧桐"意。庭中梧桐数株，古时为园主待客之所。',
+        mapX:50,mapY:65,
+        hotspots:[
+          {x:50,y:50,name:'梧 桐',detail:'庭中梧桐数株，凤尾森森，浓荫匝地。'}
+        ]
+      }
+    ],
+    history:[
+      {era:'清同治光绪年间',event:'宁绍道台顾文彬在明代尚书吴宽旧宅遗址上营建，历时五年方毕。'},
+      {era:'清光绪八年',event:'怡园建成，取《论语》"兄弟怡怡"之"怡"，兼取"怡情悦性"之谓。'},
+      {era:'民国',event:'顾氏后人对园林进行修缮，藏入大量金石书画。'},
+      {era:'1949',event:'园归人民政府管理，园中建筑修缮一新。'},
+      {era:'1980年',event:'全面修复后对外开放。'}
+    ],
+    features:[
+      {no:'一',name:'坡仙琴馆',tag:'琴馆',desc:'藏苏东坡"玉涧流泉"古琴，怡园至宝。'},
+      {no:'二',name:'拜 石 轩',tag:'轩',desc:'取米芾"拜石"典故，轩前置奇石。'},
+      {no:'三',name:'锁 绿 轩',tag:'轩',desc:'轩周种竹，翠影锁窗。'},
+      {no:'四',name:'南 雪 亭',tag:'亭',desc:'冬日亭前赏残雪。'},
+      {no:'五',name:'碧 梧 栖 凤',tag:'庭院',desc:'取"凤栖梧桐"意，梧桐数株。'},
+      {no:'六',name:'藕 香 榭',tag:'荷榭',desc:'临水荷榭，夏日藕香满座。'}
+    ],
+    poems:[
+      {text:'何必丝与竹<br>山水有清音',author:'古琴曲意'},
+      {text:'一片冰心在玉壶',author:'唐 · 王昌龄'}
+    ]
+  },
+
+  yipu: {
+    name:'艺 圃', alias:'世 界 文 化 遗 产 · 文 人 小 园 之 典 范',
+    eyebrow:'第 七 园 · 明 · 一 五 三 四 年',
+    heroImg:url(IMG[6], 1920),
+    heroFocus:'center 42%',
+    era:'明嘉靖', founder:'袁氏', area:'约 5 亩', unesco:'2000',
+    location:'苏州市姑苏区文昌路',
+    tags:['世遗名园','别有洞天','书卷气'],
+    introVerse:'一门自有别<br>洞天别有天',
+    introAuthor:'— 艺圃门楼',
+    scenes:[
+      { name:'别有洞天', alias:'砖 雕 门 楼 · 园 之 眼 目', img:url(IMG[6]),
+        verse:'曲径通幽处，别有一洞天',
+        desc:'艺圃的门户，砖雕门楼额刻"别有洞天"四字，为苏州园林砖雕之绝。穿过门洞，豁然开朗，遂入园境。',
+        mapX:50,mapY:38,
+        hotspots:[
+          {x:50,y:45,name:'砖 雕 门 楼',detail:'门楼高逾丈许，砖雕仿木结构，额枋间饰人物花鸟，江南砖雕第一。'},
+          {x:22,y:65,name:'芭 蕉',detail:'门侧芭蕉数株，取"蕉叶题诗"意，疏朗有致。'},
+          {x:78,y:58,name:'古 树',detail:'门侧老树一株，枝干遒劲，与门楼互为映衬。'}
+        ]
+      },
+      { name:'世 纶 堂', alias:'正 堂 敞 朗 · 悬 匾 生 辉', img:url(IMG[2]),
+        verse:'世纶堂前坐春风',
+        desc:'艺圃住宅的主厅，世纶堂之名出自《论语》"父子笃，兄弟睦，夫妇和，家之肥也"。堂内悬匾，肃穆雍容。',
+        mapX:58,mapY:30,
+        hotspots:[
+          {x:50,y:45,name:'世 纶 堂 匾',detail:'堂内高悬"世纶堂"匾额，为园主自书，取宗族和睦之义。'},
+          {x:28,y:55,name:'古 柏',detail:'堂前古柏两株，枝叶掩映，取"松柏常青"意。'},
+          {x:75,y:50,name:'石 灯 笼',detail:'庭中石灯笼一盏，玲珑剔透。'}
+        ]
+      },
+      { name:'乳 鱼 亭', alias:'池 中 小 亭 · 九 曲 通 幽', img:url(IMG[3]),
+        verse:'乳鱼亭中观游鱼',
+        desc:'艺圃西北隅的池上小亭，因池中旧有石雕乳鱼得名。亭在水中，以九曲桥与岸相连，小而精妙。',
+        mapX:30,mapY:58,
+        hotspots:[
+          {x:50,y:50,name:'乳 鱼 亭',detail:'亭为四角攒尖顶，四周有围栏，凭栏可观游鱼戏藻。'},
+          {x:25,y:35,name:'九 曲 桥',detail:'石桥九折，通向亭中，步步换景。'},
+          {x:75,y:60,name:'荷 叶',detail:'池中荷叶田田，与小亭互为掩映。'}
+        ]
+      },
+      { name:'思 嗜 轩', alias:'书 斋 小 院 · 曲 廊 绕 之', img:url(IMG[4]),
+        verse:'思嗜轩前读好书',
+        desc:'艺圃的书斋小院，绕以曲廊，院中植竹叠石，环境清幽。主人读书作画于此，是园中最文雅的一处。',
+        mapX:72,mapY:52,
+        hotspots:[
+          {x:50,y:45,name:'思 嗜 轩',detail:'三间书斋，取"思嗜"命名，读书求道之所。'},
+          {x:25,y:60,name:'湖 石 叠 峰',detail:'院中湖石叠成小峰，瘦皱漏透，姿态各异。'},
+          {x:75,y:35,name:'修 竹',detail:'窗外修竹数竿，风过有声。'}
+        ]
+      },
+      { name:'延 光 阁', alias:'园 中 高 处 · 望 尽 烟 水', img:url(IMG[5]),
+        verse:'延光阁上望烟水',
+        desc:'艺圃最高的楼阁，登之可俯瞰全园池馆与假山，把园中景致尽收眼底。',
+        mapX:68,mapY:30,
+        hotspots:[
+          {x:50,y:45,name:'延 光 阁',detail:'楼阁两层，飞檐翘角，为艺圃的制高点。'},
+          {x:28,y:58,name:'俯 视 全 园',detail:'凭栏四顾，池水假山，历历在目。'}
+        ]
+      },
+      { name:'芹 庐', alias:'小 院 清 幽 · 蔬 畦 一 角', img:url(IMG[7]),
+        verse:'芹庐小院种蔬菜',
+        desc:'艺圃东北角的小院，曾为园中蔬圃所在，名"芹庐"。今虽改作居所，而疏淡田园之气犹存。',
+        mapX:30,mapY:32,
+        hotspots:[
+          {x:50,y:50,name:'芹 庐 院',detail:'小院仅一隅，粉墙围合，朴素安静。'},
+          {x:30,y:65,name:'古 树',detail:'院中老树一株，枝叶扶疏。'}
+        ]
+      }
+    ],
+    history:[
+      {era:'明嘉靖年间',event:'袁氏于此建宅园，初名"醉颖堂"。'},
+      {era:'清初',event:'孔氏购得，改名"药圃"，取《论语》"越小国如多，邾婁曰：彼哉！彼哉！非吾党之小卒"之义。'},
+      {era:'清康熙',event:'大学士文洪购得，扩建修治，正式名"艺圃"。'},
+      {era:'清乾隆末',event:'园归陆氏，增多亭轩，仍守旧观。'},
+      {era:'民国',event:'庞元济购得，一度易主。'},
+      {era:'1955年',event:'苏州工艺美术研究所迁入，园内辟作漆器工艺研究室。'},
+      {era:'2000年',event:'列入《世界文化遗产名录》（扩展项目）。'}
+    ],
+    features:[
+      {no:'一',name:'别 有 洞 天',tag:'砖雕门楼',desc:'江南砖雕之绝，园之门户与眼目。'},
+      {no:'二',name:'世 纶 堂',tag:'正堂',desc:'住宅主厅，匾额高悬，取宗族和睦之义。'},
+      {no:'三',name:'乳 鱼 亭',tag:'池亭',desc:'池中小亭，九曲桥通之。'},
+      {no:'四',name:'思 嗜 轩',tag:'书斋',desc:'曲廊环绕，竹石清幽。'},
+      {no:'五',name:'延 光 阁',tag:'楼阁',desc:'园中最高处，可俯瞰全园。'},
+      {no:'六',name:'芹 庐',tag:'小院',desc:'东北隅小院，蔬圃旧址。'}
+    ],
+    poems:[
+      {text:'曲径通幽处<br>别有一洞天',author:'艺圃 · 别有洞天'},
+      {text:'世纶敦厚族<br>艺圃得书香',author:'清 · 艺圃旧题'},
+      {text:'明月松间照<br>清泉石上流',author:'唐 · 王维《山居秋暝》'}
+    ]
+  }
+};
+
+const GARDEN_ORDER = ['zhuozheng','liu','wangshi','shizi','canglang','yi','yipu'];
+
+/* ============ 渲染函数 ============ */
+function getGardenFromUrl(){
+  const params = new URLSearchParams(window.location.search);
+  let id = params.get('id') || 'zhuozheng';
+  if (!GARDENS[id]) id = 'zhuozheng';
+  return id;
+}
+
+function renderGarden(id){
+  const g = GARDENS[id];
+  document.title = g.name + ' · 苏州园林志';
+  
+  const idx = GARDEN_ORDER.indexOf(id);
+  const quickNav = GARDEN_ORDER.map((k, i) => 
+    `<a href="garden.html?id=${k}" class="${k===id?'active':''}" title="${GARDENS[k].name}">${GARDENS[k].name.replace(/\s/g,'')}</a>`
+  ).join('');
+  document.getElementById('quick-nav').innerHTML = quickNav;
+  document.getElementById('nav-cur').textContent = g.name.replace(/\s/g,'');
+  
+  const otherGardens = GARDEN_ORDER.filter(k => k !== id).map(k => {
+    const og = GARDENS[k];
+    const heroFn = k === 'zhuozheng' ? 'heroZhuozheng'
+                : k === 'liu' ? 'heroLiu'
+                : k === 'wangshi' ? 'heroWangshi'
+                : k === 'shizi' ? 'heroShizi'
+                : k === 'canglang' ? 'heroCanglang'
+                : k === 'yi' ? 'heroYi' : 'heroZhuozheng';
+    return `<a class="other-card" href="garden.html?id=${k}">
+      <div class="img"><div class="illu" data-hero="${heroFn}" data-photo-key="card-${k}"></div></div>
+      <div class="body">
+        <div class="name">${og.name}</div>
+        <div class="py">${og.alias}</div>
+        <div class="go">入园 →</div>
+      </div>
+    </a>`;
+  }).join('');
+  
+  // 名景卡片：能对上 walker 场景的复用同一张照片，一图两用
+  const archCards = g.features.map((f, k) => {
+    const si = g.scenes.findIndex(s => s.name.replace(/\s/g,'') === f.name.replace(/\s/g,''));
+    const key = si >= 0 ? `${id}-scene-${si}` : `${id}-feature-${k}`;
+    const fnName = illuForName(f.name) || HERO_FN[id] || 'heroZhuozheng';
+    return `
+    <div class="arch-card">
+      <span class="seal-corner">园</span>
+      <span class="no">${f.no}</span>
+      <div class="arch-illu" data-arch-fn="${fnName}" data-photo-key="${key}"></div>
+      <h4>${f.name}</h4>
+      <span class="tag">${f.tag}</span>
+      <p>${f.desc}</p>
+    </div>
+  `;
+  }).join('');
+  
+  const timeline = g.history.map(h => `
+    <div class="timeline-item">
+      <span class="era">${h.era}</span>
+      <span class="event">${h.event}</span>
+    </div>
+  `).join('');
+  
+  const poems = g.poems.map((p, i) => `
+    <div class="poem-item">
+      <span class="quote-mark">"</span>
+      <div class="poem-text">${p.text}</div>
+      <div class="poem-author">${p.author}</div>
+      ${i < g.poems.length - 1 ? '<div class="poem-divider"><span class="bar"></span><span class="diamond"></span><span class="bar"></span></div>' : ''}
+    </div>
+  `).join('');
+  
+  document.getElementById('app').innerHTML = `
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-img" id="hero-img"></div>
+      <div class="hero-frame"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">${g.eyebrow}</div>
+        <h1 class="hero-title">${g.name}</h1>
+        <div class="hero-py">${g.alias}</div>
+        <div class="hero-verse">${g.introVerse.split('<br>').map(l => l).join(' · ')}<br><span class="accent">— ${g.introAuthor}</span></div>
+        <div class="hero-tags">
+          ${g.tags.map(t => `<span>${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="scroll-hint">向 下 漫 步<div class="arrow"></div></div>
+    </section>
+
+    <!-- 速览信息条 -->
+    <section class="quick-info">
+      <div class="quick-grid">
+        <div class="quick-item">
+          <span class="k">始 建 年 代</span>
+          <span class="v">${g.era}</span>
+          <span class="en">建 园 之 始</span>
+        </div>
+        <div class="quick-item">
+          <span class="k">造 园 者</span>
+          <span class="v">${g.founder}</span>
+          <span class="en">主 人 之 名</span>
+        </div>
+        <div class="quick-item">
+          <span class="k">园 林 面 积</span>
+          <span class="v">${g.area}</span>
+          <span class="en">园 之 大 小</span>
+        </div>
+        <div class="quick-item">
+          <span class="k">列 入 世 遗</span>
+          <span class="v">${g.unesco}</span>
+          <span class="en">世 遗 年 份</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分隔 -->
+    <div class="section-divider">
+      <div class="ornament">
+        <span class="bar"></span>
+        <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+        </svg>
+        <span>移 · 步 · 换 · 景</span>
+        <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+        </svg>
+        <span class="diamond"></span>
+        <span class="bar"></span>
+      </div>
+      <h2>园 林 漫 步<span class="en">漫 步 园 林</span></h2>
+      <p>点击场景缩略图或左右按钮，移步换景，漫步园林之间。每完成一处游览，皆盖印章一枚；走完六处，即得「园志」完游之印。</p>
+    </div>
+
+    <!-- 移步换景 mini-game -->
+    <section class="walker-section">
+      <div class="walker">
+        <!-- 游戏条 -->
+        <div class="game-bar">
+          <div class="title">漫 步 ${g.name}</div>
+          <div class="progress">已游 <span class="num" id="progress-num">0</span> / ${g.scenes.length}</div>
+          <div class="actions">
+            <button id="reset-btn">重 游</button>
+            <button id="map-btn">园 林 图</button>
+          </div>
+        </div>
+        <div class="progress-bar" id="progress-bar"></div>
+
+        <!-- 舞台 -->
+        <div class="stage" id="stage">
+          <div class="stage-frame"></div>
+          <div class="stage-bg cur" id="stage-bg"></div>
+          <div class="stage-overlay-tl" id="stage-seal">${g.name.replace(/\s/g,'').slice(0,2)}</div>
+          <div class="stage-overlay-tr">
+            <div class="scene-num" id="scene-no">01 / 0${g.scenes.length}</div>
+            <div class="scene-en" id="scene-en"></div>
+          </div>
+          <div class="stage-info">
+            <div class="text">
+              <div class="name" id="scene-name"></div>
+              <div class="verse" id="scene-verse"></div>
+            </div>
+            <div class="desc">
+              <div id="scene-desc"></div>
+              <div class="spots" id="scene-spots"></div>
+            </div>
+          </div>
+          <button class="step-btn prev" id="prev-btn" aria-label="上一步">←</button>
+          <button class="step-btn next" id="next-btn" aria-label="下一步">→</button>
+          <button class="map-toggle" id="map-toggle">园 林 平 面 图</button>
+        </div>
+
+        <!-- 场景走廊 -->
+        <div class="scene-strip">
+          <div class="strip-header">
+            <span class="strip-title">场 景 走 廊</span>
+            <span class="strip-hint">点 击 缩 略 图 即 可 跳 转 场 景</span>
+          </div>
+          <div class="scene-list" id="scene-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 历史沿革 -->
+    <section class="history">
+      <div class="section-divider" style="padding:0 0 30px">
+        <div class="ornament">
+          <span class="bar"></span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span>历 · 史 · 沿 · 革</span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span class="diamond"></span>
+          <span class="bar"></span>
+        </div>
+        <h2>园 之 史<span class="en">历 史 沿 革</span></h2>
+      </div>
+      <div class="history-grid">
+        <div class="history-text">
+          <div class="lead">园 之 沧 桑 录</div>
+          <h3>${g.name}<br>数 百 年 沧 桑</h3>
+          <p>${g.history[0].event}</p>
+          <p>自${g.history[0].era}至今，${g.name}数易其主，屡经修缮，每一次易主都是一次文化的叠加。造园者的匠心、园主人的雅趣、文人墨客的题咏，共同塑造了今日之${g.name}。</p>
+        </div>
+        <div class="timeline">${timeline}</div>
+      </div>
+    </section>
+
+    <!-- 建筑之美 -->
+    <section class="architecture">
+      <div class="section-divider" style="padding:0 0 30px">
+        <div class="ornament">
+          <span class="bar"></span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span>建 · 筑 · 之 · 美</span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span class="diamond"></span>
+          <span class="bar"></span>
+        </div>
+        <h2>六 大 名 景<span class="en">六 大 名 景</span></h2>
+      </div>
+      <div class="arch-grid">
+        ${archCards}
+      </div>
+    </section>
+
+    <!-- 名诗佳联 -->
+    <section class="poetry">
+      <div class="section-divider" style="padding:0 0 30px">
+        <div class="ornament" style="color:rgba(243,234,181,0.7)">
+          <span class="bar" style="background:linear-gradient(90deg,transparent,var(--c-gold),transparent)"></span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="var(--c-gold)" stroke-width="1.1"/>
+          </svg>
+          <span>名 · 诗 · 佳 · 联</span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="var(--c-gold)" stroke-width="1.1"/>
+          </svg>
+          <span class="diamond" style="background:var(--c-gold)"></span>
+          <span class="bar" style="background:linear-gradient(90deg,transparent,var(--c-gold),transparent)"></span>
+        </div>
+        <h2 style="color:var(--c-paper)">诗 意 ${g.name}<span class="en" style="color:var(--c-gold)">名 诗 佳 联</span></h2>
+      </div>
+      <div class="poem-list">${poems}</div>
+    </section>
+
+    <!-- 游览指南 -->
+    <section class="visit">
+      <div class="section-divider" style="padding:0 0 30px">
+        <div class="ornament">
+          <span class="bar"></span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span>游 · 览 · 指 · 南</span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span class="diamond"></span>
+          <span class="bar"></span>
+        </div>
+        <h2>入 园 须 知<span class="en">游 览 指 南</span></h2>
+      </div>
+      <div class="visit-grid">
+        <div class="visit-card">
+          <span class="icon">票</span>
+          <div class="label">门 票</div>
+          <div class="value">¥70 起</div>
+          <div class="en">门 票</div>
+        </div>
+        <div class="visit-card">
+          <span class="icon">时</span>
+          <div class="label">开 放 时 间</div>
+          <div class="value">07:30 - 17:00</div>
+          <div class="en">开 放 时 间</div>
+        </div>
+        <div class="visit-card">
+          <span class="icon">期</span>
+          <div class="label">最 佳 季 节</div>
+          <div class="value">春 · 秋</div>
+          <div class="en">最 佳 时 令</div>
+        </div>
+        <div class="visit-card">
+          <span class="icon">地</span>
+          <div class="label">地 址</div>
+          <div class="value" style="font-size:14px">${g.location}</div>
+          <div class="en">园 址</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 其他园林 -->
+    <section class="other-gardens">
+      <div class="section-divider" style="padding:0 0 30px">
+        <div class="ornament">
+          <span class="bar"></span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span>其 · 他 · 名 · 园</span>
+          <svg width="56" height="20" viewBox="0 0 56 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2,18 L2,10 L8,10 L8,16 L14,16 L14,10 L20,10 L20,16 L26,16 L26,10 L32,10 L32,16 L38,16 L38,10 L44,10 L44,16 L50,16 L50,10 L54,10" fill="none" stroke="#1a1410" stroke-width="1.1"/>
+          </svg>
+          <span class="diamond"></span>
+          <span class="bar"></span>
+        </div>
+        <h2>姑 苏 园 林 志<span class="en">姑 苏 其 他 名 园</span></h2>
+      </div>
+      <div class="other-grid">${otherGardens}</div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="foot">
+      <div class="foot-inner">
+        <div class="foot-brand">咫 尺 乾 坤<small>苏 州 园 林 志 · 江 南 烟 雨</small></div>
+        <div class="foot-links">
+          <a href="index.html">回首页</a>
+          <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">回顶部</a>
+          <a href="javascript:location.reload()">重游本园</a>
+        </div>
+        <div class="foot-credit">© 丙 午 年 · 江 南 烟 雨</div>
+      </div>
+    </footer>
+
+    <!-- 园林图弹窗 -->
+    <div class="map-modal" id="map-modal">
+      <div class="map-frame">
+        <button class="map-close" id="map-close">×</button>
+        <h3>${g.name} 平 面 图</h3>
+        <div class="map-py">${g.alias} · 园 林 平 面 图</div>
+        <svg class="map-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+          ${generateMapSVG(g)}
+        </svg>
+        <div class="map-legend">
+          <span><span class="dot" style="background:#2f5a6e"></span>水面</span>
+          <span><span class="dot" style="background:#a66a3d"></span>建筑</span>
+          <span><span class="dot" style="background:#5a6b3a"></span>山石</span>
+          <span><span class="dot" style="background:#b13a2f"></span>当前位置</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 完成弹窗 -->
+    <div class="complete-overlay" id="complete-overlay">
+      <button class="complete-close" id="complete-close">关 闭</button>
+      <div class="complete-seal">
+        <div class="big">园<br>志</div>
+        <div class="small">完 · 游 · 印</div>
+      </div>
+      <div class="complete-msg">
+        ${g.name} · 漫 步 完 成
+        <small>— 六 景 已 遍 · 愿 君 再 游 —</small>
+      </div>
+    </div>
+  `;
+
+  // 注入灯笼至 hero
+  const hero = document.querySelector('.hero');
+  if (hero && !document.querySelector('.hero-lantern')) {
+    const lanternL = document.createElement('div');
+    lanternL.innerHTML = `<svg class="hero-lantern l" viewBox="0 0 60 130" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="0" x2="30" y2="32" stroke="#f3ead7" stroke-width=".6" opacity=".7"/>
+      <rect x="20" y="30" width="20" height="6" fill="#5a3a26"/>
+      <ellipse cx="30" cy="64" rx="22" ry="30" fill="#b13a2f" stroke="#f3ead7" stroke-width=".8"/>
+      <line x1="30" y1="34" x2="30" y2="94" stroke="#f3ead7" stroke-width=".5" opacity=".7"/>
+      <ellipse cx="30" cy="46" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".55"/>
+      <ellipse cx="30" cy="64" rx="22" ry="6" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".55"/>
+      <ellipse cx="30" cy="82" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".55"/>
+      <rect x="20" y="92" width="20" height="5" fill="#5a3a26"/>
+      <line x1="30" y1="97" x2="30" y2="105" stroke="#b58d4e" stroke-width="1"/>
+      <path d="M27,105 q3,8 6,0 M28,107 l1,16 M30,107 v18 M32,107 l-1,16" fill="none" stroke="#b58d4e" stroke-width=".6"/>
+      <text x="30" y="70" text-anchor="middle" font-family="serif" font-size="22" fill="#f3ead7" font-weight="700" opacity=".95">福</text>
+    </svg>`;
+    hero.appendChild(lanternL.firstElementChild);
+
+    const lanternR = document.createElement('div');
+    const pickedChar = (g.name || '').replace(/\s/g,'').charAt(0) || '园';
+    lanternR.innerHTML = `<svg class="hero-lantern r" viewBox="0 0 60 130" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="0" x2="30" y2="32" stroke="#f3ead7" stroke-width=".6" opacity=".7"/>
+      <rect x="20" y="30" width="20" height="6" fill="#5a3a26"/>
+      <ellipse cx="30" cy="64" rx="22" ry="30" fill="#b13a2f" stroke="#f3ead7" stroke-width=".8"/>
+      <line x1="30" y1="34" x2="30" y2="94" stroke="#f3ead7" stroke-width=".5" opacity=".6"/>
+      <ellipse cx="30" cy="46" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".5"/>
+      <ellipse cx="30" cy="64" rx="22" ry="6" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".5"/>
+      <ellipse cx="30" cy="82" rx="16" ry="3.5" fill="none" stroke="#f3ead7" stroke-width=".4" opacity=".5"/>
+      <rect x="20" y="92" width="20" height="5" fill="#5a3a26"/>
+      <line x1="30" y1="97" x2="30" y2="105" stroke="#b58d4e" stroke-width="1"/>
+      <path d="M27,105 q3,8 6,0 M28,107 l1,16 M30,107 v18 M32,107 l-1,16" fill="none" stroke="#b58d4e" stroke-width=".6"/>
+      <text x="30" y="70" text-anchor="middle" font-family="serif" font-size="20" fill="#f3ead7" font-weight="700" opacity=".95">${pickedChar}</text>
+    </svg>`;
+    hero.appendChild(lanternR.firstElementChild);
+  }
+
+  setupWalker(g);
+}
+
+/* ============ 园林平面图 SVG 生成 ============ */
+function generateMapSVG(g){
+  const scenes = g.scenes;
+  // 通用园林图：矩形围墙 + 水面 + 建筑 + 山石 + 标注
+  let svg = '';
+  
+  // 外墙
+  svg += `<rect x="20" y="20" width="760" height="460" fill="none" stroke="#3d3329" stroke-width="3" stroke-dasharray="2,4"/>`;
+  svg += `<rect x="40" y="40" width="720" height="420" fill="none" stroke="#3d3329" stroke-width="1.5"/>`;
+  
+  // 入口
+  svg += `<rect x="380" y="455" width="40" height="20" fill="#872821"/>`;
+  svg += `<text x="400" y="495" text-anchor="middle" font-family="'Ma Shan Zheng',serif" font-size="14" fill="#1a1410">入</text>`;
+  
+  // 北侧
+  svg += `<text x="400" y="32" text-anchor="middle" font-family="'Liu Jian Mao Cao',serif" font-size="14" fill="#3d3329" font-style="italic">— 北 —</text>`;
+  
+  // 通用水面（中心偏左）
+  svg += `<path d="M 100 280 Q 180 240 280 250 T 480 290 Q 500 350 380 360 T 150 340 Z" 
+    fill="#2f5a6e" opacity="0.3" stroke="#2f5a6e" stroke-width="1.5"/>`;
+  svg += `<text x="220" y="320" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="13" fill="#2f5a6e" font-style="italic" opacity="0.7">彩 霞 池</text>`;
+  
+  // 山石区域（西部）
+  svg += `<g opacity="0.6">
+    <path d="M 80 130 L 110 100 L 140 130 L 130 160 L 90 160 Z" fill="#5a6b3a"/>
+    <path d="M 140 110 L 170 80 L 200 110 L 190 145 L 150 145 Z" fill="#5a6b3a"/>
+    <path d="M 200 130 L 230 100 L 260 130 L 250 165 L 210 165 Z" fill="#5a6b3a"/>
+  </g>`;
+  svg += `<text x="170" y="170" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="11" fill="#5a6b3a" opacity="0.7">假 山 区</text>`;
+  
+  // 建筑小图标
+  function building(x, y, label){
+    return `
+      <g>
+        <rect x="${x-20}" y="${y-12}" width="40" height="20" fill="#a66a3d" stroke="#1a1410" stroke-width="1"/>
+        <polygon points="${x-24},${y-12} ${x},${y-22} ${x+24},${y-12}" fill="#872821" stroke="#1a1410" stroke-width="1"/>
+        <text x="${x}" y="${y+30}" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="11" fill="#1a1410">${label}</text>
+      </g>
+    `;
+  }
+  
+  // 场景点
+  scenes.forEach((s, i) => {
+    const x = 80 + (s.mapX / 100) * 640;
+    const y = 60 + (s.mapY / 100) * 380;
+    svg += `<g class="map-pt" data-idx="${i}">
+      <circle cx="${x}" cy="${y}" r="22" fill="none" stroke="#b13a2f" stroke-width="1" opacity="0.3"/>
+      <circle cx="${x}" cy="${y}" r="14" fill="#b13a2f" stroke="#872821" stroke-width="2" class="map-pt-dot" data-idx="${i}"/>
+      <text x="${x}" y="${y+5}" text-anchor="middle" font-family="'Ma Shan Zheng',serif" font-size="12" fill="#f3ead7">${['一','二','三','四','五','六'][i]}</text>
+      <text x="${x}" y="${y-30}" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" fill="#1a1410" font-weight="500">${s.name.replace(/\s/g,'')}</text>
+    </g>`;
+  });
+  
+  return svg;
+}
+
+/* ============ 移步换景 游戏逻辑 ============ */
+function setupWalker(g){
+  const gardenId = GARDEN_ORDER.find(k => GARDENS[k] === g);
+  let currentScene = 0;
+  let visited = new Set();
+  const stageBg = document.getElementById('stage-bg');
+  const sceneList = document.getElementById('scene-list');
+  const sceneName = document.getElementById('scene-name');
+  const sceneVerse = document.getElementById('scene-verse');
+  const sceneDesc = document.getElementById('scene-desc');
+  const sceneSpots = document.getElementById('scene-spots');
+  const sceneNo = document.getElementById('scene-no');
+  const sceneEn = document.getElementById('scene-en');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const progressNum = document.getElementById('progress-num');
+  const progressBar = document.getElementById('progress-bar');
+  const resetBtn = document.getElementById('reset-btn');
+  const mapBtn = document.getElementById('map-btn');
+  const mapToggle = document.getElementById('map-toggle');
+  const mapModal = document.getElementById('map-modal');
+  const mapClose = document.getElementById('map-close');
+  const completeOverlay = document.getElementById('complete-overlay');
+  const completeClose = document.getElementById('complete-close');
+  const stage = document.getElementById('stage');
+
+  // 场景名 → 插画函数映射见顶层 SCENE_ILLU
+
+  function getSceneIllu(name){
+    return illuForName(name) || HERO_FN[gardenId] || 'heroZhuozheng';
+  }
+
+  // 照片到位后把 SVG 兜底层淡出：两层叠加时 SVG 可能压在照片之上
+  window.dropIlluFallback = function(img){
+    const fb = img && img.previousElementSibling;
+    if (!fb || fb.className !== 'svg-fallback') return;
+    fb.style.transition = 'opacity .8s ease';
+    fb.style.opacity = '0';
+    setTimeout(function(){ if (fb.parentNode) fb.remove(); }, 1000);
+  };
+
+  // 渲染场景缩略图（只建一次，之后只改状态类，避免换景时图片重载闪烁）
+  function buildSceneList(){
+    sceneList.innerHTML = g.scenes.map((s, i) => {
+      const illuName = getSceneIllu(s.name);
+      const svgFn = GP[illuName] || GP[HERO_FN[gardenId]] || GP.heroZhuozheng;
+      const photoUrl = GP.photoFor(`${gardenId}-scene-${i}`);
+      return `
+      <div class="scene-thumb" data-idx="${i}">
+        <div class="illu" data-thumb-idx="${i}">
+          <div class="svg-fallback" style="position:absolute;inset:0;z-index:1">${svgFn()}</div>
+          <img src="${photoUrl}" alt="${s.name}" loading="lazy"
+               onload="this.classList.add('loaded');window.dropIlluFallback(this)" onerror="this.remove()">
+        </div>
+        <div class="thumb-no">${String(i+1).padStart(2,'0')}</div>
+        <div class="thumb-name">${s.name}</div>
+        <div class="visited-mark">已<br>游</div>
+      </div>`;
+    }).join('');
+    sceneList.querySelectorAll('.scene-thumb').forEach(el => {
+      el.addEventListener('click', () => goToScene(+el.dataset.idx));
+    });
+  }
+
+  // 只更新缩略图状态：当前景高亮 + 已游章
+  function updateSceneListState(){
+    sceneList.querySelectorAll('.scene-thumb').forEach((el, i) => {
+      el.classList.toggle('current', i === currentScene);
+      el.classList.toggle('visited', visited.has(i));
+    });
+  }
+
+  // 景中之物：原热点圆点的坐标对应平面图，与照片对不上，改为文字条
+  function renderSpots(scene){
+    if (!scene.hotspots || scene.hotspots.length === 0){
+      sceneSpots.innerHTML = '';
+      return;
+    }
+    sceneSpots.innerHTML = scene.hotspots.map(h => `
+      <div class="spot-item">
+        <span class="spot-name">${h.name}</span>
+        <span class="spot-detail">${h.detail}</span>
+      </div>
+    `).join('');
+  }
+
+  // 舞台铺图：实景照片在上，SVG 兜底在下
+  function fillStage(scene, idx){
+    const illuName = getSceneIllu(scene.name);
+    const svgFn = GP[illuName] || GP[HERO_FN[gardenId]] || GP.heroZhuozheng;
+    const photoUrl = GP.photoFor(`${gardenId}-scene-${idx}`);
+    stageBg.innerHTML = '';
+    // SVG 兜底层
+    const svgWrap = document.createElement('div');
+    svgWrap.style.cssText = 'position:absolute;inset:0;z-index:1';
+    svgWrap.innerHTML = svgFn();
+    stageBg.appendChild(svgWrap);
+    // 实景照片上层（本地就位后淡入）
+    const img = new Image();
+    img.alt = scene.name;
+    img.loading = 'eager';
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;filter:saturate(0.9) contrast(1.05) sepia(0.08);opacity:0;transition:opacity .8s ease';
+    img.onload = function(){
+      const self = this;
+      self.style.opacity = '1';
+      // 兜底层同步淡出，避免两层叠加
+      svgWrap.style.transition = 'opacity .8s ease';
+      svgWrap.style.opacity = '0';
+      setTimeout(function(){ if (svgWrap.parentNode) svgWrap.remove(); }, 1000);
+    };
+    img.onerror = function(){ this.remove(); };
+    img.src = photoUrl;
+    stageBg.appendChild(img);
+  }
+
+  // 显示一景：画面与文字同步
+  function showScene(scene, idx){
+    fillStage(scene, idx);
+    // 容器立即复位：新画面自身做淡入（SVG 底 → 照片）
+    stageBg.style.transition = 'none';
+    stageBg.style.opacity = '1';
+    void stageBg.offsetWidth;        // 强制回流，让「无过渡」生效
+    stageBg.style.transition = '';
+    sceneName.textContent = scene.name;
+    sceneVerse.textContent = scene.verse;
+    sceneDesc.textContent = scene.desc;
+    sceneNo.textContent = `0${idx+1} / 0${g.scenes.length}`;
+    sceneEn.textContent = scene.alias;
+    // 左上印章保持园林名（与下方场景标题不再重复）
+    renderSpots(scene);
+  }
+
+  // 落章：盖在当前画面上，照片全程留在屏上
+  let liveStamp = null;
+  function stampSeal(){
+    if (liveStamp && liveStamp.parentNode) liveStamp.remove();
+    const stamp = document.createElement('div');
+    stamp.className = 'stamp-flash';
+    stamp.textContent = '游';
+    stage.appendChild(stamp);
+    liveStamp = stamp;
+    return stamp;
+  }
+
+  // 章随画面一同淡出
+  function fadeStamp(stamp){
+    if (!stamp || !stamp.parentNode) return;
+    stamp.style.animation = 'none';
+    stamp.style.opacity = '0';
+    setTimeout(() => {
+      if (stamp.parentNode) stamp.remove();
+      if (liveStamp === stamp) liveStamp = null;
+    }, 500);
+  }
+
+  // 切换场景
+  let swapToken = 0;
+  function goToScene(idx, direction = 'next', initial = false, allowStamp = true){
+    if (idx < 0) idx = g.scenes.length - 1;
+    if (idx >= g.scenes.length) idx = 0;
+    const scene = g.scenes[idx];
+    const leaving = currentScene;     // 即将离开的一景
+    currentScene = idx;
+
+    // 离景盖章：这一景看完才算「已游」，章落在旧画面上，此时照片不消失
+    let stamp = null;
+    const sealLeaving = allowStamp && !initial && leaving !== idx && !visited.has(leaving);
+    if (sealLeaving){
+      visited.add(leaving);
+      stamp = stampSeal();
+    }
+
+    const myToken = ++swapToken;
+    if (initial){
+      showScene(scene, idx);           // 首景直接铺图
+    } else {
+      // 章落定后，画面才淡出换图
+      const hold = sealLeaving ? 850 : 0;
+      setTimeout(() => {
+        if (myToken !== swapToken) return;   // 连续点击时只认最后一次
+        fadeStamp(stamp);
+        stageBg.style.opacity = '0';           // 淡出旧画面
+        setTimeout(() => {
+          if (myToken !== swapToken) return;
+          showScene(scene, idx);               // 换上新画面
+        }, 450);
+      }, hold);
+    }
+
+    updateSceneListState();
+    updateProgress();
+
+    // 地图点更新
+    document.querySelectorAll('.map-pt-dot').forEach((d, i) => {
+      d.setAttribute('r', i === idx ? '20' : '14');
+      d.setAttribute('fill', i === idx ? '#b13a2f' : (visited.has(i) ? '#872821' : '#b13a2f'));
+    });
+  }
+  
+  // 完成弹窗延迟开启：重游时须撤销，避免清零后又弹出
+  let completeTimer = null;
+  function updateProgress(){
+    progressNum.textContent = visited.size;
+    const pct = (visited.size / g.scenes.length) * 100;
+    progressBar.style.setProperty('--progress', pct + '%');
+
+    // 完成检测
+    if (visited.size === g.scenes.length){
+      clearTimeout(completeTimer);
+      completeTimer = setTimeout(() => {
+        completeOverlay.classList.add('open');
+      }, 1200);
+    }
+  }
+  
+  prevBtn.addEventListener('click', () => goToScene(currentScene - 1, 'prev'));
+  nextBtn.addEventListener('click', () => goToScene(currentScene + 1, 'next'));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') goToScene(currentScene - 1);
+    if (e.key === 'ArrowRight') goToScene(currentScene + 1);
+  });
+  
+  resetBtn.addEventListener('click', () => {
+    visited.clear();                        // 清空所有「已游」章
+    clearTimeout(completeTimer);
+    completeOverlay.classList.remove('open');
+    goToScene(0, 'next', false, false);     // 回到首景，重游不盖章
+  });
+  
+  // 地图开关
+  function openMap(){ mapModal.classList.add('open'); }
+  function closeMap(){ mapModal.classList.remove('open'); }
+  mapBtn.addEventListener('click', openMap);
+  mapToggle.addEventListener('click', openMap);
+  mapClose.addEventListener('click', closeMap);
+  mapModal.addEventListener('click', (e) => { if (e.target === mapModal) closeMap(); });
+  
+  // 地图点点击
+  document.querySelectorAll('.map-pt').forEach(pt => {
+    pt.addEventListener('click', () => {
+      closeMap();
+      goToScene(+pt.dataset.idx);
+    });
+    pt.style.cursor = 'pointer';
+  });
+  
+  completeClose.addEventListener('click', () => completeOverlay.classList.remove('open'));
+  
+  // 初始化（首景直接铺图，不盖章）
+  buildSceneList();
+  goToScene(0, 'next', true);
+}
+
+/* ============ 入场观察 ============ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in-view');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+/* ============ 水墨涟漪（与首页一致） ============ */
+const canvas = document.getElementById('ripple-canvas');
+const ctx = canvas.getContext('2d');
+let ripples = [];
+let mouseX = -1000, mouseY = -1000;
+let lastDrop = 0;
+
+function resizeCanvas(){
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Ripple {
+  constructor(x, y, power = 1){
+    this.x = x; this.y = y;
+    this.radius = 3;
+    this.maxRadius = (150 + Math.random() * 110) * power;
+    this.speed = (0.46 + Math.random() * 0.3) * (0.9 + power * 0.18);
+    this.life = 1;
+    this.decay = (0.0038 + Math.random() * 0.0016) / power;
+    this.wobble = Math.random() * Math.PI * 2;
+    this.spin = 0.004 + Math.random() * 0.007;
+    this.ink = 0.72 + Math.random() * 0.28;
+  }
+  update(){
+    this.radius += this.speed;
+    this.wobble += this.spin;
+    this.life -= this.decay;
+    if (this.radius > this.maxRadius) this.life = 0;
+  }
+  draw(){
+    if (this.life <= 0) return;
+    const { x, y, radius, life, wobble } = this;
+    // 二次衰减：墨痕收尾更柔
+    const fade = life * life * this.ink;
+    if (fade <= 0.003) return;
+    const R = Math.max(0.5, radius + Math.sin(wobble) * 2.2);
+    const k = 0.93 + Math.sin(wobble * 0.63) * 0.06;  // 略扁，像手绘水波
+    const ry = R * k;
+
+    // 外层水墨晕：边缘完全化开
+    const halo = ctx.createRadialGradient(x, y, R * 0.5, x, y, R * 1.05);
+    halo.addColorStop(0, 'rgba(31,26,20,0)');
+    halo.addColorStop(0.70, `rgba(31,26,20,${0.045 * fade})`);
+    halo.addColorStop(0.93, `rgba(31,26,20,${0.12 * fade})`);
+    halo.addColorStop(1, 'rgba(31,26,20,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.ellipse(x, y, R * 1.05, ry * 1.05, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 三道由浓到淡的水波线，扩散越远越细
+    const rings = [[1, 0.19, 1.1], [0.78, 0.125, 0.9], [0.54, 0.065, 0.7]];
+    for (const r of rings){
+      const rr = Math.max(0.4, R * r[0]);
+      ctx.strokeStyle = `rgba(31,26,20,${r[1] * fade})`;
+      ctx.lineWidth = r[2];
+      ctx.beginPath();
+      ctx.ellipse(x, y, rr, rr * k, wobble * 0.06, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // 落笔处的淡墨点，随扩散很快化开
+    const dot = Math.max(0, 1 - radius / 44);
+    if (dot > 0.02){
+      const dr = Math.max(0.4, radius * 0.85 + 2);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, dr);
+      g.addColorStop(0, `rgba(31,26,20,${0.26 * fade * dot})`);
+      g.addColorStop(1, 'rgba(31,26,20,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, dr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
+// 落墨：慢、疏、克制
+function dropInk(x, y, power){
+  ripples.push(new Ripple(x, y, power));
+  while (ripples.length > 8) ripples.shift();
+}
+
+window.addEventListener('mousemove', e => {
+  const moved = Math.hypot(e.clientX - mouseX, e.clientY - mouseY);
+  mouseX = e.clientX; mouseY = e.clientY;
+  const now = performance.now();
+  // 至少移动 26px 且间隔 240ms 才落一滴：比原来慢得多、稀得多
+  if (moved > 26 && now - lastDrop > 240){
+    lastDrop = now;
+    dropInk(mouseX, mouseY, 1);
+  }
+});
+
+window.addEventListener('touchmove', e => {
+  if (!e.touches[0]) return;
+  const t = e.touches[0];
+  const moved = Math.hypot(t.clientX - mouseX, t.clientY - mouseY);
+  mouseX = t.clientX; mouseY = t.clientY;
+  const now = performance.now();
+  if (moved > 26 && now - lastDrop > 240){
+    lastDrop = now;
+    dropInk(mouseX, mouseY, 1);
+  }
+}, { passive:true });
+
+// 点击 = 滴墨入纸：晕得更慢、更浓
+window.addEventListener('mousedown', e => { dropInk(e.clientX, e.clientY, 1.9); });
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ripples.forEach(r => { r.update(); r.draw(); });
+  ripples = ripples.filter(r => r.life > 0);
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ============ 启动 ============ */
+const id = getGardenFromUrl();
+renderGarden(id);
+
+/* ============ 渲染所有 SVG 插画（实景照片 + SVG 兜底） ============ */
+(function(){
+  if (!window.GP) return;
+
+  function renderPhotoWithSvg(el, photoUrl, svgFn, focus){
+    el.innerHTML = '';
+    const svgWrap = document.createElement('div');
+    svgWrap.className = 'svg-fallback';
+    svgWrap.style.cssText = 'position:absolute;inset:0;z-index:1';
+    if (svgFn) svgWrap.innerHTML = svgFn();
+    el.appendChild(svgWrap);
+    const img = new Image();
+    img.alt = el.dataset.alt || '';
+    img.loading = 'lazy';
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity .8s ease'
+      + (focus ? ';object-position:' + focus : '');
+    img.onload = function(){
+      const self = this;
+      self.style.opacity = '1';
+      // 兜底层同步淡出，避免两层叠加时 SVG 压在照片之上
+      svgWrap.style.transition = 'opacity .8s ease';
+      svgWrap.style.opacity = '0';
+      setTimeout(function(){ if (svgWrap.parentNode) svgWrap.remove(); }, 1000);
+    };
+    img.onerror = function(){ this.remove(); }; // 照片缺失则保留 SVG 兜底
+    img.src = photoUrl;
+    el.appendChild(img);
+  }
+
+  // Hero 大图
+  const heroEl = document.getElementById('hero-img');
+  const heroFn = GP[HERO_FN[id]];
+  if (heroEl && heroFn){
+    renderPhotoWithSvg(heroEl, GP.photoFor(id + '-hero'), heroFn, GARDENS[id].heroFocus);
+  }
+
+  // 其他园林插画（5 张）—— 复用首页卡片照片 card-{gardenId}.jpg
+  document.querySelectorAll('[data-hero]').forEach(el => {
+    const fn = GP[el.dataset.hero];
+    const key = el.dataset.photoKey || 'card-zhuozheng';
+    if (fn) renderPhotoWithSvg(el, GP.photoFor(key), fn);
+  });
+
+  // 名景卡片配图：与 walker 场景共用同一张照片
+  document.querySelectorAll('[data-arch-fn]').forEach(el => {
+    // 插画函数缺失时退回本园主图插画，避免出现空白框
+    const fn = GP[el.dataset.archFn] || GP[HERO_FN[id]] || GP.heroZhuozheng;
+    const key = el.dataset.photoKey;
+    if (key) renderPhotoWithSvg(el, GP.photoFor(key), fn);
+  });
+})();
+
+/* ============ 入场动画 ============ */
+window.addEventListener('load', () => {
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+});
+</script>
+</body>
+</html>
