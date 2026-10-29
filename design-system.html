@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设计系统 · 苏州园林志</title>
+<meta name="description" content="色彩、字体、图标、圆角、阴影、间距、栅格与组件库规范">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.d-doc{position:relative;z-index:2;padding:40px 0 90px}
+.d-toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.d-toc a{padding:6px 14px;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);
+  font-family:var(--f-kai);font-size:13px;letter-spacing:.12em;color:var(--text-2);transition:all var(--t-fast)}
+.d-toc a:hover{border-color:var(--primary);color:var(--primary)}
+.d-block{margin-bottom:64px;scroll-margin-top:92px}
+.d-block__t{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+.d-block__n{font-family:var(--f-latin);font-size:13px;letter-spacing:.2em;color:var(--c-vermilion);opacity:.6}
+.d-block__h{font-family:var(--f-li);font-size:26px;letter-spacing:.12em;color:var(--c-ink)}
+.d-block__d{font-family:var(--f-kai);font-size:13px;color:var(--text-4);letter-spacing:.1em;margin-bottom:24px}
+.d-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+.d-sw{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:var(--surface)}
+.d-sw__c{height:74px;display:flex;align-items:flex-end;justify-content:flex-end;padding:8px}
+.d-sw__hex{font-family:var(--f-latin);font-size:11.5px;padding:2px 7px;border-radius:3px;background:rgba(255,255,255,.82);color:#1a1410}
+.d-sw__b{padding:11px 13px 13px}
+.d-sw__n{font-family:var(--f-xw);font-size:14px;letter-spacing:.08em}
+.d-sw__v{font-family:var(--f-latin);font-size:11.5px;color:var(--text-4);margin-top:3px}
+.d-sw__u{font-family:var(--f-kai);font-size:11px;color:var(--text-4);margin-top:6px;line-height:1.6}
+.d-type{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:var(--surface)}
+.d-type__r{display:grid;grid-template-columns:250px minmax(0,1fr);border-bottom:1px solid var(--border)}
+.d-type__r:last-child{border-bottom:0}
+.d-type__m{padding:18px 20px;background:var(--surface-2);border-right:1px solid var(--border)}
+.d-type__n{font-family:var(--f-xw);font-size:15px;letter-spacing:.06em}
+.d-type__v{font-family:var(--f-latin);font-size:11.5px;color:var(--text-4);margin-top:4px}
+.d-type__u{font-family:var(--f-kai);font-size:11.5px;color:var(--text-4);margin-top:6px;line-height:1.65}
+.d-type__s{padding:18px 22px;display:flex;align-items:center;min-height:64px}
+.d-space{display:flex;flex-wrap:wrap;gap:12px}
+.d-space__i{display:flex;flex-direction:column;align-items:center;gap:7px}
+.d-space__b{background:var(--c-vermilion);opacity:.8;border-radius:2px}
+.d-space__l{font-family:var(--f-latin);font-size:11.5px;color:var(--text-3)}
+.d-spec{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.d-spec__i{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);padding:16px 18px}
+.d-spec__k{font-family:var(--f-kai);font-size:11.5px;letter-spacing:.18em;color:var(--text-4)}
+.d-spec__v{font-family:var(--f-xw);font-size:19px;margin-top:6px;color:var(--c-ink)}
+.d-comp{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);padding:22px}
+.d-comp + .d-comp{margin-top:16px}
+.d-comp__t{font-family:var(--f-xw);font-size:15.5px;letter-spacing:.1em;margin-bottom:4px}
+.d-comp__d{font-family:var(--f-kai);font-size:12.5px;color:var(--text-4);margin-bottom:18px}
+.d-states{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.d-st{background:var(--surface);padding:14px 12px;text-align:center}
+.d-st__n{font-family:var(--f-kai);font-size:12.5px;letter-spacing:.1em;color:var(--text-2)}
+.d-st__d{font-family:var(--f-kai);font-size:11px;color:var(--text-4);margin-top:4px;line-height:1.6}
+.d-ico{display:flex;flex-wrap:wrap;gap:12px}
+.d-ico__i{width:66px;text-align:center}
+.d-ico__b{width:52px;height:52px;margin:0 auto 7px;border:1px solid var(--border);border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;background:var(--surface-2);color:var(--text-2);transition:all var(--t-fast)}
+.d-ico__i:hover .d-ico__b{border-color:var(--primary);color:var(--primary);transform:translateY(-3px)}
+.d-ico__l{font-family:var(--f-kai);font-size:11.5px;color:var(--text-3)}
+.d-brk{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.d-brk__i{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);padding:16px 14px}
+.d-brk__w{font-family:var(--f-latin);font-size:23px;color:var(--primary-deep)}
+.d-brk__d{font-family:var(--f-kai);font-size:11.5px;color:var(--text-3);margin-top:6px;line-height:1.7}
+@media (max-width:1024px){ .d-states{grid-template-columns:repeat(3,1fr)} .d-brk{grid-template-columns:repeat(2,1fr)} .d-type__r{grid-template-columns:1fr} .d-type__m{border-right:0;border-bottom:1px solid var(--border)} }
+@media (max-width:600px){ .d-states{grid-template-columns:repeat(2,1fr)} .d-brk{grid-template-columns:1fr} }
+</style>
+</head>
+<body class="gp-paper">
+<header data-gp-nav></header>
+
+<main class="d-doc">
+  <div class="gp-wrap">
+    <div class="gp-eyebrow">设 计 系 统 · DESIGN SYSTEM v1.0</div>
+    <h1 class="gp-h1" style="margin:12px 0 14px">咫 尺 乾 坤 · 设 计 规 范</h1>
+    <p class="gp-lead" style="max-width:760px">
+      第二周确立的视觉基因，在第五、六周扩展为可执行的系统：一条色彩链、一套字体层级、一组克制的圆角与阴影、一套 4px 间距模数，以及一套覆盖默认／悬停／点击／加载／空／错六态的组件库。
+    </p>
+    <nav class="d-toc">
+      <a href="#s-color">色彩</a><a href="#s-type">字体</a><a href="#s-icon">图标</a><a href="#s-shape">圆角与阴影</a>
+      <a href="#s-space">间距</a><a href="#s-grid">栅格与断点</a><a href="#s-comp">组件库</a><a href="#s-state">状态矩阵</a>
+    </nav>
+
+    <!-- 色彩 -->
+    <section class="d-block" id="s-color">
+      <div class="d-block__t"><span class="d-block__n">01</span><h2 class="d-block__h">色 彩</h2></div>
+      <div class="d-block__d">以"宣纸—墨—朱砂—黛青—金"五色为骨架，暖色为底、冷色为信息、朱砂为唯一强行动色。</div>
+      <div class="d-swatches">
+        <div class="d-sw"><div class="d-sw__c" style="background:#f3ead7"><span class="d-sw__hex">#F3EAD7</span></div><div class="d-sw__b"><div class="d-sw__n">宣纸 Paper</div><div class="d-sw__v">#F3EAD7</div><div class="d-sw__u">页面底色／卡片次底</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#e8dec3"><span class="d-sw__hex">#E8DEC3</span></div><div class="d-sw__b"><div class="d-sw__n">纸二</div><div class="d-sw__v">#E8DEC3</div><div class="d-sw__u">分区底／输入框</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#ddd0ad"><span class="d-sw__hex">#DDD0AD</span></div><div class="d-sw__b"><div class="d-sw__n">纸三</div><div class="d-sw__v">#DDD0AD</div><div class="d-sw__u">骨架屏／分隔块</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#1a1410"><span class="d-sw__hex">#1A1410</span></div><div class="d-sw__b"><div class="d-sw__n">墨 Ink</div><div class="d-sw__v">#1A1410</div><div class="d-sw__u">正文与主标题</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#3d3329"><span class="d-sw__hex">#3D3329</span></div><div class="d-sw__b"><div class="d-sw__n">淡墨</div><div class="d-sw__v">#3D3329</div><div class="d-sw__u">次级正文</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#8a7d6a"><span class="d-sw__hex">#8A7D6A</span></div><div class="d-sw__b"><div class="d-sw__n">浅墨</div><div class="d-sw__v">#8A7D6A</div><div class="d-sw__u">辅助信息</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#b13a2f"><span class="d-sw__hex">#B13A2F</span></div><div class="d-sw__b"><div class="d-sw__n">朱砂</div><div class="d-sw__v">#B13A2F</div><div class="d-sw__u">主行动／强调</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#872821"><span class="d-sw__hex">#872821</span></div><div class="d-sw__b"><div class="d-sw__n">深朱砂</div><div class="d-sw__v">#872821</div><div class="d-sw__u">主按钮悬停</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#2f5a6e"><span class="d-sw__hex">#2F5A6E</span></div><div class="d-sw__b"><div class="d-sw__n">黛青</div><div class="d-sw__v">#2F5A6E</div><div class="d-sw__u">次行动／信息</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#143442"><span class="d-sw__hex">#143442</span></div><div class="d-sw__b"><div class="d-sw__n">深黛青</div><div class="d-sw__v">#143442</div><div class="d-sw__u">深色区块</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#b58d4e"><span class="d-sw__hex">#B58D4E</span></div><div class="d-sw__b"><div class="d-sw__n">赭金</div><div class="d-sw__v">#B58D4E</div><div class="d-sw__u">点缀／说明</div></div></div>
+        <div class="d-sw"><div class="d-sw__c" style="background:#5a6b3a"><span class="d-sw__hex">#5A6B3A</span></div><div class="d-sw__b"><div class="d-sw__n">苔绿</div><div class="d-sw__v">#5A6B3A</div><div class="d-sw__u">成功态</div></div></div>
+      </div>
+      <div class="gp-grid" style="margin-top:26px">
+        <div class="gp-col-6"><div class="gp-card" style="padding:20px 22px">
+          <div class="gp-eyebrow" style="margin-bottom:12px">用 色 规 则</div>
+          <ul style="font-family:var(--f-kai);font-size:13.5px;line-height:2.1;color:var(--text-2)">
+            <li>· 朱砂仅用于<b>唯一主行动</b>、当前态与关键数值，全屏占比不超过 8%</li>
+            <li>· 黛青承担"次级行动 / 信息类"语义，与朱砂形成冷暖分工</li>
+            <li>· 纸色三阶用于制造层次，不使用纯白与纯黑，避免破坏纸感</li>
+            <li>· 正文与背景对比度 ≥ 7:1，辅助文字 ≥ 4.5:1</li>
+          </ul>
+        </div></div>
+        <div class="gp-col-6"><div class="gp-card" style="padding:20px 22px">
+          <div class="gp-eyebrow" style="margin-bottom:12px">语 义 色</div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px">
+            <span class="gp-tag gp-tag--solid">主行动</span><span class="gp-tag gp-tag--accent">信息</span>
+            <span class="gp-tag gp-tag--gold">提示</span><span class="gp-tag gp-tag--primary">强调</span>
+            <span class="gp-tag">默认</span>
+            <span class="gp-tag" style="border-color:rgba(74,107,58,.5);color:#3a5730;background:rgba(74,107,58,.1)">成功</span>
+            <span class="gp-tag" style="border-color:rgba(177,58,47,.5);color:var(--primary-deep);background:rgba(177,58,47,.1)">失败</span>
+          </div>
+          <p class="gp-help" style="margin-top:14px">语义色只用于状态表达与辅助识别，不承担层级功能。</p>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- 字体 -->
+    <section class="d-block" id="s-type">
+      <div class="d-block__t"><span class="d-block__n">02</span><h2 class="d-block__h">字 体 与 层 级</h2></div>
+      <div class="d-block__d">六款字体分工：书法用于标题与题跋，楷体用于正文与界面，西文衬线用于数字与拉丁文。</div>
+      <div class="d-type">
+        <div class="d-type__r"><div class="d-type__m"><div class="d-type__n">主标题 H1</div><div class="d-type__v">Ma Shan Zheng · 100–148px</div><div class="d-type__u">园名、页面主标。仅用于首屏，字距 0.06–0.10em</div></div>
+          <div class="d-type__s"><span style="font-family:'Ma Shan Zheng',serif;font-size:52px;letter-spacing:.08em;color:#1a1410">拙 政 园</span></div></div>
+        <div class="d-type__r"><div class="d-type__m"><div class="d-type__n">章节标题 H2</div><div class="d-type__v">Ma Shan Zheng · 24–36px</div><div class="d-type__u">区块标题，与编号并排使用</div></div>
+          <div class="d-type__s"><span style="font-family:'Ma Shan Zheng',serif;font-size:30px;letter-spacing:.12em">园 之 一 眼</span></div></div>
+        <div class="d-type__r"><div class="d-type__m"><div class="d-type__n">小标题 H3</div><div class="d-type__v">ZCOOL XiaoWei · 16–23px</div><div class="d-type__u">卡片标题、组件标题，识别度高不刺眼</div></div>
+          <div class="d-type__s"><span style="font-family:'ZCOOL XiaoWei',serif;font-size:20px;letter-spacing:.08em">远 香 堂 · 中 部 主 厅</span></div></div>
+        <div class="d-type__r"><div class="d-type__m"><div class="d-type__n">正文 Body</div><div class="d-type__v">ZCOOL QingKe HuangYou · 14–16px / 1.95</div><div class="d-type__u">长文阅读，字重轻以减轻纸面压迫</div></div>
+          <div class="d-type__s"><span style="font-family:'ZCOOL QingKe HuangYou',serif;font-size:16px;line-height:1.95;color:#3d3329">园以水为脉，以廊为骨，以景为题，四百余年营建，四时不改其趣。</span></div></div>
+        <div class="d-type__r"><div class="d-type__m"><div class="d-type__n">界面文字 UI</div><div class="d-type__v">Noto Serif SC · 12–16px</div><div class="d-type__u">按钮、标签、表单，字距 0.1–0.2em</div></div>
+          <div class="d-type__s"><span style="font-family:'Noto Serif SC',serif;font-size:15px;letter-spacing:.16em">入 园 移 步</span></div></div>
+        <div class="d-type__r"><div class="d-type__m"><div class="d-type__n">题跋 Poem</div><div class="d-type__v">Liu Jian Mao Cao · 21px</div><div class="d-type__u">诗文题联、手写批注，保留书写感</div></div>
+          <div class="d-type__s"><span style="font-family:'Liu Jian Mao Cao',serif;font-size:24px;letter-spacing:.06em">四壁荷花三面柳<br>半潭秋水一亭凉</span></div></div>
+        <div class="d-type__r"><div class="d-type__m"><div class="d-type__n">数字 Numeral</div><div class="d-type__v">Cormorant Garamond · 24–46px</div><div class="d-type__u">统计、年份、计数，强调与汉字基线对齐</div></div>
+          <div class="d-type__s"><span style="font-family:'Cormorant Garamond',serif;font-size:40px;color:#872821">1997</span></div></div>
+      </div>
+    </section>
+
+    <!-- 图标 -->
+    <section class="d-block" id="s-icon">
+      <div class="d-block__t"><span class="d-block__n">03</span><h2 class="d-block__h">图 标</h2></div>
+      <div class="d-block__d">统一 24×24 网格、1.6–1.9 描边、圆头圆角；随文字色变化，悬停转朱砂。</div>
+      <div class="d-ico">
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg></div><div class="d-ico__l">搜索</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.2L6 21z"/></svg></div><div class="d-ico__l">收藏</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3v13M8 7l4-4 4 4M5 14v5a2 2 0 002 2h10a2 2 0 002-2v-5"/></svg></div><div class="d-ico__l">分享</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 21s-7-4.6-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.4-7 10-7 10z"/></svg></div><div class="d-ico__l">点赞</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12a8 8 0 01-8 8H7l-4 3v-5.5A8 8 0 1121 12z"/></svg></div><div class="d-ico__l">题咏</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg></div><div class="d-ico__l">新增</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h13"/></svg></div><div class="d-ico__l">筛选</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20c4-1 5-4 5-7s2-6 6-6 5 3 5 6"/></svg></div><div class="d-ico__l">足迹</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></div><div class="d-ico__l">行程</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M3 12h18"/></svg></div><div class="d-ico__l">对比</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div><div class="d-ico__l">展开</div></div>
+        <div class="d-ico__i"><div class="d-ico__b"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></div><div class="d-ico__l">异常</div></div>
+      </div>
+    </section>
+
+    <!-- 圆角与阴影 -->
+    <section class="d-block" id="s-shape">
+      <div class="d-block__t"><span class="d-block__n">04</span><h2 class="d-block__h">圆 角 与 阴 影</h2></div>
+      <div class="d-block__d">小圆角贴合"纸与印章"质感；阴影极轻，主要靠描边与底色分层。</div>
+      <div class="gp-grid">
+        <div class="gp-col-6"><div class="gp-spec">
+          <div class="d-spec__i"><div class="d-spec__k">圆 角</div><div class="d-spec__v">2 / 4 / 8 / 14 / 999px</div><div class="gp-help" style="margin-top:6px">印章 2px · 输入 4px · 卡片 8px · 弹窗 14px · 药丸 999px</div></div>
+          <div class="d-spec__i"><div class="d-spec__k">描 边</div><div class="d-spec__v">1px #D8C9A8</div><div class="gp-help" style="margin-top:6px">强描边 #BFAE8A 用于可点击容器</div></div>
+        </div></div>
+        <div class="gp-col-6"><div class="gp-spec">
+          <div class="d-spec__i"><div class="d-spec__k">阴 影 一</div><div class="d-spec__v">0 1px 2px rgba(26,20,16,.06)</div><div class="gp-help" style="margin-top:6px">卡片常态，仅轻提离纸面</div></div>
+          <div class="d-spec__i"><div class="d-spec__k">阴 影 二</div><div class="d-spec__v">0 6px 18px -6px rgba(26,20,16,.20)</div><div class="gp-help" style="margin-top:6px">悬停浮起</div></div>
+          <div class="d-spec__i"><div class="d-spec__k">阴 影 三</div><div class="d-spec__v">0 18px 48px -12px rgba(26,20,16,.30)</div><div class="gp-help" style="margin-top:6px">弹窗、抽屉、浮条</div></div>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- 间距 -->
+    <section class="d-block" id="s-space">
+      <div class="d-block__t"><span class="d-block__n">05</span><h2 class="d-block__h">间 距</h2></div>
+      <div class="d-block__d">4px 基准模数，页面留白随层级递增：卡片内 16–24px，区块间 48–96px，页面边距随断点 14–48px。</div>
+      <div class="d-space">
+        <div class="d-space__i"><div class="d-space__b" style="width:4px;height:26px"></div><span class="d-space__l">4</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:8px;height:26px"></div><span class="d-space__l">8</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:12px;height:26px"></div><span class="d-space__l">12</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:16px;height:26px"></div><span class="d-space__l">16</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:24px;height:26px"></div><span class="d-space__l">24</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:32px;height:26px"></div><span class="d-space__l">32</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:48px;height:26px"></div><span class="d-space__l">48</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:64px;height:26px"></div><span class="d-space__l">64</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:96px;height:26px"></div><span class="d-space__l">96</span></div>
+        <div class="d-space__i"><div class="d-space__b" style="width:128px;height:26px"></div><span class="d-space__l">128</span></div>
+      </div>
+    </section>
+
+    <!-- 栅格 -->
+    <section class="d-block" id="s-grid">
+      <div class="d-block__t"><span class="d-block__n">06</span><h2 class="d-block__h">栅 格 与 断 点</h2></div>
+      <div class="d-block__d">桌面 12 栏，容器最大 1320px（≥1440px 时放宽至 1400px），栏距 32px。五档断点逐级降栏、堆叠、换位。</div>
+      <div class="d-brk">
+        <div class="d-brk__i"><div class="d-brk__w">1440+</div><div class="d-brk__d">12 栏 · 容器 1400px<br>双栏 + 粘性侧栏</div></div>
+        <div class="d-brk__i"><div class="d-brk__w">1200</div><div class="d-brk__d">12 栏 · 栏距 26px<br>卡片降为 2 列</div></div>
+        <div class="d-brk__i"><div class="d-brk__w">1024</div><div class="d-brk__d">8 栏 · 栏距 22px<br>侧栏下沉、横向卡片收窄</div></div>
+        <div class="d-brk__i"><div class="d-brk__w">768</div><div class="d-brk__d">4 栏 · 栏距 16px<br>导航转抽屉、底部行动条</div></div>
+        <div class="d-brk__i"><div class="d-brk__w">480</div><div class="d-brk__d">单栏 · 边距 14px<br>按钮与图标压缩</div></div>
+      </div>
+      <div class="gp-grid" style="margin-top:22px">
+        <div class="gp-col-6"><div class="gp-card" style="padding:20px 22px">
+          <div class="gp-eyebrow" style="margin-bottom:12px">安 全 区</div>
+          <p class="gp-body" style="font-size:13.5px">左右安全边距 <b style="font-family:var(--f-latin)">clamp(16px, 4vw, 48px)</b>，内容最大宽度 1320px 居中；超宽屏两侧留白加大而非拉伸行宽，保持每行 32–38 个汉字的最佳阅读长度。</p>
+        </div></div>
+        <div class="gp-col-6"><div class="gp-card" style="padding:20px 22px">
+          <div class="gp-eyebrow" style="margin-bottom:12px">重 排 逻 辑</div>
+          <p class="gp-body" style="font-size:13.5px">先"换位"后"降列"再"堆叠"：双栏→单栏（1024）→卡片竖排（768）→导航入抽屉（768）。核心行动在移动端始终保留在底部行动条，不随滚动丢失。</p>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- 组件库 -->
+    <section class="d-block" id="s-comp">
+      <div class="d-block__t"><span class="d-block__n">07</span><h2 class="d-block__h">可 复 用 组 件</h2></div>
+      <div class="d-block__d">十一类组件覆盖全部页面；每个组件均提供默认 / 悬停 / 点击 / 加载 / 禁用五态。</div>
+
+      <div class="d-comp">
+        <div class="d-comp__t">按钮 Button</div>
+        <div class="d-comp__d">主 / 次 / 幽灵 / 文字 / 链接，五级变体 · 三档尺寸 · 加载态内置</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+          <button class="gp-btn gp-btn--primary">主 行 动</button>
+          <button class="gp-btn gp-btn--accent">次 行 动</button>
+          <button class="gp-btn gp-btn--ghost">幽 灵 按 钮</button>
+          <button class="gp-btn gp-btn--quiet">文 字 按 钮</button>
+          <button class="gp-btn gp-btn--link">链 接 按 钮</button>
+          <button class="gp-btn gp-btn--primary is-loading">加 载 中</button>
+          <button class="gp-btn gp-btn--ghost" disabled>已 禁 用</button>
+          <button class="gp-btn gp-btn--primary gp-btn--sm">小 号</button>
+        </div>
+      </div>
+
+      <div class="d-comp">
+        <div class="d-comp__t">输入框 Input / 搜索 / 开关 / 滑块</div>
+        <div class="d-comp__d">表单类组件统一 4px 圆角与 1px 描边，聚焦时朱砂描边 + 3px 光晕</div>
+        <div class="gp-grid">
+          <div class="gp-col-4"><div class="gp-field"><label class="gp-label">园 名</label><input class="gp-input" placeholder="请输入园林名称"><span class="gp-help">支持中英文与空格</span></div></div>
+          <div class="gp-col-4"><div class="gp-field"><label class="gp-label">状 态 · 错 误</label><input class="gp-input is-error" value="拙政圆"><span class="gp-help gp-help--error">未找到匹配的园林</span></div></div>
+          <div class="gp-col-4"><div class="gp-field"><label class="gp-label">检 索</label><div class="gp-search has-value"><svg class="gp-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg><input class="gp-input" value="冠云峰"><button class="gp-search__clear">✕</button></div></div></div>
+        </div>
+        <div style="display:flex;gap:26px;align-items:center;margin-top:20px;flex-wrap:wrap">
+          <label class="gp-switch"><input type="checkbox" checked><span class="gp-switch__track"></span><span class="gp-switch__dot"></span></label>
+          <span style="font-family:var(--f-kai);font-size:13px;color:var(--text-3)">开 关 Switch</span>
+          <input class="gp-range" type="range" style="max-width:220px" value="4">
+          <span style="font-family:var(--f-kai);font-size:13px;color:var(--text-3)">滑 块 Range</span>
+        </div>
+      </div>
+
+      <div class="d-comp">
+        <div class="d-comp__t">标签 Tag / 胶囊 Chip / 分段 Seg / 标签页 Tabs</div>
+        <div class="d-comp__d">标签用于分类与元信息，胶囊用于可点选筛选，标签页用于同层内容切换</div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px;align-items:center">
+          <span class="gp-tag">江 南 第 一</span><span class="gp-tag gp-tag--primary">文 人 写 意</span>
+          <span class="gp-tag gp-tag--accent">以 水 为 骨</span><span class="gp-tag gp-tag--gold">世 界 文 化 遗 产</span>
+          <span class="gp-tag gp-tag--solid">强 调</span>
+          <button class="gp-chip is-on">全部 <span class="gp-chip__n">7</span></button>
+          <button class="gp-chip">明 代 <span class="gp-chip__n">3</span></button>
+          <div class="gp-seg" style="margin-left:10px"><button class="is-on">网 格</button><button>列 表</button></div>
+        </div>
+        <div class="gp-tabs" style="margin-top:20px">
+          <button class="is-on" aria-selected="true">园 史</button><button aria-selected="false">名 景</button><button aria-selected="false">题 咏</button><button aria-selected="false">评 论</button>
+        </div>
+      </div>
+
+      <div class="d-comp">
+        <div class="d-comp__t">卡片 Card</div>
+        <div class="d-comp__d">三种形态：纵向图文卡 / 横向图文混排卡 / 纯文本卡；悬停统一浮起 6px 并放大图片</div>
+        <div class="gp-grid">
+          <div class="gp-col-4"><div class="gp-card gp-card--hover">
+            <div class="gp-card__media" style="aspect-ratio:16/10"><img src="images/liu-hero.jpg" alt="留园" onerror="this.src='images/card-liu.jpg'"><span class="gp-card__ribbon">建 筑 集 锦</span></div>
+            <div class="gp-card__body"><div class="gp-card__title">留 园</div><div class="gp-card__desc">建筑布局之巅，清代艺术集锦。</div>
+              <div class="gp-card__meta"><span class="gp-tag gp-tag--gold">1997</span><span>明嘉靖</span></div></div>
+          </div></div>
+          <div class="gp-col-8"><div class="gp-card gp-card--row gp-card--hover">
+            <div class="gp-card__media"><img src="images/shizi-hero.jpg" alt="狮子林" onerror="this.src='images/card-shizi.jpg'"></div>
+            <div class="gp-card__body"><div class="gp-card__title">狮 子 林</div><div class="gp-card__desc">以假山叠石著称，洞壑曲折，九狮峰为江南一绝。</div>
+              <div class="gp-card__meta"><span class="gp-tag">元</span><span>名景 6 处</span><span>2000 年列入</span></div></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="d-comp">
+        <div class="d-comp__t">折叠面板 Accordion / 模态 Modal / 抽屉 Drawer / 提示 Toast</div>
+        <div class="d-comp__d">折叠面板用于长信息降噪；模态用于需要中断的确认；抽屉用于移动端导航</div>
+        <div class="gp-grid">
+          <div class="gp-col-6">
+            <div class="gp-acc">
+              <div class="gp-acc__item"><button class="gp-acc__head" aria-expanded="false"><span>明 正 德 八 年</span><svg class="gp-acc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="gp-acc__panel"><div class="gp-acc__inner">御史王献臣辞官归田，于大弘寺旧址营建园林，聘文徵明参与设计。</div></div></div>
+              <div class="gp-acc__item"><button class="gp-acc__head" aria-expanded="false"><span>一 九 九 七 年</span><svg class="gp-acc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="gp-acc__panel"><div class="gp-acc__inner">联合国教科文组织列入《世界文化遗产名录》。</div></div></div>
+            </div>
+          </div>
+          <div class="gp-col-6">
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="gp-btn gp-btn--ghost gp-btn--sm" onclick="GP_APP.modal('#dsModal')">打 开 模 态</button>
+              <button class="gp-btn gp-btn--ghost gp-btn--sm" onclick="GP_APP.toast('已加入笺囊','ok')">提 示 Toast</button>
+              <button class="gp-btn gp-btn--ghost gp-btn--sm" onclick="GP_APP.toast('网络似乎不太稳','err')">错 误 Toast</button>
+            </div>
+            <div class="gp-card" style="margin-top:16px;padding:16px 18px;background:var(--surface-2)">
+              <div class="gp-banner gp-banner--warn"><svg class="gp-banner__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg><span>提示条用于页内弱提醒</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 状态矩阵 -->
+    <section class="d-block" id="s-state">
+      <div class="d-block__t"><span class="d-block__n">08</span><h2 class="d-block__h">状 态 矩 阵</h2></div>
+      <div class="d-block__d">所有可交互元素必须覆盖六态；状态通过色彩、描边、位移与文案共同表达。</div>
+      <div class="d-states">
+        <div class="d-st"><div style="font-size:22px;margin-bottom:6px">◻</div><div class="d-st__n">默 认</div><div class="d-st__d">常态，无额外装饰</div></div>
+        <div class="d-st"><div style="font-size:22px;margin-bottom:6px;color:var(--primary)">◈</div><div class="d-st__n">悬 停</div><div class="d-st__d">描边转朱砂 + 浮起 2–6px</div></div>
+        <div class="d-st"><div style="font-size:22px;margin-bottom:6px;color:var(--text-4)">◉</div><div class="d-st__n">点 击</div><div class="d-st__d">缩放 0.96，回弹</div></div>
+        <div class="d-st"><div style="font-size:22px;margin-bottom:6px;color:var(--text-4)">◌</div><div class="d-st__n">加 载</div><div class="d-st__d">骨架屏 / 内嵌转圈 / 进度</div></div>
+        <div class="d-st"><div style="font-size:22px;margin-bottom:6px;color:var(--text-4)">∅</div><div class="d-st__n">空 状 态</div><div class="d-st__d">说明 + 一个主行动</div></div>
+        <div class="d-st"><div style="font-size:22px;margin-bottom:6px;color:var(--primary)">✕</div><div class="d-st__n">错 误</div><div class="d-st__d">朱砂提示 + 重试</div></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- 模态示例 -->
+<div class="gp-modal" id="dsModal">
+  <div class="gp-modal__mask"></div>
+  <div class="gp-modal__box">
+    <button class="gp-modal__close" data-gp-close aria-label="关闭">✕</button>
+    <div class="gp-modal__title">收 入 笺 囊</div>
+    <p class="gp-body" style="font-size:14.5px">确认将《拙政园》收入笺囊？下次到访可直接从"我的笺囊"继续阅读。</p>
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:22px">
+      <button class="gp-btn gp-btn--ghost gp-btn--sm" data-gp-close>再 想 想</button>
+      <button class="gp-btn gp-btn--primary gp-btn--sm" data-gp-close onclick="GP_APP.toast('已收入笺囊','ok')">收 入</button>
+    </div>
+  </div>
+</div>
+
+<footer data-gp-footer></footer>
+
+<script src="app.js"></script>
+<script>
+(function(){ GP_APP.nav('about'); GP_APP.footer(); GP_APP.accordion(); })();
+</script>
+</body>
+</html>

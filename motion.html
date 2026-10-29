@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>交互动效规范 · 苏州园林志</title>
+<meta name="description" content="页面内动效、转场动效、情感化微交互与核心任务流程动效">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.m-doc{position:relative;z-index:2;padding:40px 0 90px}
+.m-toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.m-toc a{padding:6px 14px;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border);
+  font-family:var(--f-kai);font-size:13px;letter-spacing:.12em;color:var(--text-2);transition:all var(--t-fast)}
+.m-toc a:hover{border-color:var(--primary);color:var(--primary)}
+.m-b{margin-bottom:60px;scroll-margin-top:92px}
+.m-b__h{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+.m-b__n{font-family:var(--f-latin);font-size:13px;letter-spacing:.2em;color:var(--c-vermilion);opacity:.6}
+.m-b__t{font-family:var(--f-li);font-size:26px;letter-spacing:.12em}
+.m-b__d{font-family:var(--f-kai);font-size:13px;color:var(--text-4);letter-spacing:.1em;margin-bottom:24px}
+.m-card{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);padding:24px}
+.m-card + .m-card{margin-top:16px}
+.m-card__t{font-family:var(--f-xw);font-size:16px;letter-spacing:.1em;margin-bottom:4px}
+.m-card__d{font-family:var(--f-kai);font-size:12.5px;color:var(--text-4);margin-bottom:20px}
+.m-demo{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.m-demo__i{border:1px dashed var(--border-strong);border-radius:var(--r-md);padding:18px;text-align:center;background:var(--surface-2)}
+.m-demo__n{font-family:var(--f-kai);font-size:12.5px;letter-spacing:.1em;color:var(--text-2)}
+.m-demo__v{font-family:var(--f-latin);font-size:11.5px;color:var(--text-4);margin-top:5px}
+.m-ease{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.m-ease__i{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);padding:18px}
+.m-ease__n{font-family:var(--f-xw);font-size:15px;letter-spacing:.08em}
+.m-ease__u{font-family:var(--f-latin);font-size:11px;color:var(--text-4);margin-top:3px}
+.m-ease__svg{width:100%;height:110px;margin:12px 0 8px}
+.m-ease__p{font-family:var(--f-latin);font-size:11px;color:var(--text-3);line-height:1.6;word-break:break-all}
+.m-table{width:100%;border-collapse:collapse;font-family:var(--f-kai);font-size:13px}
+.m-table th{text-align:left;padding:11px 10px;border-bottom:1px solid var(--border-strong);color:var(--text-3);letter-spacing:.14em;font-weight:400}
+.m-table td{padding:12px 10px;border-bottom:1px dashed var(--border);vertical-align:top}
+.m-table td:first-child{color:var(--primary-deep);white-space:nowrap}
+/* 流程 */
+.m-flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.m-flow__i{flex:1;min-width:150px;position:relative;padding:20px 16px 18px;text-align:center;border:1px solid var(--border);background:var(--surface);transition:transform var(--t-base) var(--ease-move),box-shadow var(--t-base)}
+.m-flow__i:first-child{border-radius:var(--r-md) 0 0 var(--r-md)}
+.m-flow__i:last-child{border-radius:0 var(--r-md) var(--r-md) 0}
+.m-flow__i + .m-flow__i{border-left:0}
+.m-flow__i:hover{transform:translateY(-5px);box-shadow:var(--sh-2);z-index:2}
+.m-flow__i::after{content:'';position:absolute;right:-9px;top:50%;transform:translateY(-50%) rotate(45deg);width:16px;height:16px;
+  background:var(--surface);border-top:1px solid var(--border);border-right:1px solid var(--border);z-index:3;transition:background var(--t-fast)}
+.m-flow__i:last-child::after{display:none}
+.m-flow__i:hover::after{background:var(--primary)}
+.m-flow__no{font-family:var(--f-latin);font-size:12px;color:var(--c-vermilion);letter-spacing:.2em}
+.m-flow__ic{width:46px;height:46px;margin:9px auto 11px;border-radius:50%;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--text-2)}
+.m-flow__t{font-family:var(--f-xw);font-size:15px;letter-spacing:.08em}
+.m-flow__m{font-family:var(--f-kai);font-size:11.5px;color:var(--text-4);margin-top:6px;line-height:1.7}
+.m-flow__a{font-family:var(--f-latin);font-size:10.5px;color:var(--accent-deep);margin-top:8px;display:block}
+/* 舞台 */
+.m-stage{position:relative;height:250px;border:1px solid var(--border-strong);border-radius:var(--r-md);overflow:hidden;
+  background:linear-gradient(170deg,var(--surface-2),var(--surface-3));display:flex;align-items:center;justify-content:center}
+.m-stage__layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:14px;transition:all .6s var(--ease-move)}
+.m-stage__card{width:190px;height:120px;border:1px solid var(--border-strong);background:var(--surface);border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;font-family:var(--f-xw);font-size:16px;letter-spacing:.1em;
+  transition:all .6s var(--ease-move);box-shadow:var(--sh-1)}
+.m-stage.is-view .m-stage__layer.a{opacity:0;transform:translateX(-70px) scale(.86)}
+.m-stage.is-view .m-stage__layer.b{opacity:1;transform:none}
+.m-stage.is-view .m-stage__card{transform:scale(1.34)}
+.m-stage__hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:var(--f-kai);font-size:12px;letter-spacing:.14em;color:var(--text-4)}
+/* IP */
+.m-ip{display:flex;align-items:center;gap:16px}
+.m-ip__a{width:64px;height:64px;flex:none;animation:gpFloatY 4s ease-in-out infinite}
+.m-ip__b{width:64px;height:64px;flex:none;animation:gpFloatY 4s ease-in-out .6s infinite}
+.m-ip__c{width:64px;height:64px;flex:none;animation:gpFloatY 4s ease-in-out 1.2s infinite}
+@media (max-width:768px){ .m-flow__i{flex:1 1 45%} .m-flow__i::after{display:none} }
+</style>
+</head>
+<body class="gp-paper">
+<header data-gp-nav></header>
+
+<main class="m-doc">
+  <div class="gp-wrap">
+    <div class="gp-eyebrow">交 互 动 效 · MOTION SPECIFICATION v1.0</div>
+    <h1 class="gp-h1" style="margin:12px 0 14px">动 效 语 言</h1>
+    <p class="gp-lead" style="max-width:760px">
+      动效不是装饰，是园林空间逻辑的转译：游线的开合对应元素的进退，水的流动对应界面的位移，印章的落定对应操作的确认。
+      全部动效遵循"动效有因、节奏有度、可被关闭"三条底线。
+    </p>
+    <nav class="m-toc">
+      <a href="#m-principle">总则</a><a href="#m-ease">缓动与时长</a><a href="#m-inpage">页面内动效</a>
+      <a href="#m-trans">转场动效</a><a href="#m-micro">情感化微交互</a><a href="#m-flow">任务流程</a><a href="#m-a11y">可访问性</a>
+    </nav>
+
+    <!-- 总则 -->
+    <section class="m-b" id="m-principle">
+      <div class="m-b__h"><span class="m-b__n">01</span><h2 class="m-b__t">动 效 总 则</h2></div>
+      <div class="m-b__d">FOUR PRINCIPLES</div>
+      <div class="gp-grid">
+        <div class="gp-col-3"><div class="gp-card" style="padding:20px 22px;height:100%">
+          <div class="gp-eyebrow" style="margin-bottom:11px">一 · 动 效 有 因</div>
+          <p class="gp-body" style="font-size:13.5px">每一次动效都要回答"它解释了什么"。展开说明层次、位移表示层级、粒子表示状态改变。</p></div></div>
+        <div class="gp-col-3"><div class="gp-card" style="padding:20px 22px;height:100%">
+          <div class="gp-eyebrow" style="margin-bottom:11px">二 · 节 奏 有 度</div>
+          <p class="gp-body" style="font-size:13.5px">同类动效时长一致，不同层级用快慢区分；超过 800ms 的过场必须可被跳过。</p></div></div>
+        <div class="gp-col-3"><div class="gp-card" style="padding:20px 22px;height:100%">
+          <div class="gp-eyebrow" style="margin-bottom:11px">三 · 噪 音 隔 离</div>
+          <p class="gp-body" style="font-size:13.5px">同一屏内自动播放的动效不超过一处；持续动效仅限品牌元素且可被遮挡降频。</p></div></div>
+        <div class="gp-col-3"><div class="gp-card" style="padding:20px 22px;height:100%">
+          <div class="gp-eyebrow" style="margin-bottom:11px">四 · 可 被 关 闭</div>
+          <p class="gp-body" style="font-size:13.5px">尊重系统"减少动效"设置，个人中心亦提供手动开关；关闭后仅保留功能性反馈。</p></div></div>
+      </div>
+    </section>
+
+    <!-- 缓动 -->
+    <section class="m-b" id="m-ease">
+      <div class="m-b__h"><span class="m-b__n">02</span><h2 class="m-b__t">缓 动 与 时 长</h2></div>
+      <div class="m-b__d">EASING &amp; DURATION</div>
+      <div class="m-ease">
+        <div class="m-ease__i">
+          <div class="m-ease__n">墨 晕</div><div class="m-ease__u">Ink · ease-out</div>
+          <svg class="m-ease__svg" viewBox="0 0 200 100" fill="none"><path d="M10 90 C 60 90 90 25 190 12" stroke="#b13a2f" stroke-width="2.4"/><circle cx="190" cy="12" r="4" fill="#b13a2f"/></svg>
+          <div class="m-ease__p">cubic-bezier(.22,.61,.36,1)<br>墨迹晕开：文字淡入、图片浮出</div>
+        </div>
+        <div class="m-ease__i">
+          <div class="m-ease__n">移 步</div><div class="m-ease__u">Move · expo-out</div>
+          <svg class="m-ease__svg" viewBox="0 0 200 100" fill="none"><path d="M10 90 C 30 20 110 14 190 10" stroke="#2f5a6e" stroke-width="2.4"/><circle cx="190" cy="10" r="4" fill="#2f5a6e"/></svg>
+          <div class="m-ease__p">cubic-bezier(.16,1,.3,1)<br>移步换景：页面转场、卡片浮起</div>
+        </div>
+        <div class="m-ease__i">
+          <div class="m-ease__n">落 印</div><div class="m-ease__u">Seal · back-out</div>
+          <svg class="m-ease__svg" viewBox="0 0 200 100" fill="none"><path d="M10 90 C 80 90 140 86 190 88" stroke="#b58d4e" stroke-width="2.4"/><circle cx="190" cy="88" r="4" fill="#b58d4e"/></svg>
+          <div class="m-ease__p">cubic-bezier(.34,1.56,.64,1)<br>印章落款：按钮按下、成功反馈</div>
+        </div>
+        <div class="m-ease__i">
+          <div class="m-ease__n">水 波</div><div class="m-ease__u">Ripple · linear</div>
+          <svg class="m-ease__svg" viewBox="0 0 200 100" fill="none"><path d="M10 50 H190" stroke="#8a7d6a" stroke-width="2.4" stroke-dasharray="4 5"/><circle cx="190" cy="50" r="4" fill="#8a7d6a"/></svg>
+          <div class="m-ease__p">linear<br>涟漪扩散、进度推进、加载循环</div>
+        </div>
+      </div>
+      <div class="m-card" style="margin-top:18px">
+        <div class="m-card__t">时 长 标 尺</div>
+        <div class="m-card__d">按时长分级，保证同类反馈节奏一致</div>
+        <table class="m-table">
+          <thead><tr><th>等 级</th><th>时 长</th><th>缓 动</th><th>适 用 场 景</th></tr></thead>
+          <tbody>
+            <tr><td>即时反馈</td><td>120–200ms</td><td>ease-out</td><td>按钮按下、图标变色、开关滑动、选项高亮</td></tr>
+            <tr><td>元素进出</td><td>280–420ms</td><td>ease-ink / expo-out</td><td>Toast 出现、标签页切换、卡片浮起、卡片展开</td></tr>
+            <tr><td>结构展开</td><td>560–640ms</td><td>expo-out</td><td>折叠面板、模态出现、抽屉推入、视差位移</td></tr>
+            <tr><td>页面转场</td><td>700–900ms</td><td>expo-out + 遮罩</td><td>页面进入退出、共享元素过渡、路由切换</td></tr>
+            <tr><td>循环动效</td><td>1.4–5s</td><td>linear / ease-in-out</td><td>骨架屏微光、涟漪、呼吸提示、加载旋转</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 页面内动效 -->
+    <section class="m-b" id="m-inpage">
+      <div class="m-b__h"><span class="m-b__n">03</span><h2 class="m-b__t">页 面 内 动 效</h2></div>
+      <div class="m-b__d">IN-PAGE MOTION</div>
+      <div class="m-card">
+        <div class="m-card__t">可 交 互 示 例</div>
+        <div class="m-card__d">以下组件均为真实原型中的实现，可直接操作体验</div>
+        <div class="m-demo">
+          <div class="m-demo__i">
+            <div class="gp-card gp-card--hover" style="text-align:left">
+              <div class="gp-card__media" style="aspect-ratio:16/9"><img src="images/canglang-hero.jpg" alt="沧浪亭" onerror="this.src='images/card-canglang.jpg'"></div>
+              <div class="gp-card__body" style="padding:14px 16px"><div class="gp-card__title" style="font-size:16px">悬 停 浮 起</div><div class="gp-card__desc" style="font-size:12.5px">上移 6px + 阴影加深 + 图片缓推</div></div>
+            </div>
+            <div class="m-demo__n" style="margin-top:10px">悬 停 / 焦 点</div><div class="m-demo__v">280ms · expo-out</div>
+          </div>
+          <div class="m-demo__i" style="display:flex;flex-direction:column;justify-content:center">
+            <button class="gp-like" data-like><svg class="gp-like__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-7-4.6-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.4-7 10-7 10z"/></svg><span>赞 </span><span data-like-count>128</span></button>
+            <div class="m-demo__n" style="margin-top:14px">点 赞 粒 子</div><div class="m-demo__v">朱砂散开 620ms</div>
+          </div>
+          <div class="m-demo__i" style="display:flex;flex-direction:column;justify-content:center;gap:12px">
+            <button class="gp-collect" data-collect><svg class="gp-collect__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.2L6 21z"/></svg><span>收 入 笺 囊</span></button>
+            <button class="gp-share" data-share><svg class="gp-share__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v13M8 7l4-4 4 4M5 14v5a2 2 0 002 2h10a2 2 0 002-2v-5"/></svg><span>分 享</span></button>
+            <div class="m-demo__n">收 藏 / 分 享</div><div class="m-demo__v">图标变形 + 提示条</div>
+          </div>
+          <div class="m-demo__i" style="display:flex;flex-direction:column;justify-content:center">
+            <div class="gp-seal" style="margin:0 auto 12px;opacity:.9">园<br>印</div>
+            <div class="m-demo__n">印 章 落 款</div><div class="m-demo__v">旋转落下 · 620ms</div>
+          </div>
+          <div class="m-demo__i" style="display:flex;flex-direction:column;justify-content:center">
+            <div style="width:78px;height:78px;margin:0 auto;position:relative">
+              <span style="position:absolute;inset:0;border:1.5px solid rgba(26,20,16,.24);border-radius:50%;animation:gpBreath 2.4s ease-in-out infinite"></span>
+              <span style="position:absolute;inset:14px;border:1.5px solid rgba(26,20,16,.24);border-radius:50%;animation:gpBreath 2.4s ease-in-out .35s"></span>
+              <span style="position:absolute;inset:28px;border:1.5px solid rgba(26,20,16,.24);border-radius:50%;animation:gpBreath 2.4s ease-in-out .7s"></span>
+            </div>
+            <div class="m-demo__n">呼 吸 / 涟 漪</div><div class="m-demo__v">3 环错相 2.4s</div>
+          </div>
+          <div class="m-demo__i" style="display:flex;flex-direction:column;justify-content:center">
+            <div style="width:100%;max-width:170px;margin:0 auto"><div class="gp-progress"><div class="gp-progress__bar" style="width:62%"></div></div></div>
+            <div class="m-demo__n" style="margin-top:12px">进 度 条</div><div class="m-demo__v">朱砂→赭金渐变</div>
+          </div>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-card__t">滚 动 触 发 与 视 差</div>
+        <div class="m-card__d">滚动进入视口触发淡入上移，子元素按 80ms 步进错峰；Hero 图片层做 0.12 倍速视差</div>
+        <div class="gp-grid">
+          <div class="gp-col-6">
+            <div style="border:1px dashed var(--border-strong);border-radius:var(--r-md);padding:22px;background:var(--surface-2)">
+              <div class="gp-reveal gp-reveal--stagger in-view">
+                <div class="gp-card" style="margin-bottom:12px"><div class="gp-card__body"><div class="gp-card__title" style="font-size:15px">错 峰 入 场</div></div></div>
+                <div class="gp-card" style="margin-bottom:12px"><div class="gp-card__body"><div class="gp-card__title" style="font-size:15px">80ms 步 进</div></div></div>
+                <div class="gp-card"><div class="gp-card__body"><div class="gp-card__title" style="font-size:15px">共 同 归 位</div></div></div>
+              </div>
+              <p class="gp-help" style="margin-top:14px">滚动进入视口时按顺序淡入上移（gpRise 660ms）</p>
+            </div>
+          </div>
+          <div class="gp-col-6">
+            <div style="border:1px dashed var(--border-strong);border-radius:var(--r-md);padding:22px;background:var(--surface-2);position:relative;height:210px;overflow:hidden">
+              <div data-parallax="0.16" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:180px;height:120px;border-radius:var(--r-sm);background:linear-gradient(160deg,#c9b896,#8b5a3c);opacity:.92"></div>
+              <div data-parallax="0.06" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:80px;border-radius:var(--r-sm);border:1px solid rgba(243,234,215,.7);background:rgba(26,20,16,.22)"></div>
+              <div style="position:absolute;left:16px;bottom:12px;font-family:var(--f-kai);font-size:12px;letter-spacing:.12em;color:var(--text-4)">分层视差 · 0.16 / 0.06</div>
+            </div>
+            <p class="gp-help" style="margin-top:14px">不同图层以不同速率位移，模拟"隔窗观景"的纵深</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 转场 -->
+    <section class="m-b" id="m-trans">
+      <div class="m-b__h"><span class="m-b__n">04</span><h2 class="m-b__t">转 场 动 效</h2></div>
+      <div class="m-b__d">TRANSITIONS</div>
+      <div class="m-card">
+        <div class="m-card__t">共 享 元 素 过 渡（列表 → 详情）</div>
+        <div class="m-card__d">从列表卡片点击进入详情页时，封面图与园名沿同一路径连续过渡，避免"跳切"</div>
+        <div class="m-stage" id="mStage">
+          <div class="m-stage__layer a">
+            <div class="m-stage__card">留 园 · 卡 片</div>
+            <div class="m-stage__card" style="opacity:.6">拙 政 园</div>
+            <div class="m-stage__card" style="opacity:.32">网 师 园</div>
+          </div>
+          <div class="m-stage__layer b">
+            <div class="m-stage__card">留 园 · 详 情 首 屏</div>
+          </div>
+          <div class="m-stage__hint">点击右侧按钮体验共享元素过渡</div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:18px;align-items:center;flex-wrap:wrap">
+          <button class="gp-btn gp-btn--primary gp-btn--sm" id="mStageBtn">播 放 过 渡</button>
+          <span class="gp-help">760ms · expo-out · 图 缩 放 1.0 → 1.34，文案淡出后回填</span>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-card__t">转 场 矩 阵</div>
+        <div class="m-card__d">四类转场的具体做法</div>
+        <table class="m-table">
+          <thead><tr><th>转 场 类 型</th><th>触 发</th><th>画 面 处 理</th><th>时 长</th></tr></thead>
+          <tbody>
+            <tr><td>页面进入</td><td>路由加载完成</td><td>整页淡入 + 18px 上移，标题按字符错峰 150ms 展开</td><td>500ms</td></tr>
+            <tr><td>页面退出</td><td>点击站外链接</td><td>墨色遮罩自下而上漫过 → 跳转（可跳过）</td><td>620ms</td></tr>
+            <tr><td>共享元素</td><td>列表 → 详情</td><td>封面图与标题位置连续插值，卡片其余部分淡出</td><td>760ms</td></tr>
+            <tr><td>导航切换</td><td>顶部导航</td><td>下划线滑动 + 内容区整段替换淡入；抽屉式滑入</td><td>420ms</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 微交互 -->
+    <section class="m-b" id="m-micro">
+      <div class="m-b__h"><span class="m-b__n">05</span><h2 class="m-b__t">情 感 化 微 交 互</h2></div>
+      <div class="m-b__d">MICRO-INTERACTIONS &amp; BRAND</div>
+      <div class="m-card">
+        <div class="m-card__t">互 动 反 馈 对 应 表</div>
+        <div class="m-card__d">每个情感动作都有对应的品牌化反馈</div>
+        <table class="m-table">
+          <thead><tr><th>动 作</th><th>视 觉 反 馈</th><th>文 案</th><th>情 感 传 达</th></tr></thead>
+          <tbody>
+            <tr><td>点赞</td><td>心形弹跳 1.42 倍 + 7 粒朱砂散开</td><td>已题赞 · 留名卷末</td><td>被认可的参与感</td></tr>
+            <tr><td>收藏</td><td>书签笺片上浮 + 描边转朱砂</td><td>已收入我的笺囊</td><td>珍藏与占有</td></tr>
+            <tr><td>分享</td><td>图标上移 + Toast 升起</td><td>游园笺已复制，可分享同行</td><td>邀约同行</td></tr>
+            <tr><td>评论</td><td>新题咏插入列表顶部 + 轻微缩放</td><td>题咏已上卷首</td><td>署名的归属感</td></tr>
+            <tr><td>成功</td><td>印章落下（旋转 16° 回正）</td><td>已收入笺囊</td><td>盖印确认</td></tr>
+            <tr><td>失败</td><td>墨点晕开 + 抖动一次</td><td>园门暂闭</td><td>不失礼的歉意</td></tr>
+            <tr><td>空状态</td><td>空卷轴呼吸微动</td><td>笺囊尚空</td><td>温柔的邀请</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="m-card">
+        <div class="m-card__t">品 牌 形 象 · 「 园 印 」</div>
+        <div class="m-card__d">以朱砂印章为原型的吉祥物，出现在加载、成功与空状态中，承担趣味互动</div>
+        <div class="m-ip">
+          <div class="m-ip__a">
+            <svg viewBox="0 0 64 64" fill="none"><rect x="6" y="6" width="52" height="52" rx="5" fill="#b13a2f"/><rect x="12" y="12" width="40" height="40" rx="3" stroke="#f3ead7" stroke-width="1.4"/><text x="32" y="42" text-anchor="middle" font-family="serif" font-size="22" fill="#f3ead7">印</text></svg>
+          </div>
+          <div class="m-ip__b">
+            <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="26" fill="#872821"/><circle cx="32" cy="32" r="21" stroke="#f3ead7" stroke-width="1.4" stroke-dasharray="3 4"/><text x="32" y="41" text-anchor="middle" font-family="serif" font-size="20" fill="#f3ead7">苏</text></svg>
+          </div>
+          <div class="m-ip__c">
+            <svg viewBox="0 0 64 64" fill="none"><path d="M10 14h44v36H10z" stroke="#b13a2f" stroke-width="3"/><path d="M18 26h28M18 36h18" stroke="#b13a2f" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="44" r="8" fill="#b13a2f"/></svg>
+          </div>
+          <div style="flex:1;min-width:220px">
+            <p class="gp-body" style="font-size:14px">「园印」是园志的拟人化化身：一枚会呼吸的朱砂印章。它在启动页落款、在加载时蘸墨、在空状态里空着等待被盖下，在成功反馈时盖出一个漂亮的章。用户在设置页可开启"趣味互动"，关闭后仅保留静态标识。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 流程 -->
+    <section class="m-b" id="m-flow">
+      <div class="m-b__h"><span class="m-b__n">06</span><h2 class="m-b__t">核 心 任 务 流 程 动 效</h2></div>
+      <div class="m-b__d">USER JOURNEY</div>
+      <div class="m-card">
+        <div class="m-card__t">开 启 → 寻 园 → 阅 读 → 收 藏 → 分 享</div>
+        <div class="m-card__d">一条动效串联六个页面，每一步都以"墨"为共同语言</div>
+        <div class="m-flow">
+          <div class="m-flow__i"><div class="m-flow__no">01</div>
+            <div class="m-flow__ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4"/></svg></div>
+            <div class="m-flow__t">启 动 页</div><div class="m-flow__m">墨滴入砚 → 进度推进 → 印章落款</div><span class="m-flow__a">2.4s</span></div>
+          <div class="m-flow__i"><div class="m-flow__no">02</div>
+            <div class="m-flow__ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 20c4-1 5-4 5-7s2-6 6-6 5 3 5 6"/></svg></div>
+            <div class="m-flow__t">首 页</div><div class="m-flow__m">字符逐个落纸 → 鼠标涟漪扩散</div><span class="m-flow__a">1.2s / 常驻</span></div>
+          <div class="m-flow__i"><div class="m-flow__no">03</div>
+            <div class="m-flow__ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg></div>
+            <div class="m-flow__t">搜 索 页</div><div class="m-flow__m">旧内容保留 + 顶部细进度推进 → 结果墨染淡入</div><span class="m-flow__a">620ms</span></div>
+          <div class="m-flow__i"><div class="m-flow__no">04</div>
+            <div class="m-flow__ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg></div>
+            <div class="m-flow__t">详 情 页</div><div class="m-flow__m">共享元素过渡 → 封面擦除展开 → 目录联动</div><span class="m-flow__a">760ms</span></div>
+          <div class="m-flow__i"><div class="m-flow__no">05</div>
+            <div class="m-flow__ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.2L6 21z"/></svg></div>
+            <div class="m-flow__t">收 藏</div><div class="m-flow__m">笺片上浮 + 朱砂描边 + Toast 升起</div><span class="m-flow__a">280ms</span></div>
+          <div class="m-flow__i"><div class="m-flow__no">06</div>
+            <div class="m-flow__ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v13M8 7l4-4 4 4M5 14v5a2 2 0 002 2h10a2 2 0 002-2v-5"/></svg></div>
+            <div class="m-flow__t">分 享</div><div class="m-flow__m">图标上移 + 游园笺复制成功提示</div><span class="m-flow__a">280ms</span></div>
+        </div>
+        <p class="gp-help" style="margin-top:18px;line-height:2">
+          贯穿动线的隐喻是<b>"墨"与"印章"</b>：未确定的区域是淡墨（半透明待补全），确认的动作用朱砂落印封存（不可逆的提交），而导航切换如同翻页（共享元素连续运动）。三段语义一致，用户在任意页面都能预判下一步的反馈形态。
+        </p>
+      </div>
+    </section>
+
+    <!-- 可访问性 -->
+    <section class="m-b" id="m-a11y">
+      <div class="m-b__h"><span class="m-b__n">07</span><h2 class="m-b__t">可 访 问 性</h2></div>
+      <div class="m-b__d">ACCESSIBILITY</div>
+      <div class="m-card">
+        <table class="m-table">
+          <thead><tr><th>场 景</th><th>做 法</th></tr></thead>
+          <tbody>
+            <tr><td>减少动效偏好</td><td>通过 <code style="font-family:var(--f-latin)">@media (prefers-reduced-motion: reduce)</code> 将全局动画时长压至 0.01ms，关闭视差与自动播放，仅保留状态色变化</td></tr>
+            <tr><td>手动开关</td><td>「我的 → 偏好设置 → 减少动效」可独立覆盖，默认跟随系统设置</td></tr>
+            <tr><td>焦点可见</td><td>所有可交互元素保留 <code style="font-family:var(--f-latin)">:focus-visible</code> 朱砂描边，键盘用户可完整操作</td></tr>
+            <tr><td>动效超时</td><td>页面级过场超过 800ms 时，出现"跳过"入口；启动页进度不锁定用户，可随时点击进入</td></tr>
+            <tr><td>对比度</td><td>正文对比度 ≥ 7:1，辅助文字 ≥ 4.5:1；状态不单靠颜色表达，同时附加图标或文案</td></tr>
+            <tr><td>节奏控制</td><td>同一屏内自动播放动效不超过一处；持续动效仅保留品牌元素且支持被用户操作打断</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer data-gp-footer></footer>
+
+<script src="app.js"></script>
+<script>
+(function(){
+  GP_APP.nav('about'); GP_APP.footer();
+
+  /* 共享元素过渡演示 */
+  const stage = document.getElementById('mStage');
+  const btn = document.getElementById('mStageBtn');
+  btn.addEventListener('click', () => {
+    stage.classList.toggle('is-view');
+    btn.textContent = stage.classList.contains('is-view') ? '返 回 列 表' : '播 放 过 渡';
+  });
+})();
+</script>
+</body>
+</html>

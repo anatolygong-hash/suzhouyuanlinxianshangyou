@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于与帮助 · 苏州园林志</title>
+<meta name="description" content="关于本站 · 团队分工 · 资料来源 · 帮助中心">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.a-hero{position:relative;z-index:2;padding:54px 0 44px;border-bottom:1px solid var(--border)}
+.a-hero__t{font-family:var(--f-li);font-size:clamp(38px,5.2vw,62px);letter-spacing:.14em;line-height:1.15}
+.a-hero__d{font-family:var(--f-qkhy);font-size:16px;line-height:2.1;color:var(--text-2);max-width:680px;margin-top:18px}
+.a-body{padding:44px 0 80px}
+.a-cols{display:grid;grid-template-columns:236px minmax(0,1fr);gap:44px;align-items:start}
+.a-menu{position:sticky;top:84px;display:flex;flex-direction:column;gap:2px}
+.a-menu a{padding:10px 14px;border-left:2px solid transparent;font-family:var(--f-kai);font-size:14px;letter-spacing:.12em;color:var(--text-3);transition:all var(--t-fast)}
+.a-menu a:hover{color:var(--primary);border-left-color:var(--border-strong)}
+.a-menu a.is-on{color:var(--primary-deep);border-left-color:var(--primary);background:linear-gradient(90deg,rgba(177,58,47,.07),transparent)}
+.a-sec{margin-bottom:56px;scroll-margin-top:92px}
+.a-sec__t{font-family:var(--f-li);font-size:27px;letter-spacing:.12em;margin-bottom:6px}
+.a-sec__d{font-family:var(--f-kai);font-size:13px;color:var(--text-4);letter-spacing:.1em;margin-bottom:24px}
+.a-team{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.a-member{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);padding:22px 20px;text-align:center;transition:transform var(--t-base) var(--ease-move),box-shadow var(--t-base)}
+.a-member:hover{transform:translateY(-5px);box-shadow:var(--sh-2)}
+.a-member__av{width:56px;height:56px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-li);font-size:22px;color:var(--text-inv);background:var(--accent)}
+.a-member__n{font-family:var(--f-xw);font-size:16.5px;letter-spacing:.1em}
+.a-member__r{font-family:var(--f-kai);font-size:12px;letter-spacing:.14em;color:var(--primary-deep);margin-top:6px}
+.a-member__w{font-family:var(--f-kai);font-size:12px;color:var(--text-4);margin-top:8px;line-height:1.7}
+.a-faq{max-width:760px}
+.a-src{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.a-src__i{display:flex;gap:12px;padding:16px 18px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface)}
+.a-src__n{font-family:var(--f-latin);font-size:20px;color:var(--c-vermilion);opacity:.5;flex:none}
+@media (max-width:1024px){ .a-cols{grid-template-columns:1fr} .a-menu{position:static;flex-direction:row;flex-wrap:wrap} .a-menu a{border-left:0;border-bottom:2px solid transparent} .a-menu a.is-on{border-left:0;border-bottom-color:var(--primary)} .a-team{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:640px){ .a-team,.a-src{grid-template-columns:1fr} }
+</style>
+</head>
+<body class="gp-paper">
+<header data-gp-nav></header>
+
+<main>
+  <section class="a-hero">
+    <div class="gp-wrap">
+      <div class="gp-eyebrow">关 于 · 帮 助</div>
+      <h1 class="a-hero__t" style="margin-top:12px">咫 尺 乾 坤<br>苏 州 园 林 志</h1>
+      <p class="a-hero__d">
+        七座园林，四百余年营建史，一次被重新编排的数字漫游。本站以《网络艺术设计》课程为背景，
+        尝试在"纸本志书"的气质与"数字艺术"的动态之间找到平衡：让阅读有节奏，让交互有回响，让每一次点击都像在园中移步换景。
+      </p>
+      <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap">
+        <span class="gp-tag gp-tag--primary">第 五 · 六 周 交 付</span>
+        <span class="gp-tag">七 园 全 覆 盖</span>
+        <span class="gp-tag">动 效 语 言 完 整</span>
+        <span class="gp-tag gp-tag--gold">高 保 真 原 型</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-body">
+    <div class="gp-wrap">
+      <div class="a-cols">
+        <nav class="a-menu" id="aMenu">
+          <a href="#s-about" class="is-on">关于本站</a>
+          <a href="#s-team">小组与分工</a>
+          <a href="#s-source">资料来源</a>
+          <a href="#s-help">帮助中心</a>
+          <a href="#s-guide">使用指南</a>
+          <a href="#s-contact">联系与致谢</a>
+        </nav>
+
+        <div>
+          <section class="a-sec" id="s-about">
+            <div class="a-sec__t">关 于 本 站</div>
+            <div class="a-sec__d">ABOUT</div>
+            <p class="gp-body">《咫尺乾坤 · 苏州园林志》是一个关于苏州古典园林的数字化叙事原型。站点收录拙政园、留园、网师园、狮子林、沧浪亭、艺圃、耦园七处世界文化遗产园林，每园包含营建沿革、核心名景、诗文题联与游园指引四类内容。</p>
+            <p class="gp-body" style="margin-top:14px">设计上，我们把江南园林的两条核心方法论——"移步换景"的空间经营与"因地制宜"的营造智慧——转译为界面的组织逻辑：信息分层对应园路的开合，滚动节奏对应廊道的转折，惊喜细节对应"别有洞天"式的视觉爆发。</p>
+            <div class="gp-grid" style="margin-top:28px">
+              <div class="gp-col-4"><div class="gp-card" style="padding:20px 22px;height:100%">
+                <div class="gp-eyebrow" style="margin-bottom:12px">设 计 主 张</div>
+                <p class="gp-body" style="font-size:14px">减 少 干 扰 · 强 调 焦 点 · 每 屏 只 说 一 件 事</p>
+              </div></div>
+              <div class="gp-col-4"><div class="gp-card" style="padding:20px 22px;height:100%">
+                <div class="gp-eyebrow" style="margin-bottom:12px">动 效 主 张</div>
+                <p class="gp-body" style="font-size:14px">动 效 有 因 · 节 奏 有 度 · 动 效 可 关</p>
+              </div></div>
+              <div class="gp-col-4"><div class="gp-card" style="padding:20px 22px;height:100%">
+                <div class="gp-eyebrow" style="margin-bottom:12px">内 容 态 度</div>
+                <p class="gp-body" style="font-size:14px">史 料 有 出 处 · 文 言 不 佶 屈 · 异 常 也 有 语 气</p>
+              </div></div>
+            </div>
+          </section>
+
+          <section class="a-sec" id="s-team">
+            <div class="a-sec__t">小 组 与 分 工</div>
+            <div class="a-sec__d">TEAM</div>
+            <div class="a-team">
+              <div class="a-member"><div class="a-member__av" style="background:var(--c-vermilion)">组</div><div class="a-member__n">视 觉 主 设</div><div class="a-member__r">第一 / 三 / 四 周</div><div class="a-member__w">视觉规范 · 首页版式 · Banner 方案</div></div>
+              <div class="a-member"><div class="a-member__av" style="background:var(--accent)">结</div><div class="a-member__n">交 互 设 计</div><div class="a-member__r">第 五 / 六 周</div><div class="a-member__w">详情页 · 动效语言 · 组件库</div></div>
+              <div class="a-member"><div class="a-member__av" style="background:var(--c-gold)">构</div><div class="a-member__n">前 端 实 现</div><div class="a-member__r">全 周</div><div class="a-member__w">原型搭建 · 动效实现 · 响应式</div></div>
+              <div class="a-member"><div class="a-member__av" style="background:var(--c-moss,#5a6b3a)">辑</div><div class="a-member__n">内 容 统 筹</div><div class="a-member__r">第 二 周</div><div class="a-member__w">史料整理 · 文案撰写 · 图注校订</div></div>
+            </div>
+          </section>
+
+          <section class="a-sec" id="s-source">
+            <div class="a-sec__t">资 料 来 源</div>
+            <div class="a-sec__d">SOURCES</div>
+            <div class="a-src">
+              <div class="a-src__i"><span class="a-src__n">01</span><div><div style="font-family:var(--f-xw);font-size:15px;letter-spacing:.08em">《苏州园林甲天下》</div><div class="gp-help" style="margin-top:4px">园林概况与名称沿革</div></div></div>
+              <div class="a-src__i"><span class="a-src__n">02</span><div><div style="font-family:var(--f-xw);font-size:15px;letter-spacing:.08em">陈从周《说园》</div><div class="gp-help" style="margin-top:4px">造园手法与审美意趣表述</div></div></div>
+              <div class="a-src__i"><span class="a-src__n">03</span><div><div style="font-family:var(--f-xw);font-size:15px;letter-spacing:.08em">各园官方介绍与导览图</div><div class="gp-help" style="margin-top:4px">名景序列与热点位置</div></div></div>
+              <div class="a-src__i"><span class="a-src__n">04</span><div><div style="font-family:var(--f-xw);font-size:15px;letter-spacing:.08em">中国世界遗产官网</div><div class="gp-help" style="margin-top:4px">列入年份与遗产价值描述</div></div></div>
+            </div>
+            <div class="gp-banner gp-banner--warn" style="margin-top:18px">
+              <svg class="gp-banner__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+              <span>本站为课程设计原型，图像用于版式与氛围示意，不代表真实园区实景测绘；引用内容仅供学习交流。</span>
+            </div>
+          </section>
+
+          <section class="a-sec" id="s-help">
+            <div class="a-sec__t">帮 助 中 心</div>
+            <div class="a-sec__d">FAQ</div>
+            <div class="gp-acc a-faq" id="aFaq">
+              <div class="gp-acc__item">
+                <button class="gp-acc__head" aria-expanded="false"><span>如 何 快 速 找 到 一 座 园 子？</span><svg class="gp-acc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="gp-acc__panel"><div class="gp-acc__inner">在顶部导航点击"寻园"进入列表页，可直接输入园名、名景或题咏关键词；也可使用左侧筛选按年代、体裁、世界遗产入选年份逐层缩小范围。筛选条件可叠加，并支持"加入对比"横向比较三座园林。</div></div>
+              </div>
+              <div class="gp-acc__item">
+                <button class="gp-acc__head" aria-expanded="false"><span>详 情 页 与 "移 步" 页 有 什 么 区 别？</span><svg class="gp-acc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="gp-acc__panel"><div class="gp-acc__inner">详情页是"读"的页面：按信息层级组织史料，适合静读与检索；"移步"页是"走"的页面：以全屏场景与热点导览为主，适合沉浸浏览。两者共享同一套数据与视觉语言，可在任意时刻互相跳转。</div></div>
+              </div>
+              <div class="gp-acc__item">
+                <button class="gp-acc__head" aria-expanded="false"><span>支 持 手 机 与 平 板 吗？</span><svg class="gp-acc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="gp-acc__panel"><div class="gp-acc__inner">支持。布局在 1440 / 1200 / 1024 / 768 / 480 五个断点重排：桌面为 12 栏双栏，平板折叠侧栏，手机转为单栏并把关键操作固定在底部行动条。</div></div>
+              </div>
+              <div class="gp-acc__item">
+                <button class="gp-acc__head" aria-expanded="false"><span>可 以 关 闭 动 效 吗？</span><svg class="gp-acc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="gp-acc__panel"><div class="gp-acc__inner">可以。系统设置会自动尊重操作系统的"减少动效"偏好，也可在"我的 → 偏好设置"中手动关闭视差与墨染过场，仅保留必要状态反馈。</div></div>
+              </div>
+              <div class="gp-acc__item">
+                <button class="gp-acc__head" aria-expanded="false"><span>收 藏 与 题 咏 会 保 存 吗？</span><svg class="gp-acc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <div class="gp-acc__panel"><div class="gp-acc__inner">原型阶段保存在浏览器本地存储中，刷新不丢失；清除浏览器数据或点击"清除全部数据"后会重置。正式版本将同步至账户云端。</div></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="a-sec" id="s-guide">
+            <div class="a-sec__t">使 用 指 南</div>
+            <div class="a-sec__d">GUIDE</div>
+            <div class="gp-card" style="padding:26px 28px">
+              <div class="gp-tabs" style="margin-bottom:22px">
+                <button class="is-on" aria-selected="true">浏 览 园 志</button>
+                <button aria-selected="false">检 索 对 比</button>
+                <button aria-selected="false">移 步 场 景</button>
+                <button aria-selected="false">收 藏 题 咏</button>
+              </div>
+              <div data-gp-tab-panel>
+                <p class="gp-body">首页自上而下分为"园志引言—七园索引—造园哲学—四时之景—结语"五段。点击任一园子卡片进入其详情页；滚动浏览时左侧目录会同步高亮当前章节。</p>
+              </div>
+              <div data-gp-tab-panel hidden>
+                <p class="gp-body">在"寻园"页输入关键词即可检索七园的园名、名景、题咏与造园手法。勾选左侧筛选项可多条件叠加；右上角可切换排序方式与网格／列表视图，并最多同时对比三座园林。</p>
+              </div>
+              <div data-gp-tab-panel hidden>
+                <p class="gp-body">详情页点击"入园移步"进入沉浸场景页。点击画面中的红色热点查看景点说明，可用左右方向键切换景别，点击"导览地图"查看全园点位分布。</p>
+              </div>
+              <div data-gp-tab-panel hidden>
+                <p class="gp-body">详情页的"收入笺囊"会把园林存入"我的 → 我的笺囊"；在评论区输入文字后点击"题咏"即可留下你的观园所得，点赞与分享均带即时动效反馈。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="a-sec" id="s-contact">
+            <div class="a-sec__t">联 系 与 致 谢</div>
+            <div class="a-sec__d">CONTACT</div>
+            <div class="gp-grid">
+              <div class="gp-col-6"><div class="gp-card" style="padding:22px 24px;height:100%">
+                <div class="gp-eyebrow" style="margin-bottom:12px">联 系</div>
+                <p class="gp-body" style="font-size:14.5px">小组名：两眼一黑<br>课程：《网络艺术设计》<br>交付版本：第五 / 六 周 · 全部页面与交互动效</p>
+              </div></div>
+              <div class="gp-col-6"><div class="gp-card" style="padding:22px 24px;height:100%">
+                <div class="gp-eyebrow" style="margin-bottom:12px">致 谢</div>
+                <p class="gp-body" style="font-size:14.5px">感谢陈从周先生《说园》等著作提供的造园美学框架；感谢各园管理机构公开的导览资料；感谢课程教师在四周推进中的持续校准。</p>
+              </div></div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap">
+              <a class="gp-btn gp-btn--primary" href="index.html">回 到 园 志</a>
+              <a class="gp-btn gp-btn--ghost" href="design-system.html">查 看 设 计 系 统</a>
+              <a class="gp-btn gp-btn--ghost" href="motion.html">查 看 动 效 规 范</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-gp-footer></footer>
+
+<script src="app.js"></script>
+<script>
+(function(){
+  GP_APP.nav('about'); GP_APP.footer(); GP_APP.accordion();
+  const secs = Array.from(document.querySelectorAll('.a-sec'));
+  const links = Array.from(document.querySelectorAll('#aMenu a'));
+  window.addEventListener('scroll', () => {
+    let cur = secs[0];
+    secs.forEach(s => { if (s.getBoundingClientRect().top <= 170) cur = s; });
+    links.forEach(a => a.classList.toggle('is-on', a.getAttribute('href') === '#' + cur.id));
+  }, { passive:true });
+})();
+</script>
+</body>
+</html>

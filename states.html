@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>错误与空状态 · 苏州园林志</title>
+<meta name="description" content="404 / 无网络 / 加载失败 / 空搜索结果 / 空收藏 等异常与空状态设计">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.x-hero{position:relative;z-index:2;padding:44px 0 28px;text-align:center}
+.x-hero__t{font-family:var(--f-li);font-size:clamp(32px,4.6vw,52px);letter-spacing:.14em}
+.x-wrap{position:relative;z-index:2;padding:16px 0 80px}
+.x-demo{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);overflow:hidden;margin-bottom:26px}
+.x-demo__head{display:flex;align-items:center;gap:12px;padding:14px 22px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.x-demo__t{font-family:var(--f-xw);font-size:15px;letter-spacing:.14em}
+.x-demo__tag{margin-left:auto}
+.x-demo__body{padding:34px 26px;display:flex;justify-content:center}
+.x-full{background:linear-gradient(180deg,var(--surface-2),var(--surface-3));border-radius:var(--r-md);border:1px solid var(--border);padding:46px 26px;text-align:center;position:relative;overflow:hidden}
+.x-full .gp-state{position:relative;z-index:2}
+.x-offline-art{position:relative;width:180px;height:130px;margin:0 auto 8px}
+.x-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;width:100%;max-width:980px}
+.x-note{font-family:var(--f-kai);font-size:12.5px;color:var(--text-4);letter-spacing:.1em;text-align:center;margin-top:18px;max-width:620px;line-height:1.9}
+.x-rules{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;width:100%}
+.x-rule{border:1px dashed var(--border-strong);border-radius:var(--r-md);padding:18px}
+.x-rule__t{font-family:var(--f-xw);font-size:14.5px;letter-spacing:.1em;margin-bottom:8px;color:var(--primary-deep)}
+.x-rule__d{font-family:var(--f-kai);font-size:13px;line-height:1.9;color:var(--text-3)}
+@media (max-width:900px){ .x-grid2{grid-template-columns:1fr} .x-rules{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:600px){ .x-rules{grid-template-columns:1fr} }
+</style>
+</head>
+<body class="gp-paper">
+<header data-gp-nav></header>
+
+<main>
+  <section class="x-hero">
+    <div class="gp-wrap">
+      <div class="gp-eyebrow" style="justify-content:center">系 统 页 面 · 异 常 与 空</div>
+      <h1 class="x-hero__t" style="margin-top:10px">错 误 与 空 状 态</h1>
+      <p class="gp-lead" style="max-width:660px;margin:14px auto 0;text-align:center">
+        异常页不是一句"出错了"。保持《园志》的叙述语气，用一句合乎情境的话说明发生了什么，并给出清晰的下一步——离开、等待，或换条路走。
+      </p>
+    </div>
+  </section>
+
+  <div class="x-wrap">
+    <div class="gp-wrap">
+
+      <!-- ① 无网络 -->
+      <section class="x-demo">
+        <div class="x-demo__head"><span class="x-demo__t">① 无网络 / 离线</span><span class="gp-tag gp-tag--primary x-demo__tag">全屏拦截</span></div>
+        <div class="x-demo__body">
+          <div class="x-full" style="width:100%;max-width:980px">
+            <div class="gp-state">
+              <div class="x-offline-art">
+                <svg viewBox="0 0 180 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 108 q34-26 66-10 t94-16" stroke="#bfae8a" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M18 120 q36-18 74-6 t72-14" stroke="#ddd0ad" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M46 100 v-44 l32-24 32 24 v44 z" fill="#efe4cb" stroke="#8a7d6a" stroke-width="1.6"/>
+                  <path d="M62 100 v-22 h32 v22" stroke="#8a7d6a" stroke-width="1.3"/>
+                  <path d="M78 56 v-16 M66 40 h24" stroke="#b13a2f" stroke-width="2.2" stroke-linecap="round"/>
+                  <circle cx="130" cy="34" r="24" stroke="#b13a2f" stroke-width="2.2" opacity=".8"/>
+                  <path d="M117 47 l26-26" stroke="#b13a2f" stroke-width="2.6" stroke-linecap="round"/>
+                  <path d="M140 62 q10 8 20 0" stroke="#b13a2f" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+                </svg>
+              </div>
+              <div class="gp-state__title">园 门 暂 闭</div>
+              <div class="gp-state__desc">当前网络不可用，已为你保留上次浏览的园子。恢复连接后即可继续移步换景。</div>
+              <div class="gp-state__actions">
+                <button class="gp-btn gp-btn--primary" onclick="GP_APP.toast('正在重新连接…','info')">重 新 连 接</button>
+                <button class="gp-btn gp-btn--ghost" onclick="GP_APP.toast('已切换到离线内容','ok')">查 看 离 线 园 志</button>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;justify-content:center">
+                <span class="gp-tag">拙政园 · 可离线</span><span class="gp-tag">留园 · 可离线</span><span class="gp-tag">狮子林 · 可离线</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 状态画廊 -->
+      <section class="x-demo">
+        <div class="x-demo__head"><span class="x-demo__t">② 状态画廊</span><span class="gp-tag gp-tag--accent x-demo__tag">6 种</span></div>
+        <div class="x-demo__body" style="display:block">
+          <div class="x-grid2" style="margin:0 auto">
+
+            <!-- 404 -->
+            <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:30px 22px;text-align:center;background:var(--surface-2)">
+              <svg viewBox="0 0 120 120" fill="none" style="width:96px;height:96px;margin:0 auto 12px">
+                <rect x="22" y="26" width="76" height="72" rx="4" fill="#f8f2e1" stroke="#bfae8a" stroke-width="1.8"/>
+                <path d="M34 46h52M34 60h52M34 74h30" stroke="#ddd0ad" stroke-width="4" stroke-linecap="round"/>
+                <path d="M74 86 l16-16 M90 70 a11 11 0 100 22 11 11 0 000-22z" stroke="#b13a2f" stroke-width="2.4"/>
+              </svg>
+              <div class="gp-state__title">此 路 不 通</div>
+              <div class="gp-state__desc">你要找的页面不在园中，可能已被移动或从未存在。</div>
+              <div class="gp-state__actions">
+                <a class="gp-btn gp-btn--primary gp-btn--sm" href="index.html">回 园 志</a>
+                <a class="gp-btn gp-btn--ghost gp-btn--sm" href="explore.html">去 寻 园</a>
+              </div>
+              <div style="margin-top:14px"><span class="gp-tag gp-tag--primary">404 · Not Found</span></div>
+            </div>
+
+            <!-- 加载失败 -->
+            <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:30px 22px;text-align:center;background:var(--surface-2)">
+              <svg viewBox="0 0 120 120" fill="none" style="width:96px;height:96px;margin:0 auto 12px">
+                <circle cx="60" cy="58" r="34" stroke="#bfae8a" stroke-width="1.8"/>
+                <path d="M60 40v22" stroke="#b13a2f" stroke-width="3.4" stroke-linecap="round"/>
+                <circle cx="60" cy="74" r="2.4" fill="#b13a2f"/>
+                <path d="M26 96 q34-12 68 0" stroke="#8a7d6a" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+              </svg>
+              <div class="gp-state__title">卷 轴 受 潮</div>
+              <div class="gp-state__desc">内容读取失败，可能是网络波动。稍候再取，或先看看别的景致。</div>
+              <div class="gp-state__actions">
+                <button class="gp-btn gp-btn--primary gp-btn--sm" onclick="GP_APP.toast('重新载入中…','info')">重 新 载 入</button>
+                <a class="gp-btn gp-btn--ghost gp-btn--sm" href="index.html">回 园 志</a>
+              </div>
+              <div style="margin-top:14px"><span class="gp-tag gp-tag--primary">加载失败</span></div>
+            </div>
+
+            <!-- 空搜索结果 -->
+            <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:30px 22px;text-align:center;background:var(--surface-2)">
+              <svg viewBox="0 0 120 120" fill="none" style="width:96px;height:96px;margin:0 auto 12px">
+                <circle cx="52" cy="52" r="28" stroke="#bfae8a" stroke-width="2"/>
+                <path d="M73 73l20 20" stroke="#b13a2f" stroke-width="3" stroke-linecap="round"/>
+                <path d="M42 52h20M52 42v20" stroke="#c9b896" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+              <div class="gp-state__title">未 寻 得 此 景</div>
+              <div class="gp-state__desc">换个关键词试试，"冠云""小飞虹""濯缨水阁"都可能是你要找的。</div>
+              <div class="gp-state__actions">
+                <button class="gp-btn gp-btn--primary gp-btn--sm" onclick="GP_APP.toast('已清空搜索条件','ok')">清 空 条 件</button>
+                <button class="gp-btn gp-btn--ghost gp-btn--sm" onclick="GP_APP.toast('已为你推荐 3 座园林','ok')">看 推 荐</button>
+              </div>
+              <div style="margin-top:14px"><span class="gp-tag gp-tag--primary">空 结果</span></div>
+            </div>
+
+            <!-- 空收藏 -->
+            <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:30px 22px;text-align:center;background:var(--surface-2)">
+              <svg viewBox="0 0 120 120" fill="none" style="width:96px;height:96px;margin:0 auto 12px">
+                <path d="M42 26h36v68l-18-13-18 13z" fill="#f8f2e1" stroke="#bfae8a" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M54 46h12M54 58h12" stroke="#c9b896" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="82" cy="80" r="15" stroke="#b13a2f" stroke-width="2.2"/>
+                <path d="M82 72v16M74 80h16" stroke="#b13a2f" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>
+              </svg>
+              <div class="gp-state__title">笺 囊 尚 空</div>
+              <div class="gp-state__desc">遇到喜欢的园子，点"收入笺囊"，它就会留在这里等你。</div>
+              <div class="gp-state__actions">
+                <a class="gp-btn gp-btn--primary gp-btn--sm" href="explore.html">去 寻 一 园</a>
+              </div>
+              <div style="margin-top:14px"><span class="gp-tag gp-tag--primary">空 收 藏</span></div>
+            </div>
+
+            <!-- 无评论 -->
+            <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:30px 22px;text-align:center;background:var(--surface-2)">
+              <svg viewBox="0 0 120 120" fill="none" style="width:96px;height:96px;margin:0 auto 12px">
+                <rect x="28" y="34" width="64" height="42" rx="5" fill="#f8f2e1" stroke="#bfae8a" stroke-width="1.8"/>
+                <path d="M48 76l-6 14 20-14" fill="#f8f2e1" stroke="#bfae8a" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M42 50h36M42 61h22" stroke="#ddd0ad" stroke-width="3.4" stroke-linecap="round"/>
+                <rect x="72" y="72" width="24" height="24" rx="3" fill="#b13a2f" transform="rotate(-8 72 72)"/>
+                <text x="84" y="89" text-anchor="middle" font-family="serif" font-size="13" fill="#f3ead7">题</text>
+              </svg>
+              <div class="gp-state__title">尚 无 题 咏</div>
+              <div class="gp-state__desc">你是第一个留下观园所得的人。写下此刻的感受，成为这卷的开篇。</div>
+              <div class="gp-state__actions">
+                <button class="gp-btn gp-btn--primary gp-btn--sm" onclick="GP_APP.toast('已聚焦到题咏输入框','info')">留 下 第 一 言</button>
+              </div>
+              <div style="margin-top:14px"><span class="gp-tag gp-tag--primary">空 评 论</span></div>
+            </div>
+
+            <!-- 权限 / 下架 -->
+            <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:30px 22px;text-align:center;background:var(--surface-2)">
+              <svg viewBox="0 0 120 120" fill="none" style="width:96px;height:96px;margin:0 auto 12px">
+                <rect x="34" y="54" width="52" height="38" rx="5" fill="#f8f2e1" stroke="#bfae8a" stroke-width="1.8"/>
+                <path d="M44 54V44a16 16 0 0132 0v10" stroke="#b13a2f" stroke-width="2.6" stroke-linecap="round"/>
+                <circle cx="60" cy="72" r="5" fill="#b13a2f"/>
+                <path d="M60 77v7" stroke="#b13a2f" stroke-width="2.6" stroke-linecap="round"/>
+              </svg>
+              <div class="gp-state__title">暂 未 开 放</div>
+              <div class="gp-state__desc">此区域正在修缮维护，开放时间另行公告。可先游览其他已开放的园子。</div>
+              <div class="gp-state__actions">
+                <a class="gp-btn gp-btn--primary gp-btn--sm" href="explore.html">看 已 开 放 园 林</a>
+              </div>
+              <div style="margin-top:14px"><span class="gp-tag gp-tag--primary">维 护 中</span></div>
+            </div>
+
+          </div>
+          <p class="x-note">命名原则：标题用四字短语，与品牌语气一致（如"园门暂闭""此路不通"），避免"Error 500"这类工程化表述直出；技术代码以标签形式弱化置于下方。</p>
+        </div>
+      </section>
+
+      <!-- ③ 文案与动效规则 -->
+      <section class="x-demo">
+        <div class="x-demo__head"><span class="x-demo__t">③ 状态文案与动效规则</span><span class="gp-tag gp-tag--gold x-demo__tag">Rule</span></div>
+        <div class="x-demo__body" style="display:block;padding:26px">
+          <div class="x-rules">
+            <div class="x-rule"><div class="x-rule__t">说 事 不 说 错</div><div class="x-rule__d">先讲发生了什么，再讲能做什么。"园门暂闭"优于"网络错误"。</div></div>
+            <div class="x-rule"><div class="x-rule__t">主 动 作 ≤ 2</div><div class="x-rule__d">每个状态最多两个按钮，主按钮唯一；次按钮为退路。</div></div>
+            <div class="x-rule"><div class="x-rule__t">保 留 旧 内 容</div><div class="x-rule__d">加载失败时不清空已渲染内容，只在局部提示，避免白屏。</div></div>
+            <div class="x-rule"><div class="x-rule__t">动 效 有 因</div><div class="x-rule__d">空状态用呼吸动效吸引注意；错误状态用短促位移，避免持续干扰。</div></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer data-gp-footer></footer>
+
+<script src="app.js"></script>
+<script>
+(function(){ GP_APP.nav('about'); GP_APP.footer(); })();
+</script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的 · 苏州园林志</title>
+<meta name="description" content="个人中心与设置 · 笺囊、题咏、足迹与偏好设置">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.u-hero{position:relative;z-index:2;padding:36px 0 30px;border-bottom:1px solid var(--border)}
+.u-top{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.u-avatar{width:88px;height:88px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-li);font-size:34px;color:var(--text-inv);background:linear-gradient(140deg,var(--c-vermilion),var(--c-vermilion-deep));
+  box-shadow:0 0 0 4px var(--bg),0 0 0 5px var(--border-strong);position:relative}
+.u-avatar::after{content:'';position:absolute;right:-2px;bottom:-2px;width:26px;height:26px;border-radius:50%;
+  background:var(--c-gold);border:3px solid var(--bg);display:flex;align-items:center;justify-content:center}
+.u-id h1{font-family:var(--f-li);font-size:30px;letter-spacing:.12em;color:var(--c-ink);line-height:1.2}
+.u-id__sub{font-family:var(--f-kai);font-size:13px;letter-spacing:.14em;color:var(--text-4);margin-top:6px}
+.u-stats{display:flex;gap:26px;margin-left:auto;flex-wrap:wrap}
+.u-stat{text-align:center}
+.u-stat__n{font-family:var(--f-latin);font-size:32px;color:var(--primary-deep);line-height:1}
+.u-stat__l{font-family:var(--f-kai);font-size:12px;letter-spacing:.18em;color:var(--text-4);margin-top:6px;display:block}
+.u-body{padding:32px 0 80px}
+.u-layout{display:grid;grid-template-columns:238px minmax(0,1fr);gap:38px;align-items:start}
+.u-side{position:sticky;top:84px}
+.u-side__item{display:flex;align-items:center;gap:11px;padding:11px 14px;border-radius:var(--r-sm);cursor:pointer;
+  font-family:var(--f-kai);font-size:14.5px;letter-spacing:.12em;color:var(--text-2);
+  border-left:2px solid transparent;transition:all var(--t-fast) var(--ease-soft);background:none;border-top:0;border-right:0;border-bottom:0;width:100%;text-align:left}
+.u-side__item:hover{background:var(--surface-2);color:var(--primary)}
+.u-side__item.is-on{background:rgba(177,58,47,.08);color:var(--primary-deep);border-left-color:var(--primary)}
+.u-side__item svg{width:17px;height:17px;flex:none}
+.u-panel{display:none}
+.u-panel.is-on{display:block;animation:gpFadeUp .45s var(--ease-move)}
+.u-panel__t{font-family:var(--f-li);font-size:23px;letter-spacing:.1em;margin-bottom:6px}
+.u-panel__d{font-family:var(--f-kai);font-size:13px;color:var(--text-4);letter-spacing:.1em;margin-bottom:22px}
+.u-set{display:flex;align-items:center;gap:18px;padding:18px 20px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);margin-bottom:12px}
+.u-set__icon{width:40px;height:40px;border-radius:var(--r-sm);background:var(--surface-2);color:var(--text-3);display:flex;align-items:center;justify-content:center;flex:none}
+.u-set__t{font-family:var(--f-xw);font-size:15.5px;letter-spacing:.08em}
+.u-set__d{font-family:var(--f-kai);font-size:12.5px;color:var(--text-4);margin-top:3px;line-height:1.7}
+.u-set__ctl{margin-left:auto;flex:none}
+.u-danger{border-color:rgba(177,58,47,.35)}
+.u-danger .u-set__icon{background:rgba(177,58,47,.1);color:var(--primary)}
+.u-favs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.u-trail{display:grid;gap:0}
+.u-trail__i{display:flex;gap:16px;padding:16px 0;border-bottom:1px dashed var(--border)}
+.u-trail__d{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:10px;flex:none;box-shadow:0 0 0 4px rgba(177,58,47,.12)}
+.u-trail__t{font-family:var(--f-kai);font-size:14.5px;color:var(--text)}
+.u-trail__m{font-family:var(--f-latin);font-size:12px;color:var(--text-4);margin-top:3px}
+@media (max-width:1024px){ .u-layout{grid-template-columns:1fr} .u-side{position:static;display:flex;gap:6px;overflow-x:auto;padding-bottom:6px} .u-side__item{white-space:nowrap;border-left:0;border-bottom:2px solid transparent;border-radius:0} .u-side__item.is-on{border-left:0;border-bottom-color:var(--primary)} }
+@media (max-width:768px){ .u-stats{margin-left:0;gap:20px} .u-favs{grid-template-columns:1fr} }
+</style>
+</head>
+<body class="gp-paper">
+<header data-gp-nav></header>
+
+<main>
+  <section class="u-hero">
+    <div class="gp-wrap">
+      <div class="u-top">
+        <div class="u-avatar">游</div>
+        <div class="u-id">
+          <h1>看 园 人 · 沈 砚 秋</h1>
+          <div class="u-id__sub">苏州园林志 · 已题咏 3 卷 · 加入于二〇二六年春</div>
+        </div>
+        <div class="u-stats">
+          <div class="u-stat"><span class="u-stat__n" id="stFav">0</span><span class="u-stat__l">笺 囊</span></div>
+          <div class="u-stat"><span class="u-stat__n">3</span><span class="u-stat__l">题 咏</span></div>
+          <div class="u-stat"><span class="u-stat__n">12</span><span class="u-stat__l">足 迹</span></div>
+          <div class="u-stat"><span class="u-stat__n">4</span><span class="u-stat__l">印 鉴</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="u-body">
+    <div class="gp-wrap">
+      <div class="u-layout">
+        <aside class="u-side" id="uSide">
+          <button class="u-side__item is-on" data-panel="fav">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.2L6 21z"/></svg>我的笺囊</button>
+          <button class="u-side__item" data-panel="cmt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8H7l-4 3v-5.5A8 8 0 1121 12z"/></svg>我的题咏</button>
+          <button class="u-side__item" data-panel="trail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 20c4-1 5-4 5-7s2-6 6-6 5 3 5 6"/></svg>观园足迹</button>
+          <button class="u-side__item" data-panel="setting">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M21 12h-2.5M5.5 12H3M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8M18.4 18.4l-1.8-1.8M7.4 7.4L5.6 5.6"/></svg>偏好设置</button>
+          <button class="u-side__item" data-panel="about">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01" stroke-linecap="round"/></svg>关于本站</button>
+        </aside>
+
+        <div>
+          <!-- 笺囊 -->
+          <section class="u-panel is-on" id="p-fav">
+            <div class="u-panel__t">我 的 笺 囊</div>
+            <div class="u-panel__d">收藏的园林会保留在此，随你下次到访。</div>
+            <div class="u-favs" id="uFavs"></div>
+            <div class="gp-state" id="uFavEmpty" style="display:none">
+              <svg class="gp-state__art" viewBox="0 0 120 120" fill="none">
+                <path d="M42 26h36v68l-18-13-18 13z" fill="#f8f2e1" stroke="#bfae8a" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M54 46h12M54 58h12" stroke="#c9b896" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+              <div class="gp-state__title">笺 囊 尚 空</div>
+              <div class="gp-state__desc">遇到喜欢的园子，点"收入笺囊"，它就会留在这里等你。</div>
+              <div class="gp-state__actions"><a class="gp-btn gp-btn--primary" href="explore.html">去 寻 一 园</a></div>
+            </div>
+          </section>
+
+          <!-- 题咏 -->
+          <section class="u-panel" id="p-cmt">
+            <div class="u-panel__t">我 的 题 咏</div>
+            <div class="u-panel__d">你在各园留下的观园所得。</div>
+            <div class="gp-card" style="padding:20px 22px;margin-bottom:14px">
+              <div class="gp-comment__head">
+                <span class="gp-comment__name">沈 砚 秋</span>
+                <span class="gp-tag gp-tag--gold">留 园 · 冠云峰</span>
+                <span class="gp-comment__time">2 天前</span>
+              </div>
+              <div class="gp-comment__text">皱、漏、瘦、透四字，站着看和绕着看完全是两座石头。绕三圈才明白"冠云"不是形状，是气势。</div>
+              <div class="gp-comment__acts">
+                <button class="gp-comment__act" data-like><span>赞 </span><span data-like-count>9</span></button>
+                <button class="gp-comment__act">删 除</button>
+              </div>
+            </div>
+            <div class="gp-card" style="padding:20px 22px;margin-bottom:14px">
+              <div class="gp-comment__head">
+                <span class="gp-comment__name">沈 砚 秋</span>
+                <span class="gp-tag gp-tag--gold">沧浪亭 · 看山楼</span>
+                <span class="gp-comment__time">6 天前</span>
+              </div>
+              <div class="gp-comment__text">"看山楼"得见山，一园之内借了园外的远山古塔——这是江南造园最开阔的一笔。</div>
+              <div class="gp-comment__acts">
+                <button class="gp-comment__act" data-like><span>赞 </span><span data-like-count>4</span></button>
+                <button class="gp-comment__act">删 除</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 足迹 -->
+          <section class="u-panel" id="p-trail">
+            <div class="u-panel__t">观 园 足 迹</div>
+            <div class="u-panel__d">最近 30 天的浏览记录，可一键清除。</div>
+            <div class="u-trail">
+              <div class="u-trail__i"><span class="u-trail__d"></span><div><div class="u-trail__t">拙政园 · 远香堂（沉浸场景页）</div><div class="u-trail__m">今天 14:22 · 浏览 6 分钟</div></div></div>
+              <div class="u-trail__i"><span class="u-trail__d"></span><div><div class="u-trail__t">留园 · 冠云峰（详情页）</div><div class="u-trail__m">昨天 09:40 · 浏览 3 分钟</div></div></div>
+              <div class="u-trail__i"><span class="u-trail__d"></span><div><div class="u-trail__t">搜索"水" · 3 条结果</div><div class="u-trail__m">10 月 26 日 19:08</div></div></div>
+              <div class="u-trail__i"><span class="u-trail__d"></span><div><div class="u-trail__t">狮子林 · 真趣亭（详情页）</div><div class="u-trail__m">10 月 25 日 15:11 · 浏览 8 分钟</div></div></div>
+              <div class="u-trail__i"><span class="u-trail__d"></span><div><div class="u-trail__t">网师园 · 濯缨水阁</div><div class="u-trail__m">10 月 22 日 10:02 · 浏览 5 分钟</div></div></div>
+            </div>
+            <button class="gp-btn gp-btn--ghost gp-btn--sm" style="margin-top:18px" onclick="GP_APP.toast('足迹记录已清除','info')">清 除 足 迹</button>
+          </section>
+
+          <!-- 设置 -->
+          <section class="u-panel" id="p-setting">
+            <div class="u-panel__t">偏 好 设 置</div>
+            <div class="u-panel__d">调整阅读与动效偏好，设置保存在本机。</div>
+
+            <div class="u-set">
+              <span class="u-set__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 20c4-1 5-4 5-7s2-6 6-6 5 3 5 6"/><path d="M2 12h2M20 12h2"/></svg></span>
+              <div><div class="u-set__t">减少动效</div><div class="u-set__d">关闭视差、墨染与自动播放的过场动画，仅保留必要的状态反馈。</div></div>
+              <div class="u-set__ctl"><label class="gp-switch"><input type="checkbox" id="setMotion"><span class="gp-switch__track"></span><span class="gp-switch__dot"></span></label></div>
+            </div>
+
+            <div class="u-set">
+              <span class="u-set__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h10M4 18h13"/></svg></span>
+              <div><div class="u-set__t">正文字号</div><div class="u-set__d">阅读正文默认 15.5px，可放大至 18px 以适应长时间阅读。</div></div>
+              <div class="u-set__ctl"><div class="gp-seg" id="setFont"><button data-f="1">标 准</button><button data-f="1.15">大</button><button data-f="1.3">特 大</button></div></div>
+            </div>
+
+            <div class="u-set">
+              <span class="u-set__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10.3 21a2 2 0 003.4 0"/></svg></span>
+              <div><div class="u-set__t">新园上新提醒</div><div class="u-set__d">当七园中的任何一园更新内容时，在导航处提示一次。</div></div>
+              <div class="u-set__ctl"><label class="gp-switch"><input type="checkbox" checked><span class="gp-switch__track"></span><span class="gp-switch__dot"></span></label></div>
+            </div>
+
+            <div class="u-set">
+              <span class="u-set__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M21 12h-2.5M5.5 12H3"/></svg></span>
+              <div><div class="u-set__t">个性化推荐</div><div class="u-set__d">依据你的足迹与题咏，推荐更契合的园子与名景。</div></div>
+              <div class="u-set__ctl"><label class="gp-switch"><input type="checkbox" checked><span class="gp-switch__track"></span><span class="gp-switch__dot"></span></label></div>
+            </div>
+
+            <div class="u-set">
+              <span class="u-set__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M3 12h18"/></svg></span>
+              <div><div class="u-set__t">离线缓存</div><div class="u-set__d">已缓存 3 座园林共 28 MB，离线也可阅读。</div></div>
+              <div class="u-set__ctl"><button class="gp-btn gp-btn--ghost gp-btn--sm" onclick="GP_APP.toast('缓存已清理','ok')">清 理</button></div>
+            </div>
+
+            <div class="u-set u-danger">
+              <span class="u-set__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></span>
+              <div><div class="u-set__t">清除全部数据</div><div class="u-set__d">清除收藏、题咏与足迹，本操作不可撤销。</div></div>
+              <div class="u-set__ctl"><button class="gp-btn gp-btn--ghost gp-btn--sm" id="setClear">清 除</button></div>
+            </div>
+          </section>
+
+          <!-- 关于 -->
+          <section class="u-panel" id="p-about">
+            <div class="u-panel__t">关 于 本 站</div>
+            <div class="u-panel__d">《咫尺乾坤 · 苏州园林志》课程设计原型。</div>
+            <div class="gp-card" style="padding:26px 28px">
+              <p class="gp-body">本站以数字化方式整理苏州古典园林的图文资料，覆盖拙政园、留园、网师园、狮子林、沧浪亭、艺圃、耦园七处世界文化遗产。</p>
+              <p class="gp-body" style="margin-top:12px">全部文本依据公开史料与公开出版物整理，图像用于版式与氛围示意，不作商业用途。</p>
+              <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+                <a class="gp-btn gp-btn--ghost gp-btn--sm" href="about.html">关 于 与 帮 助</a>
+                <a class="gp-btn gp-btn--ghost gp-btn--sm" href="design-system.html">设 计 系 统</a>
+                <a class="gp-btn gp-btn--ghost gp-btn--sm" href="motion.html">动 效 规 范</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-gp-footer></footer>
+
+<script src="illustrations.js"></script>
+<script src="gardens-data.js"></script>
+<script src="app.js"></script>
+<script>
+(function(){
+  const { GARDENS } = window.GP_DATA;
+  GP_APP.nav('profile'); GP_APP.footer();
+
+  /* 面板切换 */
+  const side = document.getElementById('uSide');
+  side.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-panel]');
+    if (!b) return;
+    side.querySelectorAll('.u-side__item').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on');
+    document.querySelectorAll('.u-panel').forEach(p => p.classList.remove('is-on'));
+    document.getElementById('p-' + b.dataset.panel).classList.add('is-on');
+  });
+
+  /* 笺囊：读取 localStorage 收藏 */
+  const favIds = ['zhuozheng','liu','shizi','liu','wangshi'];
+  const favBox = document.getElementById('uFavs');
+  const emptyBox = document.getElementById('uFavEmpty');
+  function renderFavs(){
+    const ids = [...new Set(favIds)];
+    document.getElementById('stFav').textContent = ids.length;
+    if (!ids.length) { favBox.style.display='none'; emptyBox.style.display='flex'; return; }
+    favBox.style.display=''; emptyBox.style.display='none';
+    favBox.innerHTML = ids.map(id => {
+      const g = GARDENS[id]; if (!g) return '';
+      return `<a class="gp-card gp-card--hover" href="detail.html?id=${id}">
+        <div class="gp-card__media" style="aspect-ratio:16/10">
+          <img src="images/${id}-hero.jpg" alt="${g.name.replace(/\s/g,'')}" loading="lazy" onerror="this.src='images/card-${id}.jpg'">
+          <span class="gp-card__ribbon">${g.era||''}</span>
+          <span class="gp-card__seal"><span class="gp-seal gp-seal--sm">藏</span></span>
+        </div>
+        <div class="gp-card__body">
+          <div class="gp-card__title">${g.name}</div>
+          <div class="gp-card__desc">${g.alias}</div>
+        </div></a>`;
+    }).join('');
+  }
+  renderFavs();
+
+  /* 字号设置 */
+  document.querySelectorAll('#setFont button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#setFont button').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on');
+    document.querySelector('.gp-body').style.fontSize = (15.5 * (+b.dataset.f)) + 'px';
+    GP_APP.toast('正文字号已调整', 'ok');
+  }));
+
+  /* 减少动效 */
+  document.getElementById('setMotion').addEventListener('change', e => {
+    document.body.style.setProperty('--t-base', e.target.checked ? '1ms' : '280ms');
+    document.body.style.setProperty('--t-slow', e.target.checked ? '1ms' : '560ms');
+    GP_APP.toast(e.target.checked ? '已开启减少动效' : '已恢复标准动效', 'info');
+  });
+
+  document.getElementById('setClear').addEventListener('click', () => {
+    if (confirm('确认清除全部收藏、题咏与足迹？')) {
+      favIds.length = 0; renderFavs(); GP_APP.toast('数据已清除', 'ok');
+    }
+  });
+})();
+</script>
+</body>
+</html>

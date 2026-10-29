@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
 <style>
 /* ============ 基础重置 ============ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1180,6 +1181,9 @@ body::after{
   苏州古典园林 <span class="vline"></span> 世界文化遗产 <span class="vline"></span> 一九九七年列入 <span class="vline"></span> 江南烟雨 六朝风雅
 </div>
 
+<!-- 全站导航（第五/六周统一） -->
+<header data-gp-nav></header>
+
 <!-- 鼠标水墨涟漪画布 -->
 <canvas id="ripple-canvas" aria-hidden="true"></canvas>
 
@@ -1701,7 +1705,10 @@ body::after{
 
 <!-- 模态已移除 - 详情见独立页面 garden.html -->
 
+<footer data-gp-footer></footer>
+
 <script src="illustrations.js"></script>
+<script src="app.js"></script>
 <script>
 /* ============ 数据 ============ */
 /* 卡片为静态链接，内容见 garden.html；此处不再重复维护园子数据 */
@@ -1907,6 +1914,10 @@ document.querySelectorAll('.char').forEach((el, i) => {
     scrollImg.src = GP.photoFor('hero-scroll-art');
     scrollArt.insertBefore(scrollImg, scrollArt.firstChild);
   }
+
+  /* ============ 全站导航与页脚（第五/六周统一） ============ */
+  GP_APP.nav('home');
+  GP_APP.footer();
 })();
 </script>
 </body>

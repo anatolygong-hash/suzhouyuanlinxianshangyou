@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>寻园 · 苏州园林志</title>
+<meta name="description" content="七座苏州古典园林的检索、筛选与对比 · 列表页与搜索结果页">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Liu+Jian+Mao+Cao&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+.e-hero{position:relative;z-index:2;padding:52px 0 40px;border-bottom:1px solid var(--border)}
+.e-hero__t{font-family:var(--f-li);font-size:clamp(40px,5.4vw,66px);letter-spacing:.12em;line-height:1.1}
+.e-searchbar{display:flex;gap:12px;margin-top:26px;max-width:760px}
+.e-searchbar .gp-search{flex:1}
+.e-searchbar .gp-search input{padding:15px 18px 15px 46px;font-size:16px;border-width:1.5px}
+.e-quick{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;align-items:center}
+.e-quick__lbl{font-family:var(--f-kai);font-size:12.5px;letter-spacing:.2em;color:var(--text-4)}
+.e-body{padding:34px 0 80px}
+.e-layout{display:grid;grid-template-columns:252px minmax(0,1fr);gap:40px;align-items:start}
+.e-filter{position:sticky;top:84px}
+.e-filter__grp{padding:18px 0;border-bottom:1px solid var(--border)}
+.e-filter__grp:first-child{padding-top:0}
+.e-filter__t{font-family:var(--f-xw);font-size:14px;letter-spacing:.18em;color:var(--text);margin-bottom:12px}
+.e-filter__list{display:flex;flex-direction:column;gap:9px}
+.e-check{display:flex;align-items:center;gap:9px;cursor:pointer;font-family:var(--f-kai);font-size:14px;color:var(--text-2);letter-spacing:.06em;transition:color var(--t-fast)}
+.e-check:hover{color:var(--primary)}
+.e-check input{appearance:none;width:16px;height:16px;border:1.5px solid var(--border-strong);border-radius:3px;background:var(--surface);cursor:pointer;position:relative;flex:none;transition:all var(--t-fast)}
+.e-check input:checked{background:var(--primary);border-color:var(--primary)}
+.e-check input:checked::after{content:'';position:absolute;left:4.5px;top:1px;width:4px;height:8px;border:solid #f3ead7;border-width:0 1.8px 1.8px 0;transform:rotate(42deg)}
+.e-check__n{margin-left:auto;font-family:var(--f-latin);font-size:12.5px;color:var(--text-4)}
+.e-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.e-count{font-family:var(--f-kai);font-size:14px;color:var(--text-3);letter-spacing:.1em}
+.e-count b{font-family:var(--f-latin);font-size:24px;color:var(--primary-deep);margin:0 4px}
+.e-toolbar__right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.e-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.e-card__badges{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:3}
+.e-card__idx{position:absolute;left:12px;bottom:12px;z-index:3;color:var(--text-inv);font-family:var(--f-latin);font-size:12px;letter-spacing:.2em;text-shadow:0 1px 5px rgba(0,0,0,.6)}
+.e-viewtoggle{display:flex;gap:2px;padding:3px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm)}
+.e-viewtoggle button{border:0;background:transparent;cursor:pointer;padding:5px 9px;border-radius:3px;color:var(--text-3);display:flex}
+.e-viewtoggle button.is-on{background:var(--surface);color:var(--primary);box-shadow:var(--sh-1)}
+.e-cards.is-list{grid-template-columns:1fr}
+.e-cards.is-list .gp-card{display:flex}
+.e-cards.is-list .gp-card__media{width:260px;flex:none;aspect-ratio:auto;min-height:170px}
+.e-cards.is-list .gp-card__desc{-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.e-skeleton{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.e-empty{display:none}
+.e-empty.is-show{display:block}
+.e-hint{font-family:var(--f-kai);font-size:12.5px;color:var(--text-4);letter-spacing:.12em;margin-top:10px}
+.e-cmp{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);z-index:110;display:flex;align-items:center;gap:16px;
+  background:rgba(26,20,16,.95);color:var(--text-inv);padding:12px 20px;border-radius:var(--r-pill);box-shadow:var(--sh-3);
+  transition:transform var(--t-slow) var(--ease-move)}
+.e-cmp.is-show{transform:translate(-50%,0)}
+.e-cmp__t{font-family:var(--f-kai);font-size:13.5px;letter-spacing:.14em}
+.e-cmp__list{display:flex;gap:8px}
+.e-cmp__item{display:flex;align-items:center;gap:6px;background:rgba(243,234,215,.14);border-radius:var(--r-pill);padding:4px 10px;font-family:var(--f-kai);font-size:12.5px}
+.e-cmp__item button{border:0;background:transparent;color:inherit;cursor:pointer;opacity:.6;padding:0 0 0 2px}
+.e-cmp__item button:hover{opacity:1}
+.e-cmp .gp-btn{padding:6px 14px;font-size:12.5px}
+@media (max-width:1200px){ .e-cards,.e-skeleton{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:1024px){ .e-layout{grid-template-columns:1fr} .e-filter{position:static} .e-filter__inner{display:grid;grid-template-columns:repeat(2,1fr);gap:0 24px} }
+@media (max-width:768px){
+  .e-cards,.e-skeleton{grid-template-columns:1fr}
+  .e-cards.is-list .gp-card{flex-direction:column}
+  .e-cards.is-list .gp-card__media{width:100%;min-height:0;aspect-ratio:16/10}
+  .e-searchbar{flex-direction:column}
+  .e-filter__inner{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="gp-paper">
+<header data-gp-nav></header>
+
+<main>
+  <section class="e-hero">
+    <div class="gp-wrap">
+      <div class="gp-eyebrow">寻 园 · 七 园 索 引</div>
+      <h1 class="e-hero__t">择 一 园 而 入</h1>
+      <p class="gp-lead" style="max-width:620px;margin-top:16px">
+        苏州古典园林甲天下。天下诸园，其尤著者七：拙政、留园、网师、狮林、沧浪、艺圃、耦园。
+        此处可按年代、体裁、造园手法检索比较。
+      </p>
+      <div class="e-searchbar">
+        <div class="gp-search" id="eSearchWrap">
+          <svg class="gp-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+          <input class="gp-input" id="eQ" type="search" placeholder="搜索园名、名景、题咏、造园手法…" autocomplete="off">
+          <button class="gp-search__clear" id="eClear" aria-label="清空">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+        <button class="gp-btn gp-btn--primary" id="eSearchBtn">检 索</button>
+      </div>
+      <div class="e-quick">
+        <span class="e-quick__lbl">热 词</span>
+        <button class="gp-chip" data-q="水">水</button>
+        <button class="gp-chip" data-q="建筑">建筑</button>
+        <button class="gp-chip" data-q="石">石</button>
+        <button class="gp-chip" data-q="明">明</button>
+        <button class="gp-chip" data-q="冠云峰">冠云峰</button>
+        <button class="gp-chip" data-q="世界文化遗产">世界文化遗产</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="e-body">
+    <div class="gp-wrap">
+      <div class="e-layout">
+        <!-- 筛选侧栏 -->
+        <aside class="e-filter">
+          <div class="e-filter__inner">
+            <div class="e-filter__grp">
+              <div class="e-filter__t">营 建 年 代</div>
+              <div class="e-filter__list" id="fEra">
+                <label class="e-check"><input type="checkbox" value="明">明 代 <span class="e-check__n">3</span></label>
+                <label class="e-check"><input type="checkbox" value="清">清 代 <span class="e-check__n">3</span></label>
+                <label class="e-check"><input type="checkbox" value="宋">宋 元 <span class="e-check__n">1</span></label>
+              </div>
+            </div>
+            <div class="e-filter__grp">
+              <div class="e-filter__t">造 园 体 裁</div>
+              <div class="e-filter__list" id="fTag">
+                <label class="e-check"><input type="checkbox" value="文人写意">文人写意 <span class="e-check__n">3</span></label>
+                <label class="e-check"><input type="checkbox" value="建筑">建筑见长 <span class="e-check__n">2</span></label>
+                <label class="e-check"><input type="checkbox" value="石">叠山理水 <span class="e-check__n">4</span></label>
+                <label class="e-check"><input type="checkbox" value="水">水景为主 <span class="e-check__n">3</span></label>
+                <label class="e-check"><input type="checkbox" value="园中园">园中园 <span class="e-check__n">2</span></label>
+              </div>
+            </div>
+            <div class="e-filter__grp">
+              <div class="e-filter__t">世 界 文 化 遗 产</div>
+              <div class="e-filter__list" id="fUnesco">
+                <label class="e-check"><input type="checkbox" value="1997">1997 首批 <span class="e-check__n">4</span></label>
+                <label class="e-check"><input type="checkbox" value="2000">2000 扩展 <span class="e-check__n">3</span></label>
+              </div>
+            </div>
+            <div class="e-filter__grp">
+              <div class="e-filter__t">景 点 数</div>
+              <div class="e-filter__list">
+                <label class="gp-range" style="display:block">
+                  <input class="gp-range" type="range" id="fScene" min="0" max="6" value="0">
+                </label>
+                <div style="display:flex;justify-content:space-between;font-family:var(--f-kai);font-size:12px;color:var(--text-4);margin-top:8px">
+                  <span>不限</span><span id="fSceneV">0 处起</span>
+                </div>
+              </div>
+            </div>
+            <button class="gp-btn gp-btn--ghost gp-btn--block gp-btn--sm" id="eReset">重 置 条 件</button>
+          </div>
+        </aside>
+
+        <!-- 结果区 -->
+        <div>
+          <div class="e-toolbar">
+            <span class="e-count">共 <b id="eCount">7</b> 座园林</span>
+            <div class="e-toolbar__right">
+              <button class="gp-btn gp-btn--quiet gp-btn--sm" id="eCmpBtn" style="border:1px solid var(--border)">加 入 对 比</button>
+              <div class="gp-seg" id="eSort">
+                <button class="is-on" data-sort="default">默认</button>
+                <button data-sort="area">按面积</button>
+                <button data-sort="era">按年代</button>
+                <button data-sort="name">按园名</button>
+              </div>
+              <div class="e-viewtoggle">
+                <button class="is-on" data-view="grid" aria-label="网格视图">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                </button>
+                <button data-view="list" aria-label="列表视图">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><rect x="3" y="5" width="18" height="3" rx="1"/><rect x="3" y="11" width="18" height="3" rx="1"/><rect x="3" y="17" width="18" height="3" rx="1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="e-skeleton" id="eSkeleton" hidden>
+            <div class="gp-card"><div class="gp-sk gp-sk--media"></div><div class="gp-card__body"><div class="gp-sk gp-sk--title"></div><div class="gp-sk gp-sk--line"></div><div class="gp-sk gp-sk--line" style="width:70%"></div></div></div>
+            <div class="gp-card"><div class="gp-sk gp-sk--media"></div><div class="gp-card__body"><div class="gp-sk gp-sk--title"></div><div class="gp-sk gp-sk--line"></div><div class="gp-sk gp-sk--line" style="width:70%"></div></div></div>
+            <div class="gp-card"><div class="gp-sk gp-sk--media"></div><div class="gp-card__body"><div class="gp-sk gp-sk--title"></div><div class="gp-sk gp-sk--line"></div><div class="gp-sk gp-sk--line" style="width:70%"></div></div></div>
+          </div>
+
+          <div class="e-cards" id="eCards"></div>
+
+          <!-- 空状态 -->
+          <div class="e-empty" id="eEmpty">
+            <div class="gp-state">
+              <svg class="gp-state__art" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="42" stroke="#bfae8a" stroke-width="1.5" stroke-dasharray="5 6"/>
+                <path d="M42 46h36v30H42z" stroke="#8a7d6a" stroke-width="1.6"/>
+                <path d="M42 54h36M52 46v30" stroke="#8a7d6a" stroke-width="1"/>
+                <path d="M70 70l14 14" stroke="#b13a2f" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="82" cy="82" r="8" stroke="#b13a2f" stroke-width="2.4"/>
+              </svg>
+              <div class="gp-state__title">未 寻 得 此 园</div>
+              <div class="gp-state__desc">换一个关键词，或放宽筛选条件试试。苏州七园各有其名，或许"冠云""沧浪""曲园"能引你入胜。</div>
+              <div class="gp-state__actions">
+                <button class="gp-btn gp-btn--primary" id="eEmptyReset">清 空 所 有 条 件</button>
+                <button class="gp-btn gp-btn--ghost" id="eEmptySuggest">看 我 推 荐 的</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="e-hint">排序：默认按"园志"原序；面积按园区规模估算，仅供比较。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 对比浮条 -->
+<div class="e-cmp" id="eCmp">
+  <span class="e-cmp__t">已选 <b id="eCmpN">0</b> 座</span>
+  <div class="e-cmp__list" id="eCmpList"></div>
+  <button class="gp-btn gp-btn--primary gp-btn--sm" id="eCmpGo">开 始 对 比</button>
+  <button class="gp-iconbtn" id="eCmpClear" aria-label="清空对比" style="background:transparent;border-color:rgba(243,234,215,.3);color:#f3ead7">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+</div>
+
+<footer data-gp-footer></footer>
+
+<script src="illustrations.js"></script>
+<script src="gardens-data.js"></script>
+<script src="app.js"></script>
+<script>
+(function(){
+  const { GARDENS, GARDEN_ORDER } = window.GP_DATA;
+  GP_APP.nav('explore');
+  GP_APP.footer();
+
+  const ORDER = GARDEN_ORDER;
+  const AREA = { zhuozheng:78, liu:35, wangshi:9.8, shizi:1.1, canglang:15, yi:7, yipu:12 };
+  const ERA  = { zhuozheng:'明', liu:'明', wangshi:'清', shizi:'元', canglang:'宋', yi:'明', yipu:'清' };
+  const TAGS = {
+    zhuozheng:['文人写意','水','石'], liu:['建筑','石','园中园'], wangshi:['水','园中园'],
+    shizi:['石','建筑'], canglang:['水','园中园'], yi:['水','园中园'], yipu:['建筑','文人写意','水']
+  };
+  const SCENES = {}; Object.keys(GARDENS).forEach(k => SCENES[k] = (GARDENS[k].scenes||[]).length);
+
+  let query = '';
+  let view = 'grid';
+  let cmp = [];
+
+  const cards = document.getElementById('eCards');
+  const emptyBox = document.getElementById('eEmpty');
+  const countEl = document.getElementById('eCount');
+
+  function match(g, id){
+    if (query){
+      const hay = [g.name, g.alias, g.era, g.founder, g.location, (g.tags||[]).join(' '),
+        (g.scenes||[]).map(s => s.name + ' ' + s.alias + ' ' + (s.verse||'')).join(' '),
+        (g.poems||[]).map(p => p.text + ' ' + p.author).join(' ')].join(' ').replace(/\s+/g,'');
+      if (hay.indexOf(query.replace(/\s+/g,'')) === -1) return false;
+    }
+    const eras = Array.from(document.querySelectorAll('#fEra input:checked')).map(i=>i.value);
+    if (eras.length && eras.indexOf(ERA[id]) === -1) return false;
+    const tags = Array.from(document.querySelectorAll('#fTag input:checked')).map(i=>i.value);
+    if (tags.length && !tags.some(t => (TAGS[id]||[]).includes(t))) return false;
+    const un = Array.from(document.querySelectorAll('#fUnesco input:checked')).map(i=>i.value);
+    if (un.length && un.indexOf(g.unesco) === -1) return false;
+    const sc = +document.getElementById('fScene').value;
+    if (sc && (SCENES[id]||0) < sc) return false;
+    return true;
+  }
+
+  function render(){
+    const sort = (document.querySelector('#eSort button.is-on')||{}).dataset.sort || 'default';
+    let list = ORDER.filter(id => match(GARDENS[id], id));
+    if (sort === 'area') list = list.slice().sort((a,b) => AREA[b]-AREA[a]);
+    if (sort === 'era')  list = list.slice().sort((a,b) => (ERA[a]+ERA[b]).length - (ERA[b]+ERA[a]).length);
+    if (sort === 'name')  list = list.slice().sort((a,b) => GARDENS[a].name.localeCompare(GARDENS[b].name,'zh'));
+
+    countEl.textContent = list.length;
+    cards.classList.toggle('is-list', view === 'list');
+    cards.innerHTML = list.map((id, i) => {
+      const g = GARDENS[id];
+      const no = ['一','二','三','四','五','六','七'][ORDER.indexOf(id)];
+      const inCmp = cmp.includes(id);
+      return `<a class="gp-card gp-card--hover" href="detail.html?id=${id}">
+        <div class="gp-card__media" style="aspect-ratio:16/10">
+          <img src="images/${id}-hero.jpg" alt="${g.name.replace(/\s/g,'')}" loading="lazy" onerror="this.src='images/card-${id}.jpg'">
+          <span class="gp-card__ribbon">第 ${no} 园</span>
+          <div class="e-card__badges">
+            <button class="gp-iconbtn" style="width:30px;height:30px;background:rgba(26,20,16,.5);border-color:rgba(243,234,215,.45);color:#f3ead7" data-cmp="${id}" title="加入对比">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 4v16M16 4v16"/></svg>
+            </button>
+          </div>
+          <span class="e-card__idx">${g.eyebrow||''}</span>
+        </div>
+        <div class="gp-card__body">
+          <div class="gp-card__title">${g.name}<span style="font-family:var(--f-kai);font-size:12px;color:var(--text-4);margin-left:9px;letter-spacing:.1em">${g.era||''} · ${g.unesco||''}</span></div>
+          <div class="gp-card__desc">${g.alias}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+            ${(g.tags||[]).map(t=>`<span class="gp-tag">${t}</span>`).join('')}
+            <span class="gp-tag gp-tag--gold">${g.area||''}</span>
+          </div>
+          <div class="gp-card__meta">
+            <span>名景 ${SCENES[id]} 处</span><span>·</span><span>${(g.poems||[]).length} 首题咏</span>
+            <span style="margin-left:auto;color:${inCmp?'var(--primary)':'var(--text-4)'}">${inCmp?'已加入对比':'移步细看 →'}</span>
+          </div>
+        </div>
+      </a>`;
+    }).join('');
+    emptyBox.classList.toggle('is-show', list.length === 0);
+    cards.style.display = list.length ? '' : 'none';
+    renderCmp();
+  }
+
+  function renderCmp(){
+    const bar = document.getElementById('eCmp');
+    document.getElementById('eCmpN').textContent = cmp.length;
+    document.getElementById('eCmpList').innerHTML = cmp.map(id =>
+      `<span class="e-cmp__item">${GARDENS[id].name.replace(/\s/g,'')}<button data-rm="${id}" aria-label="移除">✕</button></span>`).join('');
+    bar.classList.toggle('is-show', cmp.length > 0);
+  }
+
+  /* 搜索 */
+  const q = document.getElementById('eQ');
+  const wrap = document.getElementById('eSearchWrap');
+  function applyQuery(v){
+    query = (v||'').trim();
+    wrap.classList.toggle('has-value', !!query);
+    render();
+  }
+  q.addEventListener('input', () => applyQuery(q.value));
+  document.getElementById('eSearchBtn').addEventListener('click', () => {
+    const sk = document.getElementById('eSkeleton');
+    sk.hidden = false; cards.style.visibility = 'hidden';
+    setTimeout(() => { sk.hidden = true; cards.style.visibility = ''; applyQuery(q.value); GP_APP.toast('检索完成 · ' + countEl.textContent + ' 座园林', 'ok'); }, 620);
+  });
+  document.getElementById('eClear').addEventListener('click', () => { q.value=''; applyQuery(''); });
+  document.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => {
+    q.value = b.dataset.q; applyQuery(b.dataset.q);
+    b.classList.add('is-on');
+    document.querySelectorAll('[data-q]').forEach(x => x.classList.remove('is-on'));
+  }));
+
+  /* 筛选 */
+  document.querySelectorAll('.e-check input, #fScene').forEach(el => el.addEventListener('change', render));
+  document.getElementById('fScene').addEventListener('input', e => {
+    document.getElementById('fSceneV').textContent = e.target.value === '0' ? '不限' : e.target.value + ' 处起';
+  });
+  document.getElementById('eReset').addEventListener('click', () => {
+    document.querySelectorAll('.e-check input').forEach(i => i.checked = false);
+    document.getElementById('fScene').value = 0;
+    document.getElementById('fSceneV').textContent = '不限';
+    q.value=''; applyQuery('');
+    GP_APP.toast('筛选条件已重置', 'info');
+  });
+  document.getElementById('eEmptyReset').addEventListener('click', () => document.getElementById('eReset').click());
+  document.getElementById('eEmptySuggest').addEventListener('click', () => {
+    q.value='水'; applyQuery('水');
+  });
+
+  /* 排序 / 视图 */
+  document.querySelectorAll('#eSort button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#eSort button').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on'); render();
+  }));
+  document.querySelectorAll('.e-viewtoggle button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.e-viewtoggle button').forEach(x => x.classList.remove('is-on'));
+    b.classList.add('is-on');
+    view = b.dataset.view;
+    cards.classList.toggle('is-list', view === 'list');
+  }));
+
+  /* 对比 */
+  document.addEventListener('click', (e) => {
+    const add = e.target.closest('[data-cmp]');
+    if (add) {
+      e.preventDefault(); e.stopPropagation();
+      const id = add.dataset.cmp;
+      if (!cmp.includes(id) && cmp.length < 3) { cmp.push(id); GP_APP.toast('已加入对比栏', 'ok'); }
+      else if (cmp.includes(id)) { cmp = cmp.filter(x => x !== id); GP_APP.toast('已移出对比栏', 'info'); }
+      else GP_APP.toast('对比栏最多容纳 3 座园林', 'err');
+      render(); return;
+    }
+    const rm = e.target.closest('[data-rm]');
+    if (rm) { cmp = cmp.filter(x => x !== rm.dataset.rm); render(); }
+  });
+  document.getElementById('eCmpClear').addEventListener('click', () => { cmp = []; render(); });
+  document.getElementById('eCmpGo').addEventListener('click', () => {
+    const map = { zhuozheng:'园中园始祖', liu:'建筑集锦', wangshi:'水景典范', shizi:'叠山奇观', canglang:'沧浪古意', yi:'疏朗小园', yipu:'宅园一体' };
+    GP_APP.toast('对比：' + cmp.map(c => GARDENS[c].name.replace(/\s/g,'') + '（' + map[c] + '）').join(' · '), 'info');
+  });
+  document.getElementById('eCmpBtn').addEventListener('click', () => GP_APP.toast('在卡片右上角点击 + 加入对比', 'info'));
+
+  /* 首次聚焦搜索框 */
+  const params = new URLSearchParams(location.search);
+  if (params.get('focus') === 'search') { setTimeout(() => { q.focus(); q.scrollIntoView({block:'center'}); }, 260); }
+
+  render();
+  GP_APP.reveal();
+})();
+</script>
+</body>
+</html>
